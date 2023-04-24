@@ -1,0 +1,1805 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bRPC – Docs</title><link>https://brpc.apache.org/docs/</link><description>Recent content in Docs on bRPC</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://brpc.apache.org/docs/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: bRPC overview</title><link>https://brpc.apache.org/docs/overview/</link><pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/overview/</guid><description>
+&lt;h1 id="what-is-rpc">What is RPC?&lt;/h1>
+&lt;p>Most machines on internet communicate with each other via &lt;a href="https://en.wikipedia.org/wiki/Internet_protocol_suite">TCP/IP&lt;/a>. However, TCP/IP only guarantees reliable data transmissions. We need to abstract more to build services:&lt;/p>
+&lt;ul>
+&lt;li>What is the format of data transmission? Different machines and networks may have different byte-orders, directly sending in-memory data is not suitable. Fields in the data are added, modified or removed gradually, how do newer services talk with older services?&lt;/li>
+&lt;li>Can TCP connection be reused for multiple requests to reduce overhead? Can multiple requests be sent through one TCP connection simultaneously?&lt;/li>
+&lt;li>How to talk with a cluster with many machines?&lt;/li>
+&lt;li>What should I do when the connection is broken? What if the server does not respond?&lt;/li>
+&lt;li>&amp;hellip;&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://en.wikipedia.org/wiki/Remote_procedure_call">RPC&lt;/a> addresses the above issues by abstracting network communications as &amp;ldquo;clients accessing functions on servers&amp;rdquo;: client sends a request to server, wait until server receives -&amp;gt; processes -&amp;gt; responds to the request, then do actions according to the result.
+&lt;img src="https://brpc.apache.org/images/docs/rpc.png" alt="rpc.png">&lt;/p>
+&lt;p>Let&amp;rsquo;s see how the issues are solved.&lt;/p>
+&lt;ul>
+&lt;li>RPC needs serialization which is done by &lt;a href="https://github.com/google/protobuf">protobuf&lt;/a> pretty well. Users fill requests in format of protobuf::Message, do RPC, and fetch results from responses in protobuf::Message. protobuf has good forward and backward compatibility for users to change fields and build services incrementally. For http services, &lt;a href="http://www.json.org/">json&lt;/a> is used for serialization extensively.&lt;/li>
+&lt;li>Establishment and re-using of connections is transparent to users, but users can make choices like &lt;a href="../client/basics/#connection-type">different connection types&lt;/a>: short, pooled, single.&lt;/li>
+&lt;li>Machines are discovered by a Naming Service, which can be implemented by &lt;a href="https://en.wikipedia.org/wiki/Domain_Name_System">DNS&lt;/a>, &lt;a href="https://zookeeper.apache.org/">ZooKeeper&lt;/a> or &lt;a href="https://github.com/coreos/etcd">etcd&lt;/a>. Inside Baidu, we use BNS (Baidu Naming Service). brpc provides &lt;a href="../client/basics/#naming-service">&amp;ldquo;list://&amp;rdquo; and &amp;ldquo;file://&amp;rdquo;&lt;/a> as well. Users specify load balancing algorithms to choose one machine for each request from all machines, including: round-robin, randomized, &lt;a href="../rpc-in-depth/consistent-hashing/">consistent-hashing&lt;/a>(murmurhash3 or md5) and &lt;a href="../rpc-in-depth/locality-aware/">locality-aware&lt;/a>.&lt;/li>
+&lt;li>RPC retries when the connection is broken. When server does not respond within the given time, client fails with a timeout error.&lt;/li>
+&lt;/ul>
+&lt;h1 id="where-can-i-use-rpc">Where can I use RPC?&lt;/h1>
+&lt;p>Almost all network communications.&lt;/p>
+&lt;p>RPC can&amp;rsquo;t do everything surely, otherwise we don&amp;rsquo;t need the layer of TCP/IP. But in most network communications, RPC meets requirements and isolates the underlying details.&lt;/p>
+&lt;p>Common doubts on RPC:&lt;/p>
+&lt;ul>
+&lt;li>My data is binary and large, using protobuf will be slow. First, this is possibly a wrong feeling and you will have to test it and prove it with &lt;a href="../builtin-services/cpu_profiler/">profilers&lt;/a>. Second, many protocols support carrying binary data along with protobuf requests and bypass the serialization.&lt;/li>
+&lt;li>I&amp;rsquo;m sending streaming data which can&amp;rsquo;t be processed by RPC. Actually many protocols in RPC can handle streaming data, including &lt;a href="../client/access-httph2/#progressively-download">ProgressiveReader in http&lt;/a>, streams in h2, &lt;a href="../client/streaming-rpc/">streaming rpc&lt;/a>, and RTMP which is a specialized streaming protocol.&lt;/li>
+&lt;li>I don&amp;rsquo;t need replies. With some inductions, we know that in your scenario requests can be dropped at any stage because the client is always unaware of the situation. Are you really sure this is acceptable? Even if you don&amp;rsquo;t need the reply, we recommend sending back small-sized replies, which are unlikely to be performance bottlenecks and will probably provide valuable clues when debugging complex bugs.&lt;/li>
+&lt;/ul>
+&lt;h1 id="what-is-brpcimagesdocslogopng">What is &lt;img src="https://brpc.apache.org/images/docs/logo.png" alt="brpc">?&lt;/h1>
+&lt;p>brpc is an Industrial-grade RPC framework using C++ Language, which is often used in high performance system such as Search, Storage, Machine learning, Advertisement, Recommendation etc.&lt;/p>
+&lt;p>You can use it to:&lt;/p>
+&lt;ul>
+&lt;li>Build a server that can talk in multiple protocols (&lt;strong>on same port&lt;/strong>), or access all sorts of services
+&lt;ul>
+&lt;li>restful http/https, &lt;a href="https://http2.github.io/http2-spec">h2&lt;/a>/&lt;a href="https://grpc.io">gRPC&lt;/a>. using http/h2 in brpc is much more friendly than &lt;a href="https://curl.haxx.se/libcurl/">libcurl&lt;/a>. Access protobuf-based protocols with HTTP/h2+json, probably from another language.&lt;/li>
+&lt;li>&lt;a href="../client/access-redis/">redis&lt;/a> and &lt;a href="../client/access-memcached/">memcached&lt;/a>, thread-safe, more friendly and performant than the official clients&lt;/li>
+&lt;li>&lt;a href="https://github.com/brpc/brpc/blob/master/src/brpc/rtmp.h">rtmp&lt;/a>/&lt;a href="https://en.wikipedia.org/wiki/Flash_Video">flv&lt;/a>/&lt;a href="https://en.wikipedia.org/wiki/HTTP_Live_Streaming">hls&lt;/a>, for building &lt;a href="https://github.com/brpc/media-server">streaming services&lt;/a>.&lt;/li>
+&lt;li>hadoop_rpc (may be opensourced)&lt;/li>
+&lt;li>&lt;a href="https://en.wikipedia.org/wiki/Remote_direct_memory_access">rdma&lt;/a> support (will be opensourced)&lt;/li>
+&lt;li>&lt;a href="../client/access-thrift/">thrift&lt;/a> support, thread-safe, more friendly and performant than the official clients.&lt;/li>
+&lt;li>all sorts of protocols used in Baidu: &lt;a href="https://github.com/apache/brpc/blob/master/docs/cn/baidu_std.md">baidu_std&lt;/a>, &lt;a href="../client/streaming-rpc/">streaming_rpc&lt;/a>, hulu_pbrpc, &lt;a href="https://github.com/baidu/sofa-pbrpc">sofa_pbrpc&lt;/a>, nova_pbrpc, public_pbrpc, ubrpc, and nshead-based ones.&lt;/li>
+&lt;li>Build &lt;a href="https://en.wikipedia.org/wiki/High_availability">HA&lt;/a> distributed services using an industrial-grade implementation of &lt;a href="https://raft.github.io">RAFT consensus algorithm&lt;/a> which is opensourced at &lt;a href="https://github.com/brpc/braft">braft&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Servers can handle requests &lt;a href="../server/basics/">synchronously&lt;/a> or &lt;a href="../server/basics/#asynchronous-service">asynchronously&lt;/a>.&lt;/li>
+&lt;li>Clients can access servers &lt;a href="../client/basics/#synchronus-call">synchronously&lt;/a>, &lt;a href="../client/basics/#asynchronous-call">asynchronously&lt;/a>, &lt;a href="../client/basics/#semi-synchronous-call">semi-synchronously&lt;/a>, or use &lt;a href="../client/combo-channels/">combo channels&lt;/a> to simplify sharded or parallel accesses declaratively.&lt;/li>
+&lt;li>Debug services &lt;a href="../builtin-services/buildin_services/">via http&lt;/a>, and run &lt;a href="../builtin-services/cpu_profiler/">cpu&lt;/a>, &lt;a href="../builtin-services/heap_profiler/">heap&lt;/a> and &lt;a href="../builtin-services/contention_profiler/">contention&lt;/a> profilers.&lt;/li>
+&lt;li>Get &lt;a href="#better-latency-and-throughput">better latency and throughput&lt;/a>.&lt;/li>
+&lt;li>&lt;a href="../rpc-in-depth/new-protocol/">Extend brpc&lt;/a> with the protocols used in your organization quickly, or customize components, including &lt;a href="../rpc-in-depth/load-balancing/#%E5%91%BD%E5%90%8D%E6%9C%8D%E5%8A%A1">naming services&lt;/a> (dns, zk, etcd), &lt;a href="../rpc-in-depth/load-balancing/#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">load balancers&lt;/a> (rr, random, consistent hashing)&lt;/li>
+&lt;/ul>
+&lt;h1 id="advantages-of-brpc">Advantages of bRPC&lt;/h1>
+&lt;h3 id="more-friendly-api">More friendly API&lt;/h3>
+&lt;p>Only 3 (major) user headers: &lt;a href="https://github.com/brpc/brpc/blob/master/src/brpc/server.h">Server&lt;/a>, &lt;a href="https://github.com/brpc/brpc/blob/master/src/brpc/channel.h">Channel&lt;/a>, &lt;a href="https://github.com/brpc/brpc/blob/master/src/brpc/controller.h">Controller&lt;/a>, corresponding to server-side, client-side and parameter-set respectively. You don&amp;rsquo;t have to worry about &amp;ldquo;How to initialize XXXManager&amp;rdquo;, &amp;ldquo;How to layer all these components together&amp;rdquo;, &amp;ldquo;What&amp;rsquo;s the relationship between XXXController and XXXContext&amp;rdquo;. All you need to do is simple:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Build service? include &lt;a href="https://github.com/brpc/brpc/blob/master/src/brpc/server.h">brpc/server.h&lt;/a> and follow the comments or &lt;a href="https://github.com/brpc/brpc/blob/master/example/echo_c++/server.cpp">examples&lt;/a>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Access service? include &lt;a href="https://github.com/brpc/brpc/blob/master/src/brpc/channel.h">brpc/channel.h&lt;/a> and follow the comments or &lt;a href="https://github.com/brpc/brpc/blob/master/example/echo_c++/client.cpp">examples&lt;/a>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Tweak parameters? Checkout &lt;a href="https://github.com/brpc/brpc/blob/master/src/brpc/controller.h">brpc/controller.h&lt;/a>. Note that the class is shared by server and channel. Methods are separated into 3 parts: client-side, server-side and both-side.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>We tried to make simple things simple. Take naming service as an example. In older RPC implementations you may need to copy a pile of obscure code to make it work, however, in brpc accessing BNS is expressed as &lt;code>Init(&amp;quot;bns://node-name&amp;quot;, ...)&lt;/code>, DNS is &lt;code>Init(&amp;quot;http://domain-name&amp;quot;, ...)&lt;/code> and local machine list is &lt;code>Init(&amp;quot;file:///home/work/server.list&amp;quot;, ...)&lt;/code>. Without any explanation, you know what it means.&lt;/p>
+&lt;h3 id="make-services-more-reliable">Make services more reliable&lt;/h3>
+&lt;p>brpc is extensively used in Baidu:&lt;/p>
+&lt;ul>
+&lt;li>map-reduce service &amp;amp; table storages&lt;/li>
+&lt;li>high-performance computing &amp;amp; model training&lt;/li>
+&lt;li>all sorts of indexing &amp;amp; ranking servers&lt;/li>
+&lt;li>….&lt;/li>
+&lt;/ul>
+&lt;p>It&amp;rsquo;s been proven.&lt;/p>
+&lt;p>brpc pays special attentions to development and maintenance efficency, you can &lt;a href="../builtin-services/buildin_services/">view internal status of servers&lt;/a> in web browser or with curl, analyze &lt;a href="../builtin-services/cpu_profiler/">cpu hotspots&lt;/a>, &lt;a href="../builtin-services/heap_profiler/">heap allocations&lt;/a> and &lt;a href="../builtin-services/contention_profiler/">lock contentions&lt;/a> of online services, measure stats by &lt;a href="../bvar/bvar/">bvar&lt;/a> which is viewable in &lt;a href="../builtin-services/vars/">/vars&lt;/a>.&lt;/p>
+&lt;h3 id="better-latency-and-throughput">Better latency and throughput&lt;/h3>
+&lt;p>Although almost all RPC implementations claim that they&amp;rsquo;re &amp;ldquo;high-performant&amp;rdquo;, the numbers are probably just numbers. Being really high-performant in different scenarios is difficult. To unify communication infra inside Baidu, brpc goes much deeper at performance than other implementations.&lt;/p>
+&lt;ul>
+&lt;li>Reading and parsing requests from different clients is fully parallelized and users don&amp;rsquo;t need to distinguish between &amp;ldquo;IO-threads&amp;rdquo; and &amp;ldquo;Processing-threads&amp;rdquo;. Other implementations probably have &amp;ldquo;IO-threads&amp;rdquo; and &amp;ldquo;Processing-threads&amp;rdquo; and hash file descriptors(fd) into IO-threads. When a IO-thread handles one of its fds, other fds in the thread can&amp;rsquo;t be handled. If a message is large, other fds are significantly delayed. Although different IO-threads run in parallel, you won&amp;rsquo;t have many IO-threads since they don&amp;rsquo;t have too much to do generally except reading/parsing from fds. If you have 10 IO-threads, one fd may affect 10% of all fds, which is unacceptable to industrial online services (requiring 99.99% availability). The problem will be worse when fds are distributed unevenly accross IO-threads (unfortunately common), or the service is multi-tenancy (common in cloud services). In brpc, reading from different fds is parallelized and even processing different messages from one fd is parallelized as well. Parsing a large message does not block other messages from the same fd, not to mention other fds. More details can be found &lt;a href="../rpc-in-depth/io/#receiving-messages">here&lt;/a>.&lt;/li>
+&lt;li>Writing into one fd and multiple fds is highly concurrent. When multiple threads write into the same fd (common for multiplexed connections), the first thread directly writes in-place and other threads submit their write requests in &lt;a href="https://en.wikipedia.org/wiki/Non-blocking_algorithm#Wait-freedom">wait-free&lt;/a> manner. One fd can be written into 5,000,000 16-byte messages per second by a couple of highly-contended threads. More details can be found &lt;a href="../rpc-in-depth/io/#sending-messages">here&lt;/a>.&lt;/li>
+&lt;li>Minimal locks. High-QPS services can utilize all CPU power on the machine. For example, &lt;a href="../rpc-in-depth/memory-management/">creating bthreads&lt;/a> for processing requests, &lt;a href="../rpc-in-depth/timer-keeping/">setting up timeout&lt;/a>, &lt;a href="../rpc-in-depth/bthread_id/">finding RPC contexts&lt;/a> according to response, &lt;a href="../bvar/bvar/">recording performance counters&lt;/a> are all highly concurrent. Users see very few contentions (via &lt;a href="../builtin-services/contention_profiler/">contention profiler&lt;/a>) caused by RPC framework even if the service runs at 500,000+ QPS.&lt;/li>
+&lt;li>Server adjusts thread number according to load. Traditional implementations set number of threads according to latency to avoid limiting the throughput. brpc creates a new &lt;a href="../bthread/bthread/">bthread&lt;/a> for each request and ends the bthread when the request is done, which automatically adjusts thread number according to load.&lt;/li>
+&lt;/ul>
+&lt;p>Check &lt;a href="../benchmark/">benchmark&lt;/a> for a comparison between brpc and other implementations.&lt;/p></description></item><item><title>Docs: Community</title><link>https://brpc.apache.org/docs/community/community/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/community/</guid><description>
+&lt;!--
+{% comment %}
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements. See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to you under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+{% endcomment %}
+-->
+&lt;h2 id="apache-brpc-community">Apache bRPC Community&lt;/h2>
+&lt;p>Every volunteer project obtains its strength from the people involved in it. We invite you to participate as much or as little as you choose.&lt;/p>
+&lt;p>You can:&lt;/p>
+&lt;ul>
+&lt;li>Use our project and provide a feedback.&lt;/li>
+&lt;li>Provide us with the use-cases.&lt;/li>
+&lt;li>Report bugs and submit patches.&lt;/li>
+&lt;li>Contribute code, testcase, documentation.&lt;/li>
+&lt;/ul>
+&lt;p>Visit the &lt;a href="../contributing/">Contributing&lt;/a> page for more information.&lt;/p>
+&lt;h3 id="issue-tracker">Issue tracker&lt;/h3>
+&lt;h4 id="bug-reports">Bug Reports&lt;/h4>
+&lt;p>Found bug? Enter an issue in the &lt;a href="https://github.com/apache/brpc/issues">Issue Tracker&lt;/a>.&lt;/p>
+&lt;p>Before submitting an issue, please:&lt;/p>
+&lt;ul>
+&lt;li>Verify that the bug does in fact exist.&lt;/li>
+&lt;li>Search the issue tracker to verify there is no existing issue reporting the bug you&amp;rsquo;ve found.&lt;/li>
+&lt;li>Consider tracking down the bug yourself in the bRPC&amp;rsquo;s source and submitting a patch along with your bug report. This is a great time saver for the bRPC developers and helps ensure the bug will be fixed quickly.&lt;/li>
+&lt;/ul>
+&lt;h4 id="feature-requests">Feature Requests&lt;/h4>
+&lt;p>Enhancement requests for new features are also welcome. The more concrete and rationale the request is, the greater the chance it will incorporated into future releases.&lt;/p>
+&lt;p>&lt;a href="https://github.com/apache/brpc/issues">https://github.com/apache/brpc/issues&lt;/a>&lt;/p>
+&lt;h3 id="source-code">Source Code&lt;/h3>
+&lt;p>The project sources are accessible via the &lt;a href="https://github.com/apache/brpc">source code repository&lt;/a> which is on github.&lt;/p>
+&lt;h3 id="website-source-code">Website Source Code&lt;/h3>
+&lt;p>The project website sources are accessible via the &lt;a href="https://github.com/apache/brpc-website">website source code repository&lt;/a> which is on github also.&lt;/p></description></item><item><title>Docs: Mailing List</title><link>https://brpc.apache.org/docs/community/mailing_list/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/mailing_list/</guid><description>
+&lt;h3 id="about-mailing-list">About Mailing List&lt;/h3>
+&lt;p>Mailing list is where we discuss in public and keep everything tracked, When using or contributing to bRPC, if you encounter any problem, or you have any suggestions or new ideas, you can use the Apache mailing-list to participate in the community building.&lt;/p>
+&lt;p>If you have a specific bug to report or feature request, we&amp;rsquo;d suggest you opening an issue on our &lt;a href="https://github.com/apache/brpc/issues/new/choose">GitHub repo&lt;/a>, which is a more efficient way to report the details.&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> is for people who want to contribute code to bRPC. &lt;a href="mailto:dev-subscribe@brpc.apache.org?subject=send%20this%20email%20to%20subscribe">subscribe&lt;/a>, &lt;a href="mailto:dev-unsubscribe@brpc.apache.org?subject=send%20this%20email%20to%20unsubscribe">unsubscribe&lt;/a>, &lt;a href="https://www.mail-archive.com/dev@brpc.apache.org/">archives&lt;/a>&lt;/li>
+&lt;li>&lt;a href="commits@brpc.apache.org">commits@brpc.apache.org&lt;/a> is for commit messages and patches to bRPC. &lt;a href="mailto:commits-subscribe@brpc.apache.org?subject=send%20this%20email%20to%20subscribe">subscribe&lt;/a>, &lt;a href="mailto:commits-unsubscribe@brpc.apache.org?subject=send%20this%20email%20to%20unsubscribe">unsubscribe&lt;/a>, &lt;a href="https://www.mail-archive.com/commits@brpc.apache.org/">archives&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="subscribe-mailing-lists">Subscribe Mailing Lists&lt;/h3>
+&lt;h4 id="1-send-subscription-mail">1. Send Subscription Mail&lt;/h4>
+&lt;p>Open your own email, create a new email, and send an email to &lt;a href="mailto:dev-subscribe@brpc.apache.org">dev-subscribe@brpc.apache.org&lt;/a> (subject and content are arbitrary).&lt;/p>
+&lt;h4 id="2-receive-confirmation-emails-from-dev-helpbrpcapacheorg">2. Receive confirmation emails from &lt;a href="mailto:dev-help@brpc.apache.org">dev-help@brpc.apache.org&lt;/a>&lt;/h4>
+&lt;p>After the first step, you will receive a confirmation email from &lt;a href="mailto:dev-help@brpc.apache.org">dev-help@brpc.apache.org&lt;/a>, which is shown below (If you fail to receive it for a long time, please confirm that the mail has been intercepted, or has been automatically grouped into &amp;ldquo;Subscribed Mail&amp;rdquo;, &amp;ldquo;Spam Mail&amp;rdquo;, &amp;ldquo;Promotional Mail&amp;rdquo; folders).&lt;/p>
+&lt;h4 id="3-reply-to-confirmation-mail">3. Reply to confirmation mail&lt;/h4>
+&lt;p>For the mail received in the previous step, Reply to this email directly or Create a new recipient e-mail for the reply address in the previous step.&lt;/p>
+&lt;p>Every subject is acceptable.&lt;/p>
+&lt;h4 id="4-receiving-welcome-emails">4. Receiving Welcome Emails&lt;/h4>
+&lt;p>After completing the third step, you will receive a welcome email entitled WELCOME to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a>. So far, the work of subscribing to mailing lists has been completed, and community dynamics will be notified by mail.&lt;/p>
+&lt;h4 id="5-initiate-e-mail-discussion-optional">5. Initiate e-mail discussion (optional)&lt;/h4>
+&lt;p>After successfully subscribing to the mailing list, if you want to initiate a discussion, send an email directly to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a>. Anyone who subscribes to the mailing list receives the mail.&lt;/p></description></item><item><title>Docs: Download</title><link>https://brpc.apache.org/docs/downloadbrpc/</link><pubDate>Mon, 16 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/downloadbrpc/</guid><description>
+&lt;!--
+{% comment %}
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements. See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to you under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+{% endcomment %}
+-->
+&lt;h2 id="apache-brpc-downloads">Apache bRPC Downloads&lt;/h2>
+&lt;p>Apache bRPC is released as a source artifact.
+We are pleased to announce our 1.4.0 release as below.&lt;/p>
+&lt;h3 id="all-release">All Release&lt;/h3>
+&lt;!--when pass vote, we can change it back to Release Artifacts
+-->
+&lt;table class="table table-hover sortable">
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;b>Name&lt;/b>&lt;/th>
+&lt;th>&lt;b>Archive&lt;/b>&lt;/th>
+&lt;th>&lt;b>SHA-512&lt;/b>&lt;/th>
+&lt;th>&lt;b>Signature&lt;/b>&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Apache bRPC 1.4.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache bRPC (incubating) 1.3.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache bRPC (incubating) 1.2.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache bRPC (incubating) 1.1.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache bRPC (incubating) 1.0.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;!--tr>
+&lt;td>Release Notes&lt;/td>
+&lt;td>&lt;a href="https://brpc.apache.org/releases/spark/{{ site.data.project.latest_release }}/release-notes">{{ site.data.project.latest_release }}&lt;/a>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr-->
+&lt;/tbody>
+&lt;/table>
+&lt;p>Choose a source distribution and &lt;a href="https://www.apache.org/dyn/closer.cgi#verify">verify&lt;/a>
+using the corresponding &lt;em>pgp&lt;/em> signature (using the committer file in
+&lt;a href="https://downloads.apache.org/brpc/KEYS">KEYS&lt;/a>).
+If you cannot do that, the &lt;em>md5&lt;/em> hash file may be used to check that the
+download has completed OK.&lt;/p>
+&lt;p>For fast downloads, current source distributions are hosted on mirror servers;
+older source distributions are in the
+&lt;a href="https://archive.apache.org/dist/incubator/brpc/">archive&lt;/a>.
+If a download from a mirror fails, retry, and the second download will likely
+succeed.&lt;/p>
+&lt;p>For security, hash and signature files are always hosted at
+&lt;a href="https://www.apache.org">Apache&lt;/a>.&lt;/p></description></item><item><title>Docs: Contribute Guide</title><link>https://brpc.apache.org/docs/community/contributing/</link><pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/contributing/</guid><description>
+&lt;p>If you meet any problem or request a new feature, you&amp;rsquo;re welcome to &lt;a href="https://github.com/brpc/brpc/issues/new/choose">create an issue&lt;/a>.&lt;/p>
+&lt;p>If you can solve any of &lt;a href="https://github.com/brpc/brpc/issues">the issues&lt;/a>, you&amp;rsquo;re welcome to send the PR to us.&lt;/p>
+&lt;p>Before the PR:&lt;/p>
+&lt;ul>
+&lt;li>Fully comply with the &lt;a href="https://www.apache.org/foundation/policies/conduct.html">ASF Code of Conduct&lt;/a>.&lt;/li>
+&lt;li>Make sure your code style conforms to &lt;a href="https://google.github.io/styleguide/cppguide.html">google C++ coding style&lt;/a>. Indentation is preferred to be 4 spaces.&lt;/li>
+&lt;li>The code appears where it should be. For example the code to support an extra protocol should not be put in general classes like server.cpp, channel.cpp, while a general modification would better not be hidden inside a very specific protocol.&lt;/li>
+&lt;li>Has unittests.&lt;/li>
+&lt;/ul>
+&lt;p>After the PR:&lt;/p>
+&lt;ul>
+&lt;li>Make sure the &lt;a href="https://app.travis-ci.com/github/apache/brpc/pull_requests">travis-ci&lt;/a> passed.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Getting started</title><link>https://brpc.apache.org/docs/getting_started/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/getting_started/</guid><description>
+&lt;h2 id="build">BUILD&lt;/h2>
+&lt;p>brpc prefers static linkages of deps, so that they don&amp;rsquo;t have to be installed on every machine running the app.&lt;/p>
+&lt;p>brpc depends on following packages:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://github.com/gflags/gflags">gflags&lt;/a>: Extensively used to define global options.&lt;/li>
+&lt;li>&lt;a href="https://github.com/google/protobuf">protobuf&lt;/a>: Serializations of messages, interfaces of services.&lt;/li>
+&lt;li>&lt;a href="https://github.com/google/leveldb">leveldb&lt;/a>: Required by &lt;a href="../builtin-services/rpcz/">/rpcz&lt;/a> to record RPCs for tracing.&lt;/li>
+&lt;/ul>
+&lt;h2 id="supported-environment">Supported Environment&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="#ubuntulinuxmintwsl">Ubuntu/LinuxMint/WSL&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#fedoracentos">Fedora/CentOS&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#linux-with-self-built-deps">Linux with self-built deps&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#macos">MacOS&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#docker">Docker&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="ubuntulinuxmintwsl">Ubuntu/LinuxMint/WSL&lt;/h3>
+&lt;h4 id="prepare-deps">Prepare deps&lt;/h4>
+&lt;p>Install dependencies:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo apt-get install -y git g++ make libssl-dev libgflags-dev libprotobuf-dev libprotoc-dev protobuf-compiler libleveldb-dev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you need to statically link leveldb:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo apt-get install -y libsnappy-dev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you need to enable cpu/heap profilers in examples:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo apt-get install -y libgoogle-perftools-dev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you need to run tests, install and compile libgtest-dev (which is not compiled yet):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo apt-get install -y cmake libgtest-dev &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#204a87">cd&lt;/span> /usr/src/gtest &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> sudo cmake . &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> sudo make &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> sudo mv lib/libgtest* /usr/lib/ &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#204a87">cd&lt;/span> -
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The directory of gtest source code may be changed, try &lt;code>/usr/src/googletest/googletest&lt;/code> if &lt;code>/usr/src/gtest&lt;/code> is not there.&lt;/p>
+&lt;h4 id="compile-brpc-with-config_brpcsh">Compile brpc with config_brpc.sh&lt;/h4>
+&lt;p>git clone brpc, cd into the repo and run&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sh config_brpc.sh --headers&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>/usr/include --libs&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>/usr/lib
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To change compiler to clang, add &lt;code>--cxx=clang++ --cc=clang&lt;/code>.&lt;/p>
+&lt;p>To not link debugging symbols, add &lt;code>--nodebugsymbols&lt;/code> and compiled binaries will be much smaller.&lt;/p>
+&lt;p>To use brpc with glog, add &lt;code>--with-glog&lt;/code>.&lt;/p>
+&lt;p>To enable &lt;a href="../server/serve-thrift/">thrift support&lt;/a>, install thrift first and add &lt;code>--with-thrift&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Run example&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> example/echo_c++
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./echo_server &lt;span style="color:#000;font-weight:bold">&amp;amp;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./echo_client
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Examples link brpc statically, if you need to link the shared version, &lt;code>make clean&lt;/code> and &lt;code>LINK_SO=1 make&lt;/code>&lt;/p>
+&lt;p>&lt;strong>Run tests&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> &lt;span style="color:#204a87">test&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sh run_tests.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="compile-brpc-with-cmake">Compile brpc with cmake&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>cmake -B build &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> cmake --build build -j6
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To help VSCode or Emacs(LSP) to understand code correctly, add &lt;code>-DCMAKE_EXPORT_COMPILE_COMMANDS=ON&lt;/code> to generate &lt;code>compile_commands.json&lt;/code>&lt;/p>
+&lt;p>To change compiler to clang, overwrite environment variable &lt;code>CC&lt;/code> and &lt;code>CXX&lt;/code> to &lt;code>clang&lt;/code> and &lt;code>clang++&lt;/code> respectively.&lt;/p>
+&lt;p>To not link debugging symbols, remove &lt;code>build/CMakeCache.txt&lt;/code> and cmake with &lt;code>-DWITH_DEBUG_SYMBOLS=OFF&lt;/code>&lt;/p>
+&lt;p>To use brpc with glog, cmake with &lt;code>-DWITH_GLOG=ON&lt;/code>.&lt;/p>
+&lt;p>To enable &lt;a href="../server/serve-thrift/">thrift support&lt;/a>, install thrift first and cmake with &lt;code>-DWITH_THRIFT=ON&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Run example with cmake&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> example/echo_c++
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ cmake -B build &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> cmake --build build -j4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./echo_server &lt;span style="color:#000;font-weight:bold">&amp;amp;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./echo_client
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Examples link brpc statically, if you need to link the shared version, remove &lt;code>CMakeCache.txt&lt;/code> and cmake with &lt;code>-DLINK_SO=ON&lt;/code>&lt;/p>
+&lt;p>&lt;strong>Run tests&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ mkdir build &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#204a87">cd&lt;/span> build &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> cmake -DBUILD_UNIT_TESTS&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>ON .. &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> make &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> make &lt;span style="color:#204a87">test&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="fedoracentos">Fedora/CentOS&lt;/h3>
+&lt;h4 id="prepare-deps-1">Prepare deps&lt;/h4>
+&lt;p>CentOS needs to install EPEL generally otherwise many packages are not available by default.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo yum install epel-release
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Install dependencies:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo yum install git gcc-c++ make openssl-devel gflags-devel protobuf-devel protobuf-compiler leveldb-devel
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you need to enable cpu/heap profilers in examples:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo yum install gperftools-devel
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you need to run tests, install and compile gtest-devel (which is not compiled yet):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo yum install gtest-devel
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="compile-brpc-with-config_brpcsh-1">Compile brpc with config_brpc.sh&lt;/h4>
+&lt;p>git clone brpc, cd into the repo and run&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sh config_brpc.sh --headers&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>/usr/include --libs&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>/usr/lib64
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To change compiler to clang, add &lt;code>--cxx=clang++ --cc=clang&lt;/code>.&lt;/p>
+&lt;p>To not link debugging symbols, add &lt;code>--nodebugsymbols&lt;/code> and compiled binaries will be much smaller.&lt;/p>
+&lt;p>To use brpc with glog, add &lt;code>--with-glog&lt;/code>.&lt;/p>
+&lt;p>To enable &lt;a href="../server/serve-thrift/">thrift support&lt;/a>, install thrift first and add &lt;code>--with-thrift&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Run example&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> example/echo_c++
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./echo_server &lt;span style="color:#000;font-weight:bold">&amp;amp;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./echo_client
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Examples link brpc statically, if you need to link the shared version, &lt;code>make clean&lt;/code> and &lt;code>LINK_SO=1 make&lt;/code>&lt;/p>
+&lt;p>&lt;strong>Run tests&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> &lt;span style="color:#204a87">test&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sh run_tests.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="compile-brpc-with-cmake-1">Compile brpc with cmake&lt;/h4>
+&lt;p>Same with &lt;a href="#compile-brpc-with-cmake">here&lt;/a>&lt;/p>
+&lt;h3 id="linux-with-self-built-deps">Linux with self-built deps&lt;/h3>
+&lt;h4 id="prepare-deps-2">Prepare deps&lt;/h4>
+&lt;p>brpc builds itself to both static and shared libs by default, so it needs static and shared libs of deps to be built as well.&lt;/p>
+&lt;p>Take &lt;a href="https://github.com/gflags/gflags">gflags&lt;/a> as example, which does not build shared lib by default, you need to pass options to &lt;code>cmake&lt;/code> to change the behavior:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cmake . -DBUILD_SHARED_LIBS&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">1&lt;/span> -DBUILD_STATIC_LIBS&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#0000cf;font-weight:bold">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="compile-brpc">Compile brpc&lt;/h4>
+&lt;p>Keep on with the gflags example, let &lt;code>../gflags_dev&lt;/code> be where gflags is cloned.&lt;/p>
+&lt;p>git clone brpc. cd into the repo and run&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sh config_brpc.sh --headers&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;../gflags_dev /usr/include&amp;#34;&lt;/span> --libs&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;../gflags_dev /usr/lib64&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Here we pass multiple paths to &lt;code>--headers&lt;/code> and &lt;code>--libs&lt;/code> to make the script search for multiple places. You can also group all deps and brpc into one directory, then pass the directory to &amp;ndash;headers/&amp;ndash;libs which actually search all subdirectories recursively and will find necessary files.&lt;/p>
+&lt;p>To change compiler to clang, add &lt;code>--cxx=clang++ --cc=clang&lt;/code>.&lt;/p>
+&lt;p>To not link debugging symbols, add &lt;code>--nodebugsymbols&lt;/code> and compiled binaries will be much smaller.&lt;/p>
+&lt;p>To use brpc with glog, add &lt;code>--with-glog&lt;/code>.&lt;/p>
+&lt;p>To enable &lt;a href="../server/serve-thrift/">thrift support&lt;/a>, install thrift first and add &lt;code>--with-thrift&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ls my_dev
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gflags_dev protobuf_dev leveldb_dev brpc_dev
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> brpc_dev
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sh config_brpc.sh --headers&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>.. --libs&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>..
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="compile-brpc-with-cmake-2">Compile brpc with cmake&lt;/h4>
+&lt;p>Same with &lt;a href="#compile-brpc-with-cmake">here&lt;/a>&lt;/p>
+&lt;h3 id="macos">MacOS&lt;/h3>
+&lt;p>Note: With same environment, the performance of the MacOS version is worse than the Linux version. If your service is performance-critical, do not use MacOS as your production environment.&lt;/p>
+&lt;h4 id="apple-silicon">Apple Silicon&lt;/h4>
+&lt;p>The code at master HEAD already supports M1 series chips. M2 series are not tested yet. Please feel free to report remaining warnings/errors to us by issues.&lt;/p>
+&lt;h4 id="prepare-deps-3">Prepare deps&lt;/h4>
+&lt;p>Install dependencies:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>brew install openssl git gnu-getopt coreutils gflags protobuf leveldb
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you need to enable cpu/heap profilers in examples:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>brew install gperftools
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you need to run tests, googletest is required. Run &lt;code>brew install googletest&lt;/code> first to see if it works. If not (old homebrew does not have googletest), you can download and compile googletest by your own:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git clone https://github.com/google/googletest -b release-1.10.0 &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#204a87">cd&lt;/span> googletest/googletest &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> mkdir build &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#204a87">cd&lt;/span> build &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> cmake -DCMAKE_CXX_FLAGS&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;-std=c++11&amp;#34;&lt;/span> .. &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&amp;amp;&lt;/span> make
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After the compilation, copy &lt;code>include/&lt;/code> and &lt;code>lib/&lt;/code> into &lt;code>/usr/local/include&lt;/code> and &lt;code>/usr/local/lib&lt;/code> respectively to expose gtest to all apps&lt;/p>
+&lt;h4 id="openssl">OpenSSL&lt;/h4>
+&lt;p>openssl installed in Monterey may not be found at &lt;code>/usr/local/opt/openssl&lt;/code>, instead it&amp;rsquo;s probably put under &lt;code>/opt/homebrew/Cellar&lt;/code>. If the compiler cannot find openssl：&lt;/p>
+&lt;ul>
+&lt;li>Run &lt;code>brew link openssl --force&lt;/code> first and check if &lt;code>/user/local/opt/openssl&lt;/code> appears.&lt;/li>
+&lt;li>If above command does not work, consider making a soft link using &lt;code>sudo ln -s /opt/homebrew/Cellar/openssl@3/3.0.3 /usr/local/opt/openssl&lt;/code>. Note that the installed openssl in above command may be put in different places in different environments, which could be revealed by running &lt;code>brew info openssl&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;h4 id="compile-brpc-with-config_brpcsh-2">Compile brpc with config_brpc.sh&lt;/h4>
+&lt;p>git clone brpc, cd into the repo and run&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sh config_brpc.sh --headers&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>/usr/local/include --libs&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>/usr/local/lib --cc&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>clang --cxx&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>clang++
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The homebrew in Monterey may install software at different directories from before. If path related errors are reported, try setting headers/libs like below:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sh config_brpc.sh --headers&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>/opt/homebrew/include --libs&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>/opt/homebrew/lib --cc&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>clang --cxx&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>clang++
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To not link debugging symbols, add &lt;code>--nodebugsymbols&lt;/code> and compiled binaries will be much smaller.&lt;/p>
+&lt;p>To use brpc with glog, add &lt;code>--with-glog&lt;/code>.&lt;/p>
+&lt;p>To enable &lt;a href="../server/serve-thrift/">thrift support&lt;/a>, install thrift first and add &lt;code>--with-thrift&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Run example&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> example/echo_c++
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./echo_server &lt;span style="color:#000;font-weight:bold">&amp;amp;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./echo_client
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Examples link brpc statically, if you need to link the shared version, &lt;code>make clean&lt;/code> and &lt;code>LINK_SO=1 make&lt;/code>&lt;/p>
+&lt;p>&lt;strong>Run tests&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> &lt;span style="color:#204a87">test&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ make
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sh run_tests.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="compile-brpc-with-cmake-3">Compile brpc with cmake&lt;/h4>
+&lt;p>Same with &lt;a href="#compile-brpc-with-cmake">here&lt;/a>&lt;/p>
+&lt;h3 id="docker">Docker&lt;/h3>
+&lt;p>Compile brpc with docker:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ mkdir -p ~/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> ~/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ git clone https://github.com/apache/brpc.git
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#204a87">cd&lt;/span> brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ docker build -t brpc:master .
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ docker images
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ docker run -it brpc:master /bin/bash
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="supported-deps">Supported deps&lt;/h2>
+&lt;h4 id="gcc-48-112">GCC: 4.8-11.2&lt;/h4>
+&lt;p>c++11 is turned on by default to remove dependencies on boost (atomic).&lt;/p>
+&lt;p>The over-aligned issues in GCC7 is suppressed temporarily now.&lt;/p>
+&lt;p>Using other versions of gcc may generate warnings, contact us to fix.&lt;/p>
+&lt;p>Adding &lt;code>-D__const__=&lt;/code> to cxxflags in your makefiles is a must to avoid &lt;a href="../bthread/thread-local/">errno issue in gcc4+&lt;/a>.&lt;/p>
+&lt;h4 id="clang-35-40">Clang: 3.5-4.0&lt;/h4>
+&lt;p>no known issues.&lt;/p>
+&lt;h4 id="glibc-212-225">glibc: 2.12-2.25&lt;/h4>
+&lt;p>no known issues.&lt;/p>
+&lt;h4 id="protobuf-24">protobuf: 2.4+&lt;/h4>
+&lt;p>Be compatible with pb 3.x and pb 2.x with the same file:
+Don&amp;rsquo;t use new types in proto3 and start the proto file with &lt;code>syntax=&amp;quot;proto2&amp;quot;;&lt;/code>
+&lt;a href="https://github.com/brpc/brpc/blob/master/tools/add_syntax_equal_proto2_to_all.sh">tools/add_syntax_equal_proto2_to_all.sh&lt;/a>can add &lt;code>syntax=&amp;quot;proto2&amp;quot;&lt;/code> to all proto files without it.&lt;/p>
+&lt;p>Arena in pb 3.x is not supported yet.&lt;/p>
+&lt;h4 id="gflags-20-221">gflags: 2.0-2.2.1&lt;/h4>
+&lt;p>no known issues.&lt;/p>
+&lt;h4 id="openssl-097-11">openssl: 0.97-1.1&lt;/h4>
+&lt;p>required by https.&lt;/p>
+&lt;h4 id="tcmalloc-17-25">tcmalloc: 1.7-2.5&lt;/h4>
+&lt;p>brpc does &lt;strong>not&lt;/strong> link &lt;a href="http://goog-perftools.sourceforge.net/doc/tcmalloc.html">tcmalloc&lt;/a> by default. Users link tcmalloc on-demand.&lt;/p>
+&lt;p>Comparing to ptmalloc embedded in glibc, tcmalloc often improves performance. However different versions of tcmalloc may behave really differently. For example, tcmalloc 2.1 may make multi-threaded examples in brpc perform significantly worse(due to a spinlock in tcmalloc) than the one using tcmalloc 1.7 and 2.5. Even different minor versions may differ. When you program behave unexpectedly, remove tcmalloc or try another version.&lt;/p>
+&lt;p>Code compiled with gcc 4.8.2 and linked to a tcmalloc compiled with earlier GCC may crash or deadlock before main(), E.g:&lt;/p>
+&lt;p>&lt;img src="https://brpc.apache.org/images/docs/tcmalloc_stuck.png" alt="img">&lt;/p>
+&lt;p>When you meet the issue, compile tcmalloc with the same GCC.&lt;/p>
+&lt;p>Another common issue with tcmalloc is that it does not return memory to system as early as ptmalloc. So when there&amp;rsquo;s an invalid memory access, the program may not crash directly, instead it crashes at a unrelated place, or even not crash. When you program has weird memory issues, try removing tcmalloc.&lt;/p>
+&lt;p>If you want to use &lt;a href="../builtin-services/cpu_profiler">cpu profiler&lt;/a> or &lt;a href="../builtin-services/heap_profiler">heap profiler&lt;/a>, do link &lt;code>libtcmalloc_and_profiler.a&lt;/code>. These two profilers are based on tcmalloc. &lt;a href="../builtin-services/contention_profiler">contention profiler&lt;/a> does not require tcmalloc.&lt;/p>
+&lt;p>When you remove tcmalloc, not only remove the linkage with tcmalloc but also the macro &lt;code>-DBRPC_ENABLE_CPU_PROFILER&lt;/code>.&lt;/p>
+&lt;h4 id="glog-33">glog: 3.3+&lt;/h4>
+&lt;p>brpc implements a default &lt;a href="../../src/butil/logging.h">logging utility&lt;/a> which conflicts with glog. To replace this with glog, add &lt;em>&amp;ndash;with-glog&lt;/em> to config_brpc.sh or add &lt;code>-DWITH_GLOG=ON&lt;/code> to cmake.&lt;/p>
+&lt;h4 id="valgrind-38">valgrind: 3.8+&lt;/h4>
+&lt;p>brpc detects valgrind automatically (and registers stacks of bthread). Older valgrind(say 3.2) is not supported.&lt;/p>
+&lt;h4 id="thrift-093-0110">thrift: 0.9.3-0.11.0&lt;/h4>
+&lt;p>no known issues.&lt;/p>
+&lt;h2 id="track-instances">Track instances&lt;/h2>
+&lt;p>We provide a program to help you to track and monitor all brpc instances. Just run &lt;a href="https://github.com/brpc/brpc/tree/master/tools/trackme_server/">trackme_server&lt;/a> somewhere and launch need-to-be-tracked instances with -trackme_server=SERVER. The trackme_server will receive pings from instances periodically and print logs when it does. You can aggregate instance addresses from the log and call builtin services of the instances for further information.&lt;/p></description></item><item><title>Docs: Committer Guide</title><link>https://brpc.apache.org/docs/community/committer/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/committer/</guid><description>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>Participants in the Apache community have the following roles: &lt;strong>Contributor&lt;/strong>, &lt;strong>Committer&lt;/strong>, and &lt;strong>PMC(Project Member Committee) member&lt;/strong>.&lt;/p>
+&lt;p>When an individual contribution is accepted by the project, he/she will automatically become a Contributor.
+Committer and PMC members are invited by the PMC after a consensus vote.&lt;/p>
+&lt;p>Here we will only discuss some guidelines for the bRPC community to invite Committer and PMC member in order to be able to effectively estimate developer participation in the community.&lt;/p>
+&lt;h3 id="the-apache-way">The Apache Way:&lt;/h3>
+&lt;p>Before anyone can become a Committer or PMC member of an Apache project, they should first understand &amp;ldquo;&lt;a href="https://apache.org/theapacheway/index.html">What&amp;rsquo;s TheApacheWay&lt;/a>&amp;rdquo;.&lt;/p>
+&lt;h3 id="guidance-for-committer">Guidance for Committer:&lt;/h3>
+&lt;p>Have significant feature contributions (not limited to code), or long-term participation in community building (bug fixing, code review, documentation translation and proofreading, community outreach, etc.)
+Participate in community discussions in public domain and have a positive impact.&lt;/p>
+&lt;h3 id="guidance-for-pmc-member">Guidance for PMC member:&lt;/h3>
+&lt;p>Be able to actively participate in community maintenance work, such as answering emails, organizing wiki, release management, code review, etc.
+Recognize the Apache community philosophy and be able to actively promote the community development.&lt;/p>
+&lt;h3 id="peer-review">Peer Review:&lt;/h3>
+&lt;p>The above requirements are highly subjective and cannot be measured quantitatively. Therefore, the PMC needs to form a regular review mechanism to discuss and invite people who meet the requirements.&lt;/p>
+&lt;p>Conduct a review every 1-2 months to nominate and discuss suitable candidates&lt;/p>
+&lt;hr>
+&lt;h1 id="detailed-procedures">Detailed Procedures&lt;/h1>
+&lt;h2 id="1-how-to-develop-committers">1. How to develop committers&lt;/h2>
+&lt;h3 id="preconditions">Preconditions&lt;/h3>
+&lt;ol>
+&lt;li>More than 10 commits from the contributor&lt;/li>
+&lt;li>Contributor is willing to accept the invitation to become a committer&lt;/li>
+&lt;li>Contributor subscribe to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> and introduce himself by sending an email to &lt;a href="mailto:dev@apache.org">dev@apache.org&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h3 id="the-journey-to-become-a-committer">The journey to become a committer&lt;/h3>
+&lt;ol>
+&lt;li>The nominator sends an email to private@brpc to initiate discussion and begins to voting. If the voting is passed, it is OK (at least 3 +1, +1 &amp;gt;- 1). (See the Vote email template &lt;a href="https://community.apache.org/newcommitter.html#committer-vote-template">https://community.apache.org/newcommitter.html#committer-vote-template&lt;/a>)&lt;/li>
+&lt;li>The nominator sends a close vote email to private@brpc and private@incubator , the title can be subject [RESULT] [VOTE]. (See the close email template &lt;a href="https://community.apache.org/newcommitter.html#close-vote">https://community.apache.org/newcommitter.html#close-vote&lt;/a>)&lt;/li>
+&lt;li>The nominator sends an invitation letter to the nominee and prompts him to submit ICLA after receiving a reply. (See the template in &lt;a href="https://community.apache.org/newcommitter.html#committer-invite-template">https://community.apache.org/newcommitter.html#committer-invite-template&lt;/a>)&lt;/li>
+&lt;li>The nominee fills in ICLA（ &lt;a href="https://www.apache.org/licenses/contributor-agreements.html">https://www.apache.org/licenses/contributor-agreements.html&lt;/a> ）, individual contributors need to download [ICLA]（ &lt;a href="https://www.apache.org/licenses/icla.pdf">https://www.apache.org/licenses/icla.pdf&lt;/a> ）Fill in personal information and sign, and send the electronic version to &lt;a href="mailto:secretary@apache.org">secretary@apache.org&lt;/a> 。 (Note: ICLA needs to fill in complete information, including mailing address and signature, otherwise it will be returned by ASF&amp;rsquo;s secretary.) The personal information entry (except for the signature) can be filled in with a PDF reader or browser, and then saved for signature. Signature method support:
+&lt;ul>
+&lt;li>Print pdf documents and scan them into electronic version after handwritten signature;&lt;/li>
+&lt;li>Electronic signature using devices that support handwriting;&lt;/li>
+&lt;li>Use &amp;lsquo;gpg&amp;rsquo; for electronic signature, that is, to operate the pdf file filled with personal basic information (a public key/key pair matching the registered mailbox needs to be generated in advance): &amp;lsquo;gpg &amp;ndash; armor &amp;ndash; detach sign icla. pdf&amp;rsquo;;&lt;/li>
+&lt;li>Use &amp;lsquo;DocuSign&amp;rsquo; to sign;&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>The nominator sends an announcement email to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h3 id="how-to-grant-a-committer-permission-on-github">How to grant a committer permission on github&lt;/h3>
+&lt;ol>
+&lt;li>Add as committer (&lt;a href="https://whimsy.apache.org/roster/ppmc/brpc">https://whimsy.apache.org/roster/ppmc/brpc&lt;/a>)&lt;/li>
+&lt;li>Let him set github id (&lt;a href="https://id.apache.org/">https://id.apache.org/&lt;/a>)&lt;/li>
+&lt;li>Let him visit the website and get github permission(&lt;a href="https://id.apache.org/">https://gitbox.apache.org/setup/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;h3 id="documents-related-to-the-new-committer-on-the-official-apache-website">Documents related to the new committer on the official Apache website&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://community.apache.org/newcommitter.html">https://community.apache.org/newcommitter.html&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://infra.apache.org/new-committers-guide.html">https://infra.apache.org/new-committers-guide.html&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://juejin.cn/post/6844903788982042632">https://juejin.cn/post/6844903788982042632&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="suggested-steps-from-secretaryapacheorg">Suggested steps from &lt;a href="mailto:secretary@apache.org">secretary@apache.org&lt;/a>&lt;/h3>
+&lt;p>Please do these things:&lt;/p>
+&lt;ol>
+&lt;li>Hold the discussion and vote on your private@ list. This avoids any issues related to personnel, which should remain private.&lt;/li>
+&lt;li>If the vote is successful, announce the result to the private@ list with a new email thread with subject [RESULT][VOTE]. This makes it easier for secretary to find the result of the vote in order to request the account at the time of the filing of the ICLA.&lt;/li>
+&lt;li>Only if the candidate accepts committership, announce the new committer on your dev@ list.&lt;/li>
+&lt;/ol>
+&lt;p>Doing these things will make everyone&amp;rsquo;s job easier.&lt;/p>
+&lt;h2 id="2-how-to-upgrade-a-committer-into-a-ppmc">2. How to upgrade a committer into a PPMC&lt;/h2>
+&lt;h3 id="process-reference-apache-official-website-document">Process reference: Apache official website document&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://incubator.apache.org/guides/ppmc.html#voting_in_a_new_ppmc_member">https://incubator.apache.org/guides/ppmc.html#voting_in_a_new_ppmc_member&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://community.apache.org/newcommitter.html">https://community.apache.org/newcommitter.html&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://incubator.apache.org/guides/ppmc.html#podling_project_management_committee_ppmc">https://incubator.apache.org/guides/ppmc.html#podling_project_management_committee_ppmc&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="actual-process">Actual process&lt;/h3>
+&lt;ol>
+&lt;li>Initiate discussion in the private@brpc . If there is no objection, continue&lt;/li>
+&lt;li>Open a Vote in private@brpc&lt;/li>
+&lt;li>If the vote is successful, sends a message to the PPMC private email list about the vote result&lt;/li>
+&lt;li>send a message to the IPMC (&lt;a href="mailto:private@incubator.apache.org">private@incubator.apache.org&lt;/a>) with a reference to the vote result&lt;/li>
+&lt;li>Announce new PPMC On private@brpc&lt;/li>
+&lt;li>Set his authority by visiting &lt;a href="https://whimsy.apache.org/roster/ppmc/brpc">https://whimsy.apache.org/roster/ppmc/brpc&lt;/a>&lt;/li>
+&lt;li>Help him subscribe to a private email group. See &lt;a href="https://whimsy.apache.org/committers/moderationhelper.cgi">https://whimsy.apache.org/committers/moderationhelper.cgi&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>Docs: Performance benchmark</title><link>https://brpc.apache.org/docs/benchmark/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/benchmark/</guid><description>
+&lt;h1 id="序言">序言&lt;/h1>
+&lt;p>在多核的前提下，性能和线程是紧密联系在一起的。线程间的跳转对高频IO操作的性能有决定性作用: 一次跳转意味着至少3-20微秒的延时，由于每个核心的L1 cache独立（我们的cpu L2 cache也是独立的），随之而来是大量的cache miss，一些变量的读取、写入延时会从纳秒级上升几百倍至微秒级: 等待cpu把对应的cacheline同步过来。有时这带来了一个出乎意料的结果，当每次的处理都很简短时，一个多线程程序未必比一个单线程程序更快。因为前者可能在每次付出了大的切换代价后只做了一点点“正事”，而后者在不停地做“正事”。不过单线程也是有代价的，它工作良好的前提是“正事”都很快，否则一旦某次变慢就使后续的所有“正事”都被延迟了。在一些处理时间普遍较短的程序中，使用（多个不相交的）单线程能最大程度地”做正事“，由于每个请求的处理时间确定，延时表现也很稳定，各种http server正是这样。但我们的检索服务要做的事情可就复杂多了，有大量的后端服务需要访问，广泛存在的长尾请求使每次处理的时间无法确定，排序策略也越来越复杂。如果还是使用（多个不相交的）单线程的话，一次难以预计的性能抖动，或是一个大请求可能导致后续一堆请求被延迟。&lt;/p>
+&lt;p>为了避免请求之间相互影响，请求级的线程跳转是brpc必须付出的代价，我们能做的是使&lt;a href="../rpc-in-depth/io#the-full-picture">线程跳转最优化&lt;/a>。不过，对服务的性能测试还不能很好地体现这点。测试中的处理往往极为简单，使得线程切换的影响空前巨大，通过控制多线程和单线程处理的比例，我们可以把一个测试服务的qps从100万到500万操纵自如（同机），这损伤了性能测试结果的可信度。要知道，真实的服务并不是在累加一个数字，或者echo一个字符串，一个qps几百万的echo程序没有指导意义。鉴于此，在发起性能测试一年后（15年底），在brpc又经历了1200多次改动后，我们需要review所有的测试，加强其中的线程因素，以获得对真实场景有明确意义的结果。具体来说:&lt;/p>
+&lt;ul>
+&lt;li>请求不应等长，要有长尾。这能考察RPC能否让请求并发，否则一个慢请求会影响大量后续请求。&lt;/li>
+&lt;li>要有多级server的场景。server内用client访问下游server，这能考察server和client的综合表现。&lt;/li>
+&lt;li>要有一个client访问多个server的场景。这能考察负载均衡是否足够并发，真实场景中很少一个client只访问一个server。&lt;/li>
+&lt;/ul>
+&lt;p>我们希望这套测试场景对其他服务的性能测试有借鉴意义。&lt;/p>
+&lt;h1 id="测试目标">测试目标&lt;/h1>
+&lt;h2 id="ub">UB&lt;/h2>
+&lt;p>百度在08年开发的RPC框架，在百度产品线广泛使用，已被brpc代替。UB的每个请求独占一个连接(连接池)，在大规模服务中每台机器都需要保持大量的连接，限制了其使用场景，像百度的分布式系统没有用UB。UB只支持nshead+mcpack协议，也没怎么考虑扩展性，所以增加新协议和新功能往往要调整大段代码，在实践中大部分人“知难而退”了。UB缺乏调试和运维接口，服务的运行状态对用户基本是黑盒，只能靠低效地打日志来追踪问题，服务出现问题时常要拉上维护者一起排查，效率很低。UB有多个变种:&lt;/p>
+&lt;ul>
+&lt;li>ubrpc: 百度在10年基于UB开发的RPC框架，用.idl文件(类似.proto)描述数据的schema，而不是手动打包。这个RPC有被使用，但不广泛。&lt;/li>
+&lt;/ul>
+&lt;ul>
+&lt;li>nova_pbrpc: 百度网盟团队在12年基于UB开发的RPC框架，用protobuf代替mcpack作为序列化方法，协议是nshead + user&amp;rsquo;s protobuf。&lt;/li>
+&lt;li>public_pbrpc: 百度在13年初基于UB开发的RPC框架，用protobuf代替mcpack作为序列化方法，但协议与nova_pbrpc不同，大致是nshead + meta protobuf。meta protobuf中有个string字段包含user&amp;rsquo;s protobuf。由于用户数据要序列化两次，这个RPC的性能很差，没有被推广开来。&lt;/li>
+&lt;/ul>
+&lt;p>我们以在百度网盟团队广泛使用的nova_pbrpc为UB的代表。测试时其代码为r10500。早期的UB支持CPOOL和XPOOL，分别使用&lt;a href="http://linux.die.net/man/2/select">select&lt;/a>和&lt;a href="http://kircher-schwanninger.de/michael/publications/lf.pdf">leader-follower模型&lt;/a>，后来提供了EPOLL，使用&lt;a href="http://man7.org/linux/man-pages/man7/epoll.7.html">epoll&lt;/a>处理多路连接。鉴于产品线大都是用EPOLL模型，我们的UB配置也使用EPOLL。UB只支持&lt;a href="../client/basics/#connection-type">连接池&lt;/a>，结果用“&lt;strong>ubrpc_mc&lt;/strong>&amp;ldquo;指代（mc代表&amp;quot;multiple
+connection&amp;rdquo;）。虽然这个名称不太准确（见上文对ubrpc的介绍），但在本文的语境下，请默认ubrpc = UB。&lt;/p>
+&lt;h2 id="hulu-pbrpc">hulu-pbrpc&lt;/h2>
+&lt;p>百度在13年基于saber(kylin变种)和protobuf实现的RPC框架，hulu在多线程实现上有较多问题，已被brpc代替，测试时其代码为&lt;code>pbrpc_2-0-15-27959_PD_BL&lt;/code>。hulu-pbrpc只支持单连接，结果用“&lt;strong>hulu-pbrpc&lt;/strong>&amp;ldquo;指代。&lt;/p>
+&lt;h2 id="brpc">brpc&lt;/h2>
+&lt;p>INF在2014年底开发至今的rpc产品，支持百度内所有协议（不限于protobuf），并第一次统一了百度主要分布式系统和业务线的RPC框架。测试时代码为r31906。brpc既支持单连接也支持连接池，前者的结果用&amp;rdquo;&lt;strong>baidu-rpc&lt;/strong>&amp;ldquo;指代，后者用“&lt;strong>baidu-rpc_mc&lt;/strong>&amp;ldquo;指代。&lt;/p>
+&lt;h2 id="sofa-pbrpc">sofa-pbrpc&lt;/h2>
+&lt;p>百度大搜团队在13年基于boost::asio和protobuf实现的RPC框架，有多个版本，咨询相关同学后，确认ps/opensource下的和github上的较新，且会定期同步。故测试使用使用ps/opensource下的版本。测试时其代码为&lt;code>sofa-pbrpc_1-0-2_BRANCH&lt;/code>。sofa-pbrpc只支持单连接，结果用“&lt;strong>sofa-pbrpc&lt;/strong>”指代。&lt;/p>
+&lt;h2 id="apache-thrift">apache thrift&lt;/h2>
+&lt;p>thrift是由facebook最早在07年开发的序列化方法和rpc框架，包含独特的序列化格式和IDL，支持很多编程语言。开源后改名&lt;a href="https://thrift.apache.org/">apache thrift&lt;/a>，fb自己有一个&lt;a href="https://github.com/facebook/fbthrift">fbthrift分支&lt;/a>，我们使用的是apache thrift。测试时其代码为&lt;code>thrift_0-9-1-400_PD_BL&lt;/code>。thrift的缺点是: 代码看似分层清晰，client和server选择很多，但没有一个足够通用，每个server实现都只能解决很小一块场景，每个client都线程不安全，实际使用很麻烦。由于thrift没有线程安全的client，所以每个线程中都得建立一个client，使用独立的连接。在测试中thrift其实是占了其他实现的便宜: 它的client不需要处理多线程问题。thrift的结果用&amp;rdquo;&lt;strong>thrift_mc&lt;/strong>&amp;ldquo;指代。&lt;/p>
+&lt;h2 id="grpc">gRPC&lt;/h2>
+&lt;p>由google开发的rpc框架，使用http/2和protobuf 3.0，测试时其代码为&lt;a href="https://github.com/grpc/grpc/tree/release-0_11">https://github.com/grpc/grpc/tree/release-0_11&lt;/a>。gRPC并不是stubby，定位更像是为了推广http/2和protobuf 3.0，但鉴于很多人对它的表现很感兴趣，我们也（很麻烦地）把它加了进来。gRPC的结果用&amp;rdquo;&lt;strong>grpc&lt;/strong>&amp;ldquo;指代。&lt;/p>
+&lt;h1 id="测试方法">测试方法&lt;/h1>
+&lt;p>如序言中解释的那样，性能数字有巨大的调整空间。这里的关键在于，我们对RPC的底线要求是什么，脱离了这个底线，测试中的表现就严重偏离真实环境中的了。&lt;/p>
+&lt;p>这个底线我们认为是&lt;strong>RPC必须能处理长尾&lt;/strong>。&lt;/p>
+&lt;p>在百度的环境中，这是句大白话，哪个产品线，哪个系统没有长尾呢？作为承载大部分服务的RPC框架自然得处理好长尾，减少长尾对正常请求的影响。但在实现层面，这个问题对设计的影响太大了。如果测试中没有长尾，那么RPC实现就可以假设每个请求都差不多快，这时候最优的方法是用多个线程独立地处理请求。由于没有上下文切换和cache一致性同步，程序的性能会显著高于多个线程协作时的表现。&lt;/p>
+&lt;p>比如简单的echo程序，处理一个请求只需要200-300纳秒，单个线程可以达到300-500万的吞吐。但如果多个线程协作，即使在极其流畅的系统中，也要付出3-5微秒的上下文切换代价和1微秒的cache同步代价，这还没有考虑多个线程间的其他互斥逻辑，一般来说单个线程的吞吐很难超过10万，即使24核全部用满，吞吐也只有240万，不及一个线程。这正是以http server为典型的服务选用&lt;a href="../rpc-in-depth/threading-overview/#single-threaded-reactorhttpenwikipediaorgwikireactor_pattern">单线程模型&lt;/a>的原因（多个线程独立运行eventloop）: 大部分http请求的处理时间是可预测的，对下游的访问也不会有任何阻塞代码。这个模型可以最大化cpu利用率，同时提供可接受的延时。&lt;/p>
+&lt;p>多线程付出这么大的代价是为了&lt;strong>隔离请求间的影响&lt;/strong>。一个计算复杂或索性阻塞的过程不会影响到其他请求，1%的长尾最终只会影响到1%的性能。而多个独立的线程是保证不了这点的，一个请求进入了一个线程就等于“定了终生”，如果前面的请求慢了一下，那也只能跟着慢了。1%的长尾会影响远超1%的请求，最终表现不佳。换句话说，乍看上去多线程模型“慢”了，但在真实应用中反而会获得更好的综合性能。&lt;/p>
+&lt;p>延时能精确地体现出长尾的干扰作用，如果普通请求的延时没有被长尾请求干扰，就说明RPC成功地隔离了请求。而QPS无法体现这点，只要CPU都在忙，即使一个正常请求进入了挤满长尾的队列而被严重延迟，最终的QPS也变化不大。为了测量长尾的干扰作用，我们在涉及到延时的测试中都增加了1%的长尾请求。&lt;/p>
+&lt;h1 id="开始测试">开始测试&lt;/h1>
+&lt;h2 id="环境">环境&lt;/h2>
+&lt;p>性能测试使用的机器配置为:&lt;/p>
+&lt;ul>
+&lt;li>单机1: CPU开超线程24核，E5-2620 @ 2.00GHz；64GB内存；OS linux 2.6.32_1-15-0-0&lt;/li>
+&lt;li>多机1（15台+8台）: CPU均未开超线程12核，其中15台的CPU为E5-2420 @ 1.90GHz.，64GB内存，千兆网卡，无法开启多队列。其余8台为E5-2620 2.0GHz，千兆网卡，绑定多队列到前8个核。这些长期测试机器比较杂，跨了多个机房，测试中延时在1ms以上的就是这批机器。&lt;/li>
+&lt;li>多机2（30台）: CPU未开超线程12核，E5-2620 v3 @ 2.40GHz.；96GB内存；OS linux 2.6.32_1-17-0-0；万兆网卡，绑定多队列到前8个核。这是临时借用的新机器，配置非常好，都在广州机房，延时非常短，测试中延时在几百微秒的就是这批机器。&lt;/li>
+&lt;/ul>
+&lt;p>下面所有的曲线图是使用brpc开发的dashboard程序绘制的，去掉路径后可以看到和所有brpc
+server一样的&lt;a href="../builtin-services/buildin_services/">内置服务&lt;/a>。&lt;/p>
+&lt;h2 id="配置">配置&lt;/h2>
+&lt;p>如无特殊说明，所有测试中的配置只是数量差异（线程数，请求大小，client个数etc），而不是模型差异。我们确保用户看到的qps和延时是同一个场景的不同维度，而不是无法统一的两个场景。&lt;/p>
+&lt;p>所有RPC server都配置了24个工作线程，这些线程一般运行用户的处理逻辑。关于每种RPC的特殊说明:&lt;/p>
+&lt;ul>
+&lt;li>UB: 配置了12个reactor线程，使用EPOOL模型。连接池限制数配置为线程个数（24）&lt;/li>
+&lt;li>hulu-pbrpc: 额外配置了12个IO线程。这些线程会处理fd读取，请求解析等任务。hulu有个“共享队列“的配置项，默认不打开，作用是把fd静态散列到多个线程中，由于线程间不再争抢，hulu的qps会显著提高，但会明显地被长尾影响（原因见&lt;a href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95">测试方法&lt;/a>）。考虑到大部分使用者并不会去改配置，我们也选择不打开。&lt;/li>
+&lt;li>thrift: 额外配置了12个IO线程。这些线程会处理fd读取，请求解析等任务。thrift的client不支持多线程，每个线程得使用独立的client，连接也都是分开的。&lt;/li>
+&lt;li>sofa-pbrpc: 按照sofa同学的要求，把io_service_pool_size配置为24，work_thread_num配置为1。大概含义是使用独立的24组线程池，每组1个worker thread。和hulu不打开“共享队列”时类似，这个配置会显著提高sofa-pbrpc的QPS，但同时使它失去了处理长尾的能力。如果你在真实产品中使用，我们不建议这个配置。（而应该用io_service_pool_size=1, work_thread_num=24)&lt;/li>
+&lt;li>brpc: 尽管brpc的client运行在bthread中时会获得10%~20%的QPS提升和更低的延时，但测试中的client都运行统一的pthread中。&lt;/li>
+&lt;/ul>
+&lt;p>所有的RPC client都以多个线程同步方式发送，这种方法最接近于真实系统中的情况，在考察QPS时也兼顾了延时因素。&lt;/p>
+&lt;p>一种流行的方案是client不停地往连接中写入数据看server表现，这个方法的弊端在于: server一下子能读出大量请求，不同RPC的比拼变成了“for循环执行用户代码”的比拼，而不是分发请求的效率。在真实系统中server很少能同时读到超过4个请求。这个方法也完全放弃了延时，client其实是让server陷入了雪崩时才会进入的状态，所有请求都因大量排队而超时了。&lt;/p>
+&lt;h2 id="同机单client单server在不同请求下的qps越高越好">同机单client→单server在不同请求下的QPS（越高越好）&lt;/h2>
+&lt;p>本测试运行在&lt;a href="#%E7%8E%AF%E5%A2%83">单机1&lt;/a>上。图中的数值均为用户数据的字节数，实际的请求尺寸还要包括协议头，一般会增加40字节左右。&lt;/p>
+&lt;p>（X轴是用户数据的字节数，Y轴是对应的QPS）&lt;/p>
+&lt;p>&lt;img src="https://brpc.apache.org/images/docs/qps_vs_reqsize.png" alt="img">&lt;/p>
+&lt;p>以_mc结尾的曲线代表client和server保持多个连接（线程数个），在本测试中会有更好的表现。&lt;/p>
+&lt;p>&lt;strong>分析&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>brpc: 当请求包小于16KB时，单连接下的吞吐超过了多连接的ubrpc_mc和thrift_mc，随着请求包变大，内核对单个连接的写入速度成为瓶颈。而多连接下的brpc则达到了测试中最高的2.3GB/s。注意: 虽然使用连接池的brpc在发送大包时吞吐更高，但也会耗费更多的CPU（UB和thrift也是这样）。下图中的单连接brpc已经可以提供800多兆的吞吐，足以打满万兆网卡，而使用的CPU可能只有多链接下的1/2(写出过程是&lt;a href="../rpc-in-depth/io#sending-messages">wait-free的&lt;/a>)，真实系统中请优先使用单链接。&lt;/li>
+&lt;li>thrift: 初期明显低于brpc，随着包变大超过了单连接的brpc。&lt;/li>
+&lt;li>UB:和thrift类似的曲线，但平均要低4-5万QPS，在32K包时超过了单连接的brpc。整个过程中QPS几乎没变过。&lt;/li>
+&lt;li>gRPC: 初期几乎与UB平行，但低1万左右，超过8K开始下降。&lt;/li>
+&lt;li>hulu-pbrpc和sofa-pbrpc: 512字节前高于UB和gRPC，但之后就急转直下，相继垫底。这个趋势是写不够并发的迹象。&lt;/li>
+&lt;/ul>
+&lt;h2 id="同机单client单server在不同线程数下的qps越高越好">同机单client→单server在不同线程数下的QPS（越高越好）&lt;/h2>
+&lt;p>本测试运行在&lt;a href="#%E7%8E%AF%E5%A2%83">单机1&lt;/a>上。&lt;/p>
+&lt;p>（X轴是线程数，Y轴是对应的QPS）&lt;/p>
+&lt;p>&lt;img src="https://brpc.apache.org/images/docs/qps_vs_threadnum.png" alt="img">&lt;/p>
+&lt;p>&lt;strong>分析&lt;/strong>&lt;/p>
+&lt;p>brpc: 随着发送线程增加，QPS在快速增加，有很好的多线程扩展性。&lt;/p>
+&lt;p>UB和thrift: 8个线程下高于brpc，但超过8个线程后被brpc迅速超过，thrift继续“平移”，UB出现了明显下降。&lt;/p>
+&lt;p>gRPC，hulu-pbrpc，sofa-pbrpc: 几乎重合，256个线程时相比1个线程时只有1倍的提升，多线程扩展性不佳。&lt;/p>
+&lt;h2 id="同机单client单server在固定qps下的延时cdfbuiltin-servicesvars统计和查看分位值越左越好越直越好">同机单client→单server在固定QPS下的延时&lt;a href="../builtin-services/vars/#%E7%BB%9F%E8%AE%A1%E5%92%8C%E6%9F%A5%E7%9C%8B%E5%88%86%E4%BD%8D%E5%80%BC">CDF&lt;/a>（越左越好，越直越好）&lt;/h2>
+&lt;p>本测试运行在&lt;a href="#%E7%8E%AF%E5%A2%83">单机1&lt;/a>上。考虑到不同RPC的处理能力，我们选择了一个较低、在不少系统中会达到的的QPS: 1万。&lt;/p>
+&lt;p>本测试中有1%的长尾请求耗时5毫秒，长尾请求的延时不计入结果，因为我们考察的是普通请求是否被及时处理了。&lt;/p>
+&lt;p>（X轴是延时（微秒），Y轴是小于X轴延时的请求比例）&lt;/p>
+&lt;p>&lt;img src="https://brpc.apache.org/images/docs/latency_cdf.png" alt="img">&lt;/p>
+&lt;p>&lt;strong>分析&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>brpc: 平均延时短，几乎没有被长尾影响。&lt;/li>
+&lt;li>UB和thrift: 平均延时比brpc高1毫秒，受长尾影响不大。&lt;/li>
+&lt;li>hulu-pbrpc: 走向和UB和thrift类似，但平均延时进一步增加了1毫秒。&lt;/li>
+&lt;li>gRPC : 初期不错，到长尾区域后表现糟糕，直接有一部分请求超时了。（反复测试都是这样，像是有bug）&lt;/li>
+&lt;li>sofa-pbrpc: 30%的普通请求（上图未显示）被长尾严重干扰。&lt;/li>
+&lt;/ul>
+&lt;h2 id="跨机多client单server的qps越高越好">跨机多client→单server的QPS（越高越好）&lt;/h2>
+&lt;p>本测试运行在&lt;a href="#%E7%8E%AF%E5%A2%83">多机1&lt;/a>上。&lt;/p>
+&lt;p>（X轴是client数，Y轴是对应的QPS）&lt;/p>
+&lt;p>&lt;img src="https://brpc.apache.org/images/docs/qps_vs_multi_client.png" alt="img">&lt;/p>
+&lt;p>&lt;strong>分析&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>brpc: 随着cilent增加，server的QPS在快速增加，有不错的client扩展性。&lt;/li>
+&lt;li>sofa-pbrpc: 随着client增加，server的QPS也在快速增加，但幅度不如brpc，client扩展性也不错。从16个client到32个client时的提升较小。&lt;/li>
+&lt;li>hulu-pbrpc: 随着client增加，server的QPS在增加，但幅度进一步小于sofa-pbrpc。&lt;/li>
+&lt;li>UB: 增加client几乎不能增加server的QPS。&lt;/li>
+&lt;li>thrift: 平均QPS低于UB，增加client几乎不能增加server的QPS。&lt;/li>
+&lt;li>gRPC: 垫底、增加client几乎不能增加server的QPS。&lt;/li>
+&lt;/ul>
+&lt;h2 id="跨机多client单server在固定qps下的延时cdfbuiltin-servicesvars统计和查看分位值越左越好越直越好">跨机多client→单server在固定QPS下的延时&lt;a href="../builtin-services/vars/#%E7%BB%9F%E8%AE%A1%E5%92%8C%E6%9F%A5%E7%9C%8B%E5%88%86%E4%BD%8D%E5%80%BC">CDF&lt;/a>（越左越好，越直越好）&lt;/h2>
+&lt;p>本测试运行在&lt;a href="#%E7%8E%AF%E5%A2%83">多机1&lt;/a>上。负载均衡算法为round-robin或RPC默认提供的。由于有32个client且一些RPC的单client能力不佳，我们为每个client仅设定了2500QPS，这是一个真实业务系统能达到的数字。&lt;/p>
+&lt;p>本测试中有1%的长尾请求耗时15毫秒，长尾请求的延时不计入结果，因为我们考察的是普通请求是否被及时处理了。&lt;/p>
+&lt;p>（X轴是延时（微秒），Y轴是小于X轴延时的请求比例）&lt;/p>
+&lt;p>&lt;img src="https://brpc.apache.org/images/docs/multi_client_latency_cdf.png" alt="img">&lt;/p>
+&lt;p>&lt;strong>分析&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>brpc: 平均延时短，几乎没有被长尾影响。&lt;/li>
+&lt;li>UB和thrift: 平均延时短，受长尾影响小，平均延时高于brpc&lt;/li>
+&lt;li>sofa-pbrpc: 14%的普通请求被长尾严重干扰。&lt;/li>
+&lt;li>hulu-pbrpc: 15%的普通请求被长尾严重干扰。&lt;/li>
+&lt;li>gRPC: 已经完全失控，非常糟糕。&lt;/li>
+&lt;/ul>
+&lt;h2 id="跨机多client多server在固定qps下的延时cdfbuiltin-servicesvars统计和查看分位值越左越好越直越好">跨机多client→多server在固定QPS下的延时&lt;a href="../builtin-services/vars/#%E7%BB%9F%E8%AE%A1%E5%92%8C%E6%9F%A5%E7%9C%8B%E5%88%86%E4%BD%8D%E5%80%BC">CDF&lt;/a>（越左越好，越直越好）&lt;/h2>
+&lt;p>本测试运行在&lt;a href="#%E7%8E%AF%E5%A2%83">多机2&lt;/a>上。20台每台运行4个client，多线程同步访问10台server。负载均衡算法为round-robin或RPC默认提供的。由于gRPC访问多server较麻烦且有很大概率仍表现不佳，这个测试不包含gRPC。&lt;/p>
+&lt;p>本测试中有1%的长尾请求耗时10毫秒，长尾请求的延时不计入结果，因为我们考察的是普通请求是否被及时处理了。&lt;/p>
+&lt;p>（X轴是延时（微秒），Y轴是小于X轴延时的请求比例）&lt;/p>
+&lt;p>&lt;img src="https://brpc.apache.org/images/docs/multi_server_latency_cdf.png" alt="img">&lt;/p>
+&lt;p>&lt;strong>分析&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>brpc和UB: 平均延时短，几乎没有被长尾影响。&lt;/li>
+&lt;li>thrift: 平均延时显著高于brpc和UB。&lt;/li>
+&lt;li>sofa-pbrpc: 2.5%的普通请求被长尾严重干扰。&lt;/li>
+&lt;li>hulu-pbrpc: 22%的普通请求被长尾严重干扰。&lt;/li>
+&lt;/ul>
+&lt;h2 id="跨机多client多server多server在固定qps下的延时cdfbuiltin-servicesvars统计和查看分位值越左越好越直越好">跨机多client→多server→多server在固定QPS下的延时&lt;a href="../builtin-services/vars/#%E7%BB%9F%E8%AE%A1%E5%92%8C%E6%9F%A5%E7%9C%8B%E5%88%86%E4%BD%8D%E5%80%BC">CDF&lt;/a>（越左越好，越直越好）&lt;/h2>
+&lt;p>本测试运行在&lt;a href="#%E7%8E%AF%E5%A2%83">多机2&lt;/a>上。14台每台运行4个client，多线程同步访问8台server，这些server还会同步访问另外8台server。负载均衡算法为round-robin或RPC默认提供的。由于gRPC访问多server较麻烦且有很大概率仍表现不佳，这个测试不包含gRPC。&lt;/p>
+&lt;p>本测试中有1%的长尾请求耗时10毫秒，长尾请求的延时不计入结果，因为我们考察的是普通请求是否被及时处理了。&lt;/p>
+&lt;p>（X轴是延时（微秒），Y轴是小于X轴延时的请求比例）&lt;/p>
+&lt;p>&lt;img src="https://brpc.apache.org/images/docs/twolevel_server_latency_cdf.png" alt="img">&lt;/p>
+&lt;p>&lt;strong>分析&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>brpc: 平均延时短，几乎没有被长尾影响。&lt;/li>
+&lt;li>UB: 平均延时短，长尾区域略差于brpc。&lt;/li>
+&lt;li>thrift: 平均延时显著高于brpc和UB。&lt;/li>
+&lt;li>sofa-pbrpc: 17%的普通请求被长尾严重干扰，其中2%的请求延时极长。&lt;/li>
+&lt;li>hulu-pbrpc: 基本消失在视野中，已无法正常工作。&lt;/li>
+&lt;/ul>
+&lt;h1 id="结论">结论&lt;/h1>
+&lt;p>brpc: 在吞吐，平均延时，长尾处理上都表现优秀。&lt;/p>
+&lt;p>UB: 平均延时和长尾处理的表现都不错，吞吐的扩展性较差，提高线程数和client数几乎不能提升吞吐。&lt;/p>
+&lt;p>thrift: 单机的平均延时和吞吐尚可，多机的平均延时明显高于brpc和UB。吞吐的扩展性较差，提高线程数和client数几乎不能提升吞吐。&lt;/p>
+&lt;p>sofa-pbrpc: 处理小包的吞吐尚可，大包的吞吐显著低于其他RPC，延时受长尾影响很大。&lt;/p>
+&lt;p>hulu-pbrpc: 单机表现和sofa-pbrpc类似，但多机的延时表现极差。&lt;/p>
+&lt;p>gRPC: 几乎在所有参与的测试中垫底，可能它的定位是给google cloud platform的用户提供一个多语言，对网络友好的实现，性能还不是要务。&lt;/p></description></item><item><title>Docs: Release Guide</title><link>https://brpc.apache.org/docs/community/release/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/release/</guid><description>
+&lt;h1 id="brpc-apache-release-guide-step-by-step">brpc apache release guide step by step&lt;/h1>
+&lt;p>Overview: divided into the following steps&lt;/p>
+&lt;ol>
+&lt;li>Preparation: including generating the key required for signature, creating github release branch and tag, modifying the version file, etc&lt;/li>
+&lt;li>Publish software package: including making source tarball, signing, uploading to the designated location and verifying&lt;/li>
+&lt;li>Vote: including voting in mail group &lt;code>dev@brpc.apache.org&lt;/code> and &lt;code>general@incubator.apache.org&lt;/code>&lt;/li>
+&lt;li>Release announcement: including updating brpc website, sending announcement emails, posting WeChat official account announcements, merging the release branche into the master branch&lt;/li>
+&lt;/ol>
+&lt;h2 id="prepare-key">Prepare key&lt;/h2>
+&lt;h3 id="1-install-gpg">1. Install GPG&lt;/h3>
+&lt;p>Download the installation package from &lt;a href="https://www.gnupg.org/download/index.html">GnuPG official website&lt;/a>. The commands of GnuPG version 1.x and version 2.x are slightly different. The following instructions take the &lt;code>GnuPG-2.3.1&lt;/code> version (OSX) as an example.&lt;/p>
+&lt;p>After the installation is complete, execute the following command to check the version number.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-create-key">2. Create key&lt;/h3>
+&lt;p>After the installation is complete, execute the following command to create a key.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --full-gen-key
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Complete the key creation according to the prompts. Note that the mailbox should use the Apache email address, and the &lt;code>Real Name&lt;/code> can use Apache ID or GitHub ID:&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg (GnuPG) 2.3.1; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Please select what kind of key you want:
+(1) RSA and RSA
+(2) DSA and Elgamal
+(3) DSA (sign only)
+(4) RSA (sign only)
+(9) ECC (sign and encrypt) *default*
+(10) ECC (sign only)
+(14) Existing key from card
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+0 = key does not expire
+&amp;lt;n&amp;gt; = key expires in n days
+&amp;lt;n&amp;gt;w = key expires in n weeks
+&amp;lt;n&amp;gt;m = key expires in n months
+&amp;lt;n&amp;gt;y = key expires in n years
+Key is valid for? (0) 0
+Key does not expire at all
+Is this correct? (y/N) y
+GnuPG needs to construct a user ID to identify your key.
+Real name: LorinLee
+Email address: lorinlee@apache.org
+Comment: lorinlee&amp;#39;s key
+You selected this USER-ID:
+&amp;#34;LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;&amp;#34;
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+You need a Passphrase to protect your secret key. # Input password
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: key 92E18A11B6585834 marked as ultimately trusted
+gpg: revocation certificate stored as &amp;#39;/Users/lilei/.gnupg/openpgp-revocs.d/C30F211F071894258497F46392E18A11B6585834.rev&amp;#39;
+public and secret key created and signed.
+pub rsa4096 2021-10-17 [SC]
+C30F211F071894258497F46392E18A11B6585834
+uid LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;h3 id="3-check-the-generated-key">3. Check the generated key&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --list-keys
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>output:&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg: checking the trustdb
+gpg: marginals needed: 3 completes needed: 1 trust model: pgp
+gpg: depth: 0 valid: 2 signed: 0 trust: 0-, 0q, 0n, 0m, 0f, 2u
+/Users/lilei/.gnupg/pubring.kbx
+----------------------------------
+pub rsa4096 2021-10-17 [SC]
+C30F211F071894258497F46392E18A11B6585834
+uid [ultimate] LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;p>Note that &lt;code>C30F211F071894258497F46392E18A11B6585834&lt;/code> is the public key.&lt;/p>
+&lt;h3 id="4-publish-the-public-key-to-server">4. Publish the public key to server&lt;/h3>
+&lt;p>Execute the following command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --keyserver hkp://pgp.mit.edu --send-key C30F211F071894258497F46392E18A11B6585834
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5-generate-fingerprint-and-upload-to-apache-user-profile">5. Generate fingerprint and upload to apache user profile&lt;/h3>
+&lt;p>Since the public key server has no verifying mechanism, anyone can upload the public key in your name, so there is no way to guarantee the reliability of the public key on the server. Usually, you can publish a public key fingerprint on your website and let others check the downloaded public key.&lt;/p>
+&lt;p>Execute the following command to view the fingerprint.&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg --fingerprint lorinlee # user id
+&lt;/code>&lt;/pre>&lt;p>output:&lt;/p>
+&lt;pre tabindex="0">&lt;code>/Users/lilei/.gnupg/pubring.kbx
+----------------------------------
+pub rsa4096 2021-10-17 [SC]
+C30F 211F 0718 9425 8497 F463 92E1 8A11 B658 5834
+uid [ultimate] LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;p>Paste the above fingerprint &lt;code>C30F 211F 0718 9425 8497 F463 92E1 8A11 B658 5834&lt;/code> into the &lt;code>OpenPGP Public Key Primary Fingerprint:&lt;/code> field of your Apache user information on &lt;a href="https://id.apache.org">https://id.apache.org&lt;/a>.&lt;/p>
+&lt;h2 id="prepare-release-package">Prepare release package&lt;/h2>
+&lt;h3 id="1-create-release-branch">1. Create release branch&lt;/h3>
+&lt;p>If you are releasing a new MINOR version, like &lt;code>1.0.0&lt;/code>, you need to create a new branch &lt;code>release-1.0&lt;/code> from master.&lt;/p>
+&lt;p>If you are releasing a new PATCH version from existing MINOR version, like &lt;code>1.0.1&lt;/code>, you only need to modify the existing &lt;code>release-1.0&lt;/code> branch and add the content to be released.&lt;/p>
+&lt;p>The code modification during the release process are performed on the release branch (such as &lt;code>release-1.0&lt;/code>). After the release is complete, please merge the release branch back into the master branch.&lt;/p>
+&lt;h3 id="2-update-version-in-source-code">2. Update version in source code&lt;/h3>
+&lt;h4 id="update-release_version-file">Update RELEASE_VERSION file&lt;/h4>
+&lt;p>Edit the &lt;code>RELEASE_VERSION&lt;/code> file in the project root directory, update the version number, and submit it to the code repository. For example, the &lt;code>1.0.0&lt;/code> version of the file is:&lt;/p>
+&lt;pre tabindex="0">&lt;code>1.0.0
+&lt;/code>&lt;/pre>&lt;h4 id="update-cmakeliststxt-file">Update CMakeLists.txt file&lt;/h4>
+&lt;p>Edit the &lt;code>CMakeLists.txt&lt;/code> file in the project root directory, update the version number, and submit it to the code repository. For example:&lt;/p>
+&lt;pre tabindex="0">&lt;code>set(BRPC_VERSION 1.0.0)
+&lt;/code>&lt;/pre>&lt;h4 id="update-packagerpmbrpcspec-file">Update /package/rpm/brpc.spec file&lt;/h4>
+&lt;p>Edit the &lt;code>/package/rpm/brpc.spec&lt;/code> file in the project root directory, update the version number, and submit it to the code repository. For example:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Version: 1.0.0
+&lt;/code>&lt;/pre>&lt;h3 id="3-create-releasing-tag">3. Create releasing tag&lt;/h3>
+&lt;p>push the release branch to tag, For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git clone -b release-1.0 git@github.com:apache/brpc.git ~/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git tag -a 1.0.0 -m &lt;span style="color:#4e9a06">&amp;#34;release 1.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git push origin --tags
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-create-releasing-package">4. Create releasing package&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git archive --format&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>tar 1.0.0 --prefix&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>apache-brpc-1.0.0-incubating-src/ &lt;span style="color:#000;font-weight:bold">|&lt;/span> gzip &amp;gt; apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5-generate-gpg-signature">5. Generate GPG signature&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg -u lorinlee@apache.org --armor --output apache-brpc-1.0.0-incubating-src.tar.gz.asc --detach-sign apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gpg --verify apache-brpc-1.0.0-incubating-src.tar.gz.asc apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="6-generate-sha512-sum">6. Generate SHA512 sum&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sha512sum apache-brpc-1.0.0-incubating-src.tar.gz &amp;gt; apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sha512sum --check apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="publish-to-apache-svn-repository">Publish to Apache SVN repository&lt;/h2>
+&lt;h3 id="1-checkout-distdevbrpc-directory">1. checkout dist/dev/brpc directory&lt;/h3>
+&lt;p>If there is no local working directory, create a local working directory first. Clone the Apache SVN repository, username needs to use your own Apache LDAP username:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir -p ~/brpc_svn/dev/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn --username&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>lorinlee co https://dist.apache.org/repos/dist/dev/incubator/brpc/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-add-gpg-public-key">2. Add GPG public key&lt;/h3>
+&lt;p>A new release manager must add the key into KEYS file for the first time.&lt;/p>
+&lt;pre tabindex="0">&lt;code>(gpg --list-sigs lorinlee &amp;amp;&amp;amp; gpg -a --export lorinlee) &amp;gt;&amp;gt; KEYS
+&lt;/code>&lt;/pre>&lt;h3 id="3-add-the-releasing-package-to-svn-directory">3. Add the releasing package to SVN directory&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir -p ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz.asc ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz.sha512 ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-submit-svn">4. Submit SVN&lt;/h3>
+&lt;p>Return to the parent directory and use the Apache LDAP account to submit SVN&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn add *
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn --username&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>lorinlee commit -m &lt;span style="color:#4e9a06">&amp;#34;release 1.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="verify-release">Verify release&lt;/h2>
+&lt;h3 id="1-verify-sha512-sum">1. Verify SHA512 sum&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sha512sum --check apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-verify-gpg-signature">2. Verify GPG signature&lt;/h3>
+&lt;p>First import the publisher&amp;rsquo;s public key. Import KEYS from the svn repository to the local. (The person who releases the version does not need to import it again. The person who verify needs to import it.)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>curl https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS &amp;gt;&amp;gt; KEYS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gpg --import KEYS
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Trust the signature of publisher, execute the following command using the publisher&amp;rsquo;s user name&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --edit-key lorinlee
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>output:&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg (GnuPG) 2.3.1; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Secret key is available.
+gpg&amp;gt; trust
+Please decide how far you trust this user to correctly verify other users&amp;#39; keys
+(by looking at passports, checking fingerprints from different sources, etc.)
+1 = I don&amp;#39;t know or won&amp;#39;t say
+2 = I do NOT trust
+3 = I trust marginally
+4 = I trust fully
+5 = I trust ultimately
+m = back to the main menu
+Your decision? 5
+Do you really want to set this key to ultimate trust? (y/N) y
+gpg&amp;gt; save
+&lt;/code>&lt;/pre>&lt;p>Then verify the GPG signature:&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg --verify apache-brpc-1.0.0-incubating-src.tar.gz.asc apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/code>&lt;/pre>&lt;h3 id="3-check-release-content">3. Check release content&lt;/h3>
+&lt;h4 id="1-compare-the-difference-of-between-the-source-code-package-and-github-tag">1. Compare the difference of between the source code package and github tag&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>curl -Lo tag-1.0.0.tar.gz https://github.com/apache/brpc/archive/refs/tags/1.0.0.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tar xvzf tag-1.0.0.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tar xvzf apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>diff -r brpc-1.0.0 apache-brpc-1.0.0-incubating-src
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="2-check-file-content">2. Check file content&lt;/h4>
+&lt;ul>
+&lt;li>Check whether the source code package contains unnecessary files, which makes the tarball too large&lt;/li>
+&lt;li>LICENSE and NOTICE files exist&lt;/li>
+&lt;li>The year in the NOTICE file is correct&lt;/li>
+&lt;li>Only text files exist, no binary files exist&lt;/li>
+&lt;li>All files have an ASF license at the beginning&lt;/li>
+&lt;li>Source code can be compiled correctly, and the unit test can pass&lt;/li>
+&lt;li>Check whether there are redundant files or folders, such as empty folders&lt;/li>
+&lt;li>Check for third-party dependency licenses:
+&lt;ul>
+&lt;li>Third party dependency license compatibility&lt;/li>
+&lt;li>All licenses of third-party dependency are declared in the LICENSE file&lt;/li>
+&lt;li>The complete version of the dependency license is in the license directory&lt;/li>
+&lt;li>If third-party dependency have the Apache license and have NOTICE files, these NOTICE files also need to be added to the releasing NOTICE file&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="vote-in-apache-brpc-community">Vote in Apache brpc community&lt;/h2>
+&lt;h3 id="1-vote-stage">1. Vote stage&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>Send a voting email to &lt;code>dev@brpc.apache.org&lt;/code>. PPMC needs to check the correctness of the version according to the document before voting. After at least 72 hours and 3 +1 PPMC member votes, you can move to the next stage.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Announce the voting results and send the voting results to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> 。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="2-vote-email-template">2. Vote email template&lt;/h3>
+&lt;ol>
+&lt;li>Apache brpc community vote email template&lt;/li>
+&lt;/ol>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;p>Note: &lt;code>Release Commit ID&lt;/code> fills in the commit ID of the last commit of the current release branch.&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Apache brpc Community,
+This is a call for vote to release Apache brpc version
+1.0.0
+[Release Note]
+- xxx
+The release candidates:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0/
+Git tag for the release:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Release Commit ID:
+https://github.com/apache/brpc/commit/xxx
+Keys to verify the Release Candidate:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS
+The vote will be open for at least 72 hours or until the necessary number of
+votes are reached.
+Please vote accordingly:
+[ ] +1 approve
+[ ] +0 no opinion
+[ ] -1 disapprove with the reason
+PMC vote is +1 binding, all others are +1 non-binding.
+Checklist for reference:
+[ ] Download links are valid.
+[ ] Checksums and PGP signatures are valid.
+[ ] Source code distributions have correct names matching the current
+release.
+[ ] LICENSE and NOTICE files are correct for each brpc repo.
+[ ] All files have license headers if necessary.
+[ ] No compiled archives bundled in source archive.
+Regards,
+LorinLee
+&lt;/code>&lt;/pre>&lt;ol start="2">
+&lt;li>Apache brpc community announcement of vote result template&lt;/li>
+&lt;/ol>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[Result] [VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi all,
+The vote to release Apache brpc 1.0.0 has passed.
+The vote PASSED with 3 binding +1, 3 non binding +1 and no -1 votes:
+Binding votes:
+- xxx
+- yyy
+- zzz
+Non-binding votes:
+- aaa
+- bbb
+- ccc
+Vote thread: xxx (vote email link in https://lists.apache.org/)
+Thank you to all the above members to help us to verify and vote for the 1.0.0 release. We will move to IPMC voting shortly.
+Regards,
+LorinLee
+&lt;/code>&lt;/pre>&lt;h3 id="3-vote-not-passed">3. Vote not passed&lt;/h3>
+&lt;p>If the community vote is not passed, please modify the code of the release branch, package and vote again.&lt;/p>
+&lt;h2 id="vote-in-apache-incubator-community">Vote in Apache incubator community&lt;/h2>
+&lt;h3 id="1-update-gpg-signature">1. Update GPG Signature&lt;/h3>
+&lt;pre tabindex="0">&lt;code>svn delete https://dist.apache.org/repos/dist/release/incubator/brpc/KEYS -m &amp;#34;delete KEYS&amp;#34;
+svn cp https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS https://dist.apache.org/repos/dist/release/incubator/brpc/KEYS -m &amp;#34;update brpc KEYS&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>After commit the svn, access &lt;a href="https://downloads.apache.org/incubator/brpc/KEYS">https://downloads.apache.org/incubator/brpc/KEYS&lt;/a>, check whether the content is updated. It may take several minutes to wait for the content to be updated before continuing.&lt;/p>
+&lt;h3 id="2-vote-stage">2. Vote stage&lt;/h3>
+&lt;ol>
+&lt;li>Send voting email to &lt;code>general@incubator.apache.org&lt;/code>. IPMC will vote. After at least 72 hours and 3 +1 IPMC member tickets are counted, you can move to the next stage.&lt;/li>
+&lt;li>Announce the voting results by sending the voting results to &lt;code>general@incubator.apache.org&lt;/code>.&lt;/li>
+&lt;/ol>
+&lt;h3 id="3-vote-email-template">3. Vote email template&lt;/h3>
+&lt;ol>
+&lt;li>Apache Incubator community vote email template&lt;/li>
+&lt;/ol>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Incubator Community,
+This is a call for a vote to release Apache brpcversion
+1.0.0.
+The Apache brpc community has voted and approved the release of Apache
+brpc 1.0.0.
+We now kindly request the Incubator PMC members review and vote on this
+incubator release.
+brpc is an industrial-grade RPC framework with extremely high performance,
+and it supports multiple protocols, full rpc features, and has many
+convenient tools.
+brpc community vote thread: xxx
+Vote result thread: xxx
+The release candidate:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0/
+This release has been signed with a PGP available here:
+https://downloads.apache.org/incubator/brpc/KEYS
+Git tag for the release:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Build guide and get started instructions can be found at:
+https://brpc.apache.org/docs/getting_started
+The vote will be open for at least 72 hours or until the necessary number
+of votes is reached.
+Please vote accordingly:
+[ ] +1 approve
+[ ] +0 no opinion
+[ ] -1 disapprove with the reason
+Regards,
+Lorin Lee
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;ol start="2">
+&lt;li>Apache Incubator community announcement of vote result template&lt;/li>
+&lt;/ol>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[Result] [VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Incubator Community,
+Thanks to everyone that participated. The vote to release Apache
+brpc version 1.0.0 in general@incubator.apache.org
+is now closed.
+Vote thread: xxx
+The vote PASSED with 3 binding +1, 3 non binding +1 and no -1 votes:
+Binding votes:
+- xxx
+- yyy
+- zzz
+Non-binding votes:
+- aaa
+- bbb
+- ccc
+Many thanks for all our mentors helping us with the release procedure,
+and all IPMC helped us to review and vote for Apache brpc release.
+We will proceed with publishing the approved artifacts and
+sending out the announcement soon.
+Regards,
+Lorin Lee
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;h2 id="finish-the-release">Finish the release&lt;/h2>
+&lt;h3 id="1-move-the-release-package-from-apache-svn-directory-distdev-to-distrelease">1. Move the release package from Apache SVN directory dist/dev to dist/release&lt;/h3>
+&lt;pre tabindex="0">&lt;code>svn mv https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0 https://dist.apache.org/repos/dist/release/incubator/brpc/1.0.0 -m &amp;#34;release brpc 1.0.0&amp;#34;
+&lt;/code>&lt;/pre>&lt;h3 id="2-create-github-release">2. Create github release&lt;/h3>
+&lt;ol>
+&lt;li>On the &lt;a href="https://github.com/apache/brpc/tags">GitHub Releases page&lt;/a> Click the corresponding version of to create a new Release&lt;/li>
+&lt;li>Edit the version number and version description, and click &lt;code>Publish release&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h3 id="3-update-download-page">3. Update download page&lt;/h3>
+&lt;p>After waiting and confirming that the new release is synchronized to the Apache image, update the following page: &lt;a href="https://brpc.apache.org/docs/downloadbrpc/">https://brpc.apache.org/docs/downloadbrpc/&lt;/a> by change the code in &lt;a href="https://github.com/apache/brpc-website/">https://github.com/apache/brpc-website/&lt;/a>. Please update both Chinese and English.&lt;/p>
+&lt;p>The download links of GPG signature files and hash check files should use this prefix: &lt;code>https://downloads.apache.org/incubator/brpc/&lt;/code>&lt;/p>
+&lt;p>The download link of the code package should use this prefix: &lt;code>https://dlcdn.apache.org/incubator/brpc/&lt;/code>&lt;/p>
+&lt;h3 id="4-send-email-to-announce-release-finished">4. Send email to announce release finished&lt;/h3>
+&lt;p>Send mail to &lt;code>dev@brpc.apache.org&lt;/code>, &lt;code>general@incubator.apache.org&lt;/code>, and &lt;code>announce@apache.org&lt;/code> to announce the completion of release.&lt;/p>
+&lt;p>Note: The email account must use &lt;strong>personal apache email&lt;/strong>, and the email content must be &lt;strong>plain text format&lt;/strong> (&amp;ldquo;plain text mode&amp;rdquo; can be selected in gmail). And email to &lt;code>announce@apache.org&lt;/code> mail group will be delivered after manual review. Please wait patiently after sending the email, and it will be passed within one day.&lt;/p>
+&lt;p>The announcement email template:&lt;/p>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[ANNOUNCE] Apache brpc 1.0.0 released
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;p>Note: &lt;code>Brief notes of this release&lt;/code> It is only necessary to list the main changes of this release, without corresponding contributors and PR numbers. It is recommended to refer to the previous announcement email.&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi all,
+The Apache brpc community is glad to announce the new release
+of Apache brpc 1.0.0.
+brpc is an Industrial-grade RPC framework using C++ Language, which is
+often used in high performance systems such as Search, Storage,
+Machine learning, Advertisement, Recommendation etc.
+Brief notes of this release:
+- xxx
+- yyy
+- zzz
+More details regarding Apache brpc can be found at:
+http://brpc.apache.org/
+The release is available for download at:
+https://brpc.apache.org/docs/downloadbrpc/
+The release notes can be found here:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Website: http://brpc.apache.org/
+brpcResources:
+- Issue: https://github.com/apache/brpc/issues/
+- Mailing list: dev@brpc.apache.org
+- Documents: https://brpc.apache.org/docs/
+We would like to thank all contributors of the Apache brpc community and
+Incubating community who made this release possible!
+Best Regards,
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;h3 id="5-publish-wechat-official-account-announcement">5. Publish WeChat official account announcement&lt;/h3>
+&lt;p>Reference &lt;a href="https://mp.weixin.qq.com/s/DeFhpAV_AYsn_Xd1ylPTSg">https://mp.weixin.qq.com/s/DeFhpAV_AYsn_Xd1ylPTSg&lt;/a>.&lt;/p>
+&lt;h3 id="6-update-master-branch">6. Update master branch&lt;/h3>
+&lt;p>After the release is completed, merge the release branch into the master branch&lt;/p></description></item><item><title>Docs: bRPC 1.4.0</title><link>https://brpc.apache.org/docs/blogs/releases/1.4.0/</link><pubDate>Tue, 07 Feb 2023 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/blogs/releases/1.4.0/</guid><description>
+&lt;h2 id="whats-changed">What&amp;rsquo;s Changed&lt;/h2>
+&lt;p>New features:&lt;/p>
+&lt;ul>
+&lt;li>Support RDMA by @Tuvie in #1836, #1967, #2005 and #2036&lt;/li>
+&lt;li>Support to dump MVariable in Prometheus format by @ldak4747 in #1964&lt;/li>
+&lt;li>Support to limit max bytes in stream consume queue with the same host socket by @chenbay in #1958&lt;/li>
+&lt;li>Add timeout concurrency limiter by @yanglimingcn in #2027&lt;/li>
+&lt;li>Add a flag to manage http body on error by @jamesge&lt;/li>
+&lt;li>Add gflag to disable the sampler thread by @leaf-potato in #1990&lt;/li>
+&lt;li>Add delete_stats and has_stats interface to MVariable by @serverglen in #2041&lt;/li>
+&lt;li>Optimize parallel channel request map method by @cdjingit in #2057&lt;/li>
+&lt;/ul>
+&lt;p>Bugfix:&lt;/p>
+&lt;ul>
+&lt;li>Fix the linkage errors caused by duplicate symbols by @adonis0147 in #1936&lt;/li>
+&lt;li>Fix &amp;ldquo;sched_to itself&amp;rdquo; error when building by Clang on Linux aarch64 by @adonis0147 in #1950&lt;/li>
+&lt;li>Fix arena cleared early when parsing redis message by @dorothy00dd2 in #1959&lt;/li>
+&lt;li>Fix HTTP invalid host issue for channel not inited by http(s) by @thorneliu in #1973&lt;/li>
+&lt;li>Fix MacOS warning: bool literal returned from &amp;lsquo;main&amp;rsquo; -Wmain by @zyearn in #2020&lt;/li>
+&lt;li>Fix issue of ssl error code by @yyweii in #2019&lt;/li>
+&lt;li>Fix: domain name length by @wayslog in #1965&lt;/li>
+&lt;li>Fix demangle core by @wwbmmm in #2037&lt;/li>
+&lt;/ul>
+&lt;p>Enhancement&lt;/p>
+&lt;ul>
+&lt;li>Add rdma_performance bazel support by @372046933 in #1984&lt;/li>
+&lt;li>Add bazel third_party support by @fansehep in #1996&lt;/li>
+&lt;li>Fall back to libibverbs.so.1 by @372046933 in #1985&lt;/li>
+&lt;li>Refresh write timestamp when returning a Socket to its pool; change default value of -idle_timeout_second to 30. by @jamesge&lt;/li>
+&lt;li>Early return for IOBuf::append_user_data when size == 0 by @372046933 in #2009&lt;/li>
+&lt;li>Make BUTIL_RAPIDJSON_NAMESPACE_BEGIN::GenericDocument&amp;rsquo;s handler method public to enable outside custom parser/writer by @old-bear in #2026&lt;/li>
+&lt;li>Only allow to convert root array to single repeated pb by @chenBright in #2035&lt;/li>
+&lt;li>FlatMap&amp;rsquo;s value supports unique_ptr by @jamesge&lt;/li>
+&lt;/ul>
+&lt;p>Others&lt;/p>
+&lt;ul>
+&lt;li>Fix warning message error by @leaf-potato in #1989&lt;/li>
+&lt;li>Migrate to GitHub workflow by @guodongxiaren and @zyearn in #1899, #2008, #2015, #2018, #2023 and #2030&lt;/li>
+&lt;li>Reduce UT log output by @wwbmmm&lt;/li>
+&lt;li>Support to pack rpm for RHEL 9 distributions by @wasphin in #1955&lt;/li>
+&lt;li>Avoid std::string copy @ml-haha in #1969&lt;/li>
+&lt;li>Include directly dependent header by @372046933 in #1993&lt;/li>
+&lt;li>Update warning message on iobuf.cpp by @wwbmmm&lt;/li>
+&lt;li>Remove unnecessary semicolon by @guodongxiaren in #2004&lt;/li>
+&lt;li>Add a description to the profile graph by @hongliuliao in #2007&lt;/li>
+&lt;li>Delete deprecated logoff_ms gflag in example folder by @leaf-potato in #2064&lt;/li>
+&lt;li>Fix rpc maybe error: &amp;ldquo;libbrpc.so: undefined symbol: pthread_mutex_lock&amp;rdquo; by @co0l1ce in #2049 and roll-backed in #2076&lt;/li>
+&lt;li>Keep bthread TaskGroup abi compatible with NDEBUG macro by @wwbmmm in #2047&lt;/li>
+&lt;li>Improve/add documents by @fansehep, @cuishuang, @tanzhongyi003, @lorinlee, @Huixxi, @steven-66, @serverglen, @wwbmmm, @wasphin, @Tuvie, @0xflotus, @thinh2, @leaf-potato, @TousakaRin, @cdjingit, @chenBright, @freemandealer and @yanglimingcn&lt;/li>
+&lt;/ul>
+&lt;p>Thanks to all contributors for the 1.4.0 version!&lt;/p></description></item><item><title>Docs: Committers</title><link>https://brpc.apache.org/docs/community/committers/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/committers/</guid><description>
+&lt;h2 id="brrc-committers">bRRC Committers&lt;/h2>
+&lt;p>The development of bRPC is associated with the outstanding contributions from the people in the community, who have helped get the project to where it is today.&lt;/p>
+&lt;p>Thank you all your help!&lt;/p>
+&lt;h3 id="pmc">PMC&lt;/h3>
+&lt;table class="table table-hover">
+&lt;tr>
+&lt;th>&lt;b>Photo&lt;/b>&lt;/th>
+&lt;th>&lt;b>Full Name&lt;/b>&lt;/th>
+&lt;th>&lt;b>Apache ID&lt;/b>&lt;/th>
+&lt;th>&lt;b>GitHub&lt;/b>&lt;/th>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/jamesge">&lt;img width="64" src="https://avatars.githubusercontent.com/u/6566535?v=4">&lt;/a>&lt;/td>
+&lt;td>James Ge&lt;/td>
+&lt;td>jamesge&lt;/td>
+&lt;td>&lt;a href="http://github.com/jamesge">jamesge&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/zyearn">&lt;img width="64" src="https://avatars.githubusercontent.com/u/4475779?v=4">&lt;/a>&lt;/td>
+&lt;td>Jiashun Zhu&lt;/td>
+&lt;td>jiashunzhu&lt;/td>
+&lt;td>&lt;a href="http://github.com/zyearn">zyearn&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/chenzhangyi">&lt;img width="64" src="https://avatars.githubusercontent.com/u/6805583?v=4">&lt;/a>&lt;/td>
+&lt;td>Zhangyi Chen&lt;/td>
+&lt;td>zychen&lt;/td>
+&lt;td>&lt;a href="http://github.com/chenzhangyi">chenzhangyi&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/old-bear">&lt;img width="64" src="https://avatars.githubusercontent.com/u/1525532?v=4">&lt;/a>&lt;/td>
+&lt;td>Bear Jiang&lt;/td>
+&lt;td>jrjbear&lt;/td>
+&lt;td>&lt;a href="http://github.com/old-bear">old-bear&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/ipconfigme">&lt;img width="64" src="https://avatars.githubusercontent.com/u/2500750?v=4">&lt;/a>&lt;/td>
+&lt;td>Yao Wang&lt;/td>
+&lt;td>fisherman&lt;/td>
+&lt;td>&lt;a href="http://github.com/ipconfigme">ipconfigme&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/tanzhongyi003">&lt;img width="64" src="https://avatars.githubusercontent.com/u/20179982?v=4">&lt;/a>&lt;/td>
+&lt;td>Jerry Tan&lt;/td>
+&lt;td>jerrytan&lt;/td>
+&lt;td>&lt;a href="http://github.com/tanzhongyi003">tanzhongyi003&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/wwbmmm">&lt;img width="64" src="https://avatars.githubusercontent.com/u/3894631?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>wwbmmm&lt;/td>
+&lt;td>&lt;a href="http://github.com/wwbmmm">wwbmmm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/TousakaRin">&lt;img width="64" src="https://avatars.githubusercontent.com/u/8801314?v=4">&lt;/a>&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>leander&lt;/td>
+&lt;td>&lt;a href="http://github.com/TousakaRin">TousakaRin&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/cdjingit">&lt;img width="64" src="https://avatars.githubusercontent.com/u/31362185?v=4">&lt;/a>&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>caidj&lt;/td>
+&lt;td>&lt;a href="http://github.com/cdjingit">cdjingit&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/lorinlee">&lt;img width="64" src="https://avatars.githubusercontent.com/u/16054841?v=4">&lt;/a>&lt;/td>
+&lt;td>Lorin Lee&lt;/td>
+&lt;td>lorinlee&lt;/td>
+&lt;td>&lt;a href="http://github.com/lorinlee">lorinlee&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/table>
+&lt;h3 id="committers">Committers&lt;/h3>
+&lt;table class="table table-hover">
+&lt;tr>
+&lt;th>&lt;b>Photo&lt;/b>&lt;/th>
+&lt;th>&lt;b>Full Name&lt;/b>&lt;/th>
+&lt;th>&lt;b>Apache ID&lt;/b>&lt;/th>
+&lt;th>&lt;b>GitHub&lt;/b>&lt;/th>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/gydong">&lt;img width="64" src="https://avatars.githubusercontent.com/u/3294444?v=4">&lt;/a>&lt;/td>
+&lt;td>Mou Gaidong&lt;/td>
+&lt;td>gydong&lt;/td>
+&lt;td>&lt;a href="http://github.com/gydong">gydong&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/guodongxiaren">&lt;img width="64" src="https://avatars.githubusercontent.com/u/5945107?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang wei&lt;/td>
+&lt;td>guodong&lt;/td>
+&lt;td>&lt;a href="http://github.com/guodongxiaren">guodongxiaren&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/serverglen">&lt;img width="64" src="https://avatars.githubusercontent.com/u/38067377?v=4">&lt;/a>&lt;/td>
+&lt;td>Shuai Liu&lt;/td>
+&lt;td>serverglen&lt;/td>
+&lt;td>&lt;a href="http://github.com/serverglen">serverglen&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/wasphin">&lt;img width="64" src="https://avatars.githubusercontent.com/u/1237906?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang Xiaofeng&lt;/td>
+&lt;td>xiaofeng&lt;/td>
+&lt;td>&lt;a href="http://github.com/wasphin">wasphin&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/Huixxi">&lt;img width="64" src="https://avatars.githubusercontent.com/u/21335093?v=4">&lt;/a>&lt;/td>
+&lt;td>Xiguo Hu&lt;/td>
+&lt;td>huixxi&lt;/td>
+&lt;td>&lt;a href="http://github.com/Huixxi">Huixxi&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://github.com/chenBright">&lt;img width="64" src="https://avatars.githubusercontent.com/u/12249635?v=4">&lt;/a>&lt;/td>
+&lt;td>Guangming Chen&lt;/td>
+&lt;td>guangmingchen&lt;/td>
+&lt;td>&lt;a href="http://github.com/chenBright">chenBright&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://github.com/Tuvie">&lt;img width="64" src="https://avatars.githubusercontent.com/u/5780312?v=4">&lt;/a>&lt;/td>
+&lt;td>Zhaogeng Li&lt;/td>
+&lt;td>lizhaogeng&lt;/td>
+&lt;td>&lt;a href="http://github.com/Tuvie">Tuvie&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/table>
+&lt;h3 id="contributors">Contributors&lt;/h3>
+&lt;p>Thanks to &lt;a href="https://github.com/apache/brpc/graphs/contributors">All the Contributors&lt;/a> making their effort to help bRPC getting better.&lt;/p></description></item><item><title>Docs: Security</title><link>https://brpc.apache.org/docs/community/security/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/security/</guid><description>
+&lt;p>The Apache Software Foundation takes a rigorous stance on eliminating security issues in its software projects. Likewise, Apache bRPC is also vigilant and takes security issues related to its features and functionality into the highest consideration.&lt;/p>
+&lt;p>If you have any concerns regarding bRPC’s security, or you discover a vulnerability or potential threat, please don’t hesitate to get in touch with the &lt;a href="http://www.apache.org/security/">Apache Security Team&lt;/a> by dropping an email at &lt;a href="mailto:security@apache.org">security@apache.org&lt;/a>.&lt;/p>
+&lt;p>Please specify the project name as &amp;ldquo;bRPC&amp;rdquo; in the email, and provide a description of the relevant problem or potential threat. You are also urged to recommend how to reproduce and replicate the issue.&lt;/p>
+&lt;p>The Apache Security Team and the bRPC community will get back to you after assessing and analyzing the findings.&lt;/p>
+&lt;p>&lt;strong>Please note&lt;/strong> that the security issue should be reported on the security email first, before disclosing it on any public domain.&lt;/p></description></item><item><title>Docs: Monthly Meeting</title><link>https://brpc.apache.org/docs/community/monthly-meeting/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/monthly-meeting/</guid><description>
+&lt;h3 id="monthly-meeting-record">Monthly Meeting Record&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Month&lt;/th>
+&lt;th>Host&lt;/th>
+&lt;th>Minutes Of Meeting&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>2023-02&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/opzmc74yhhokox0164f2o5wv60o74nct">https://lists.apache.org/thread/opzmc74yhhokox0164f2o5wv60o74nct&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>2023-03&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/38rswlzl51lqvl04bvf6ho0od8smrc4z">https://lists.apache.org/thread/38rswlzl51lqvl04bvf6ho0od8smrc4z&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: bRPC 1.3.0</title><link>https://brpc.apache.org/docs/blogs/releases/1.3.0/</link><pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/blogs/releases/1.3.0/</guid><description>
+&lt;h2 id="whats-changed">What&amp;rsquo;s Changed&lt;/h2>
+&lt;p>New features:&lt;/p>
+&lt;ul>
+&lt;li>Support gcc on linux arm64 by @jamesge&lt;/li>
+&lt;li>Support gcc version &amp;gt;= 11.2.0 by @wwbmmm in #1783&lt;/li>
+&lt;li>Support the latest version of bazel(default v4.2.2) by @hcoona in #1657&lt;/li>
+&lt;li>Support multi-dimension bvar, a powerful extension of bvar by @serverglen in #1608&lt;/li>
+&lt;li>Restruct event_dispatcher source file by @guodongxiaren in #1888&lt;/li>
+&lt;li>Add http retry with error code policy by @chenBright in #1927&lt;/li>
+&lt;li>Add Nacos naming service by @yyweii in #1922&lt;/li>
+&lt;li>Add customized server bvar prefix by @jenrryyou in #1854&lt;/li>
+&lt;li>Add escape log content before printing by @jamesge&lt;/li>
+&lt;/ul>
+&lt;p>Bugfix:&lt;/p>
+&lt;ul>
+&lt;li>Fix issues in FlatMap by @jamesge&lt;/li>
+&lt;li>Fix override issue in pb by @jamesge, @wwbmmm&lt;/li>
+&lt;li>Fix ALIGNAS/ALIGNOF/BAIDU_CACHELINE_ALIGMENT by @jamesge&lt;/li>
+&lt;li>Fix some warnings for clang and revert changes on ALIGNAS/ALIGNOF by @jamesge&lt;/li>
+&lt;li>Fix rpc_replay continue when failed to init channel by @ehds in #1938&lt;/li>
+&lt;li>Fix multi-dimension bvar compile error by @dabao085 in #1937&lt;/li>
+&lt;li>Fix bvar_dump_tabs default value problem by @yyweii in #1920&lt;/li>
+&lt;li>Fix butex_wait failed with timeout by @Huixxi in #1917&lt;/li>
+&lt;li>Fix rpc_replay can&amp;rsquo;t send request equably by @bumingchun in #1910&lt;/li>
+&lt;li>Fix compile warning due to DumpOptions object by @ml-haha in #1905&lt;/li>
+&lt;li>Fix test_bvar fail on m1 mac by @wwbmmm in #1901&lt;/li>
+&lt;li>Fix the slow test in brpc_socket_unittest.cpp by @zyearn in #1898&lt;/li>
+&lt;li>Fix the first bthread keytable on worker pthread will be deleted twice by @chenBright in #1884&lt;/li>
+&lt;li>Fix currently broken MacOS build by @zyearn in #1871&lt;/li>
+&lt;li>Fix ProcessHttpRequest supports for http2 by @dandyhuang in #1868&lt;/li>
+&lt;li>Fix get_value core caused by the sampler thread start too early by @Huixxi in #1863&lt;/li>
+&lt;li>Fix UDS ut failed on MacOS by @wwbmmm in #1843&lt;/li>
+&lt;li>Fix coredump cause by bad growth_non_responsive http request by @acelyc111 in #1278&lt;/li>
+&lt;li>Fix not to abort when checking the errorno with unicode string by @tobegit3hub in #1142&lt;/li>
+&lt;/ul>
+&lt;p>Other improvements:&lt;/p>
+&lt;ul>
+&lt;li>Improve/add documents by @wwbmmm, @JackBoosY, @morningman, @serverglen, @chenBright, @guodongxiaren, @xdh0817, @KaneVV1, @tanzhongyi003, @lzfhust, @Huixxi&lt;/li>
+&lt;li>Fix typos by @opheliaKyouko, @day253, @chenBright, @fansehep&lt;/li>
+&lt;/ul>
+&lt;p>Thanks to all contributors for the 1.3.0 version!&lt;/p></description></item><item><title>Docs: bRPC 1.2.0</title><link>https://brpc.apache.org/docs/blogs/releases/1.2.0/</link><pubDate>Sun, 07 Aug 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/blogs/releases/1.2.0/</guid><description>
+&lt;h2 id="whats-changed">What&amp;rsquo;s Changed&lt;/h2>
+&lt;p>New features:&lt;/p>
+&lt;ul>
+&lt;li>Support apple silicon by @jamesge&lt;/li>
+&lt;li>Add an option to allow serialize/deserialize to/from a json array by @wasphin in #1604&lt;/li>
+&lt;li>Add redis empty request check by @lzfhust in #1745&lt;/li>
+&lt;li>Add butex_wake_all support nosignal flag by @yanglimingcn in #1751&lt;/li>
+&lt;li>Add wr/wrr policy degradation by @Huixxi in #1571&lt;/li>
+&lt;li>Add with_snappy in cmake by @renzhong in #1799&lt;/li>
+&lt;li>Add check append return code by @wwbmmm in #1762&lt;/li>
+&lt;li>Add CXXFLAGS in compiling protoc-gen-mcpack by @jamesge&lt;/li>
+&lt;/ul>
+&lt;p>Bugfix:&lt;/p>
+&lt;ul>
+&lt;li>Fix the header guard of brpc/periodic_task.h by @TousakaRin in #1820&lt;/li>
+&lt;li>Fix build warning, ByteSize() is deprecated, use ByteSizeLong() instead by @yangzhg in #1723&lt;/li>
+&lt;li>Fix c struct compile error by @wolfdan666 in #1736&lt;/li>
+&lt;li>Fix auto https check by @renzhong in #1754&lt;/li>
+&lt;li>Fix json2pb::JsonToProtoMessage() supports parsing multiple jsons by @jamesge&lt;/li>
+&lt;li>Fix compile error due to std limits header absent by @GOGOYAO in #1764&lt;/li>
+&lt;li>Fix a deadlock happened in ClearAbandonedStreamsImpl path by @zyearn in #1781&lt;/li>
+&lt;li>Fix send WindowUpdate when ClearAbandonedStreams is called by @zyearn in #1786&lt;/li>
+&lt;li>Fix _dl_sym undefined reference by @wwbmmm in #1784&lt;/li>
+&lt;li>Fix thrift protocol exception by @lzfhust in #1790&lt;/li>
+&lt;li>Fix Brpc build tools error when only build static by @stdpain in #1797&lt;/li>
+&lt;li>Fix discovery naming service core by @serverglen in #1802&lt;/li>
+&lt;li>Fix rpc_press can&amp;rsquo;t send request equably by @bumingchun #1763&lt;/li>
+&lt;li>Fix hostname2ip fails when aux_buf is not long enough by @chenBright in #1818&lt;/li>
+&lt;/ul>
+&lt;p>Other improvements:&lt;/p>
+&lt;ul>
+&lt;li>Improve documents by @wwbmmm, @tanzhongyi003, @guodongxiaren, @372046933, @wasphin, @hawkxiang, @TousakaRin, @Huixxi, @serverglen&lt;/li>
+&lt;li>Fix typos by @jamesge, @cyberkillor&lt;/li>
+&lt;/ul>
+&lt;p>Thanks to all contributors for the 1.2.0 version!&lt;/p></description></item><item><title>Docs: On Call</title><link>https://brpc.apache.org/docs/community/on-call/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/on-call/</guid><description>
+&lt;h2 id="duty-of-the-on-call">Duty of the On Call&lt;/h2>
+&lt;h3 id="1-review-and-process-the-pull-request-and-issue-list">1. Review and process the Pull Request and Issue list&lt;/h3>
+&lt;ul>
+&lt;li>Check the Pull Request and Issue list of brpc project on github every day, and be responsible for the problem handling&lt;/li>
+&lt;li>Including marking the issue, replying to the issue, closing the issue, etc.&lt;/li>
+&lt;li>Determine whether the issue is a long-term Issue. If so, mark it as Pending
+Determine the type of Issue, e.g. bug, enhancement, discussion, etc&lt;/li>
+&lt;li>Assign issues to contributors who are familiar with the module (ask who is responsible in the wechat group)&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-the-rotation-time-is-one-week">2. The rotation time is one week&lt;/h3>
+&lt;ul>
+&lt;li>From Monday morning to Sunday night&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-needed-at-the-end-of-on-call">3. Needed at the end of On Call&lt;/h3>
+&lt;ul>
+&lt;li>Write a weekly value report and send it to the &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> email group&lt;/li>
+&lt;li>Update value weekly record (brpc-website)&lt;/li>
+&lt;li>Remind the next shift student&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-on-call-order">4. On Call Order&lt;/h3>
+&lt;ul>
+&lt;li>Zhu Jiashun @zyearn&lt;/li>
+&lt;li>Li Lei @lorinlee&lt;/li>
+&lt;li>Wang Weibing @wwbmmm&lt;/li>
+&lt;li>CAI Daojin @cdjingit&lt;/li>
+&lt;li>He Lei @TousakaRin&lt;/li>
+&lt;li>Shuai Liu @serverglen&lt;/li>
+&lt;li>Huixxi @Huixxi&lt;/li>
+&lt;/ul>
+&lt;h3 id="5-on-call-record">5. On Call Record&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Date (Month/Day/year)&lt;/th>
+&lt;th>Name&lt;/th>
+&lt;th>report&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>06/21/2021 to 06/27/2021&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/czolsqo80jzsytqc7dp37knqwxnkymx1">https://lists.apache.org/thread/czolsqo80jzsytqc7dp37knqwxnkymx1&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/28/2021 to 07/04/2021&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/c05fcjdjh7473ho1ylyl98mxscmnkbv0">https://lists.apache.org/thread/c05fcjdjh7473ho1ylyl98mxscmnkbv0&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>07/05/2021 - 07/12/2021&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/hz1vn7358v5fslglg2cl4g8x0wtxy4lv">https://lists.apache.org/thread/hz1vn7358v5fslglg2cl4g8x0wtxy4lv&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/16/2021 - 08/22/2021&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/g36jtjc3v75lfoc7m3ynzplgbqlsjjrd">https://lists.apache.org/thread/g36jtjc3v75lfoc7m3ynzplgbqlsjjrd&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/23/2021 - 08/29/2021&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/2098ndgdy6fs2b1s8tywpmz47n5swh29">https://lists.apache.org/thread/2098ndgdy6fs2b1s8tywpmz47n5swh29&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/30/2021 - 09/05/2021&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/wjxdomg7fp75dc0n0rmh37bkwd8w7myv">https://lists.apache.org/thread/wjxdomg7fp75dc0n0rmh37bkwd8w7myv&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/06/2021 - 09/12/2021&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/cwjtocpjbqjgndog53rqw8gs6f9c0rmo">https://lists.apache.org/thread/cwjtocpjbqjgndog53rqw8gs6f9c0rmo&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/20/2021 - 09/26/2021&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/p779y43hogv7ftckc4cqx006gv9j65r8">https://lists.apache.org/thread/p779y43hogv7ftckc4cqx006gv9j65r8&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/27/2021 - 10/03/2021&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/ync12fx2dwjb2l3p4yck0kodmkgzz7wd">https://lists.apache.org/thread/ync12fx2dwjb2l3p4yck0kodmkgzz7wd&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/13/2021 - 12/19/2021&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/mvclsy79859mrbdso1xzm6y7yz3lg6w0">https://lists.apache.org/thread/mvclsy79859mrbdso1xzm6y7yz3lg6w0&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/24/2022 - 02/06/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/ttgqnw4hfw0qnb7swvnn2kxb5b9hkdbo">https://lists.apache.org/thread/ttgqnw4hfw0qnb7swvnn2kxb5b9hkdbo&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/10/2022 - 04/16/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/0l67lqnw0l6rgfwkvhrc168prwr7fp60">https://lists.apache.org/thread/0l67lqnw0l6rgfwkvhrc168prwr7fp60&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/17/2022 - 04/24/2022&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/xwkpyonndgtp8tq4c9v4yfowqx7fg9gl">https://lists.apache.org/thread/xwkpyonndgtp8tq4c9v4yfowqx7fg9gl&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/25/2022 - 05/01/2022&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/cx7t1glptr7x7posxstsb1691h4m4mbl">https://lists.apache.org/thread/cx7t1glptr7x7posxstsb1691h4m4mbl&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>05/02/2022 - 05/15/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/tgyqkhh6fqgyzcn5d56kt46hk978wogx">https://lists.apache.org/thread/tgyqkhh6fqgyzcn5d56kt46hk978wogx&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/06/2022 - 06/12/2022&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/s19p7ygnsj0bknfjvrh0wlf1mbgstxbk">https://lists.apache.org/thread/s19p7ygnsj0bknfjvrh0wlf1mbgstxbk&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/13/2022 - 06/19/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/tvqjyz6rh7jb1zcclx0lh6zrcsf9ykxr">https://lists.apache.org/thread/tvqjyz6rh7jb1zcclx0lh6zrcsf9ykxr&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>07/25/2022 - 07/31/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/83scwkkfxrp6kkkoltbrn1fthfy3w0qz">https://lists.apache.org/thread/83scwkkfxrp6kkkoltbrn1fthfy3w0qz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/08/2022 - 08/14/2022&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jj16rzfh34yrt6o0xqfdz9wtdtzxzswq">https://lists.apache.org/thread/jj16rzfh34yrt6o0xqfdz9wtdtzxzswq&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/15/2022 - 08/21/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jp69sm7c8fs3dkdd828qk0fsojqwwz6h">https://lists.apache.org/thread/jp69sm7c8fs3dkdd828qk0fsojqwwz6h&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/05/2022 - 09/12/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/4jjk2hxw9s2wskccclqb8fvpqxqffnlb">https://lists.apache.org/thread/4jjk2hxw9s2wskccclqb8fvpqxqffnlb&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/12/2022 - 09/18/2022&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/8mo7zl0l2yrd8tp4v3kx86rnlyfk6wz4">https://lists.apache.org/thread/8mo7zl0l2yrd8tp4v3kx86rnlyfk6wz4&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/19/2022 - 09/25/2022&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/qlkr7cmwow3ob47dt80tpx0zrgzg7bdm">https://lists.apache.org/thread/qlkr7cmwow3ob47dt80tpx0zrgzg7bdm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/26/2022 - 10/09/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/b0lwr8wyflmhqlnf0kkh1j30tgt5qw54">https://lists.apache.org/thread/b0lwr8wyflmhqlnf0kkh1j30tgt5qw54&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/10/2022 - 10/16/2022&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/y8sgbprxt21j6r0812dlftosfov6pbgk">https://lists.apache.org/thread/y8sgbprxt21j6r0812dlftosfov6pbgk&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/17/2022 - 10/23/2022&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/qn2270p9qsrglkh7oy013ts1zk5rlhwx">https://lists.apache.org/thread/qn2270p9qsrglkh7oy013ts1zk5rlhwx&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/24/2022 - 10/30/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/k74155opmwmopgtsqo6p79z9q0f0sv8j">https://lists.apache.org/thread/k74155opmwmopgtsqo6p79z9q0f0sv8j&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/31/2022 - 11/06/2022&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/t4z49yt7ymp4vr5sms0m4cpoo94db4oz">https://lists.apache.org/thread/t4z49yt7ymp4vr5sms0m4cpoo94db4oz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/14/2022 - 11/20/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/nq50fp79ox3follc7gxp814cvcqnmqzz">https://lists.apache.org/thread/nq50fp79ox3follc7gxp814cvcqnmqzz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/21/2022 - 11/27/2022&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/57kzov5g3j4vv6l2zcyw0msm36qglc8k">https://lists.apache.org/thread/57kzov5g3j4vv6l2zcyw0msm36qglc8k&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/28/2022 - 12/04/2022&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/92hbzcd662slj75v3ndjf69o1dgsnd6o">https://lists.apache.org/thread/92hbzcd662slj75v3ndjf69o1dgsnd6o&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/05/2022 - 12/11/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/99o15h9hk5dd73jv8wyp49l8mbw0j611">https://lists.apache.org/thread/99o15h9hk5dd73jv8wyp49l8mbw0j611&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/19/2022 - 12/25/2022&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/g1stjjo1mc9ds47do6gosrw5k6wwb9mj">https://lists.apache.org/thread/g1stjjo1mc9ds47do6gosrw5k6wwb9mj&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/26/2022 - 01/01/2023&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/3xw1gkobqmvr6oo375x3gsfcqvg80n23">https://lists.apache.org/thread/3xw1gkobqmvr6oo375x3gsfcqvg80n23&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/02/2023 - 01/08/2023&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/sm4f209c8ltols04gpmzo386b02dyc9s">https://lists.apache.org/thread/sm4f209c8ltols04gpmzo386b02dyc9s&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/09/2023 - 01/15/2023&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/fydjz4h88omsrb7fzw65wl64kh5r520s">https://lists.apache.org/thread/fydjz4h88omsrb7fzw65wl64kh5r520s&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/16/2023 - 01/29/2023&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/k5bb4pn2v23dksmwpwqphzlc4bd92ndr">https://lists.apache.org/thread/k5bb4pn2v23dksmwpwqphzlc4bd92ndr&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/30/2023 - 02/05/2023&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/4scwpdh163l92czm5pvc7ox78n44mrn4">https://lists.apache.org/thread/4scwpdh163l92czm5pvc7ox78n44mrn4&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/13/2023 - 02/19/2023&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jwynp880hdhcfkqwq7thsm05y037wzy5">https://lists.apache.org/thread/jwynp880hdhcfkqwq7thsm05y037wzy5&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/27/2023 - 03/05/2023&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/94ndftsvooydfnn8hdddv294pp0tfvdm">https://lists.apache.org/thread/94ndftsvooydfnn8hdddv294pp0tfvdm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/06/2023 - 03/12/2023&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/bv3qw5w8gj9xs576fplxqhktopkbk7md">https://lists.apache.org/thread/bv3qw5w8gj9xs576fplxqhktopkbk7md&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/27/2023 - 04/03/2023&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/fk37cn8r5pd1y10vjvzvkl211b67vn4q">https://lists.apache.org/thread/fk37cn8r5pd1y10vjvzvkl211b67vn4q&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/04/2023 - 04/10/2023&lt;/td>
+&lt;td>Xiguo Hu&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/p8f5knxkohj1kw5g9wb9hfbw2bjzjs3r">https://lists.apache.org/thread/p8f5knxkohj1kw5g9wb9hfbw2bjzjs3r&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: bRPC 1.1.0</title><link>https://brpc.apache.org/docs/blogs/releases/1.1.0/</link><pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/blogs/releases/1.1.0/</guid><description>
+&lt;h2 id="whats-changed">What&amp;rsquo;s Changed&lt;/h2>
+&lt;p>New features:&lt;/p>
+&lt;ul>
+&lt;li>Support ipv6 and unix domain socket by @wwbmmm in #1560&lt;/li>
+&lt;li>Support protobuf 3.19.x by @hcoona in #1679&lt;/li>
+&lt;li>Support http protocol dump and replay by @guodongxiaren in #1503&lt;/li>
+&lt;li>Support nshead protocol dump and replay by @wwbmmm in #1486&lt;/li>
+&lt;li>Support parse proto-text format http request body by @hiberabyss in #1690&lt;/li>
+&lt;li>Support deliver timeout from client to server for baidu_std protocol by @wwbmmm in #1472&lt;/li>
+&lt;li>Support inherit span on bthread create by @wwbmmm in #1494&lt;/li>
+&lt;li>Add rpc_replay BUILD file by @taoxu in #1677&lt;/li>
+&lt;li>Add brpc server Start(PortRange, const ServerOptions*) by @serverglen in #1460&lt;/li>
+&lt;li>Add FlatMap insert(const std::pair&amp;lt;key_type, mapped_type&amp;gt;&amp;amp; kv) by @serverglen in #1468&lt;/li>
+&lt;li>Add server eps bvar @serverglen in #1483&lt;/li>
+&lt;/ul>
+&lt;p>Bugfix:&lt;/p>
+&lt;ul>
+&lt;li>Fix CheckHealth not set has_request_code bug by @serverglen in #1502&lt;/li>
+&lt;li>Fix a bug that server will send unexpected data frame to client if there are errors occur during processing stream create request by @jenrryyou in #1516&lt;/li>
+&lt;li>Fix LA selection runs too long by @KaneVV1 in #1567&lt;/li>
+&lt;li>Fix HttpResponse error by @jl2005 in #1620&lt;/li>
+&lt;li>Fix bvar status compile error by @zwkno1 in #1625&lt;/li>
+&lt;li>Fix InputMessenger client side retry policy by @ehds in #1680&lt;/li>
+&lt;li>Fix work_stealing_queue_unittest for ARM by @TKONIY in #1709&lt;/li>
+&lt;li>Fix LatencyRecorder qps not accurate by @wwbmmm in #1708&lt;/li>
+&lt;li>Fix compile error after gcc11 with &amp;ndash;std=c++20 by @hiberabyss in #1719&lt;/li>
+&lt;li>Fix unstable UT link error by @wwbmmm in #1711&lt;/li>
+&lt;li>Fix Thrift download url to avoid pr build failed by @yangzhg in #1725&lt;/li>
+&lt;li>Remove grpc ParseH2Settings warning log by @yanjianglu in #1599&lt;/li>
+&lt;/ul>
+&lt;p>Other improvements:&lt;/p>
+&lt;ul>
+&lt;li>Improve documents by @wwc7654321, @wwbmmm, @tanzhongyi003, @mahongweichina, @cdjingit, @dl239, @ehds&lt;/li>
+&lt;li>Fix typos by @yangzhg, @egolearner, @PengyiPan, @Aaaaaaron, @ehds, @JiaoZiLang, @mapleFU&lt;/li>
+&lt;/ul>
+&lt;p>Thanks to all contributors for the 1.1.0 version!&lt;/p></description></item><item><title>Docs: bRPC 1.0.0</title><link>https://brpc.apache.org/docs/blogs/releases/1.0.0/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/blogs/releases/1.0.0/</guid><description>
+&lt;h2 id="whats-changed">What&amp;rsquo;s Changed&lt;/h2>
+&lt;p>New features:&lt;/p>
+&lt;ul>
+&lt;li>fix grpc ut by @zyearn in #1036&lt;/li>
+&lt;li>replace_include_with_find_package by @zyearn in #1032&lt;/li>
+&lt;li>ignore ELIMIT for circuit breaker by @TousakaRin in #1005&lt;/li>
+&lt;li>limit minimum value of max_concurrency for auto_cl by @TousakaRin in #1003&lt;/li>
+&lt;li>Add missing &amp;lsquo;`&amp;rsquo; by @lingbin in #1053&lt;/li>
+&lt;li>fix heap overflow in simple_data_pool by @yockie in #1056&lt;/li>
+&lt;li>fix redis args by @liumh8 in #1128&lt;/li>
+&lt;li>timer_thread: remove redundant code by @lorinlee in #1137&lt;/li>
+&lt;li>Update nshead_service.md by @pklim101 in #1151&lt;/li>
+&lt;li>fix_share_tls_block by @zyearn in #1156&lt;/li>
+&lt;li>(FIX COMMENT)butil: remove BasicStringPiece in comments by @mapleFU in #1172&lt;/li>
+&lt;li>fix h2_req check failed when retry after ELIMIT error by @heyuyi0906 in #1161&lt;/li>
+&lt;li>fix brpc.baidu.com not accessible by @zyearn in #1189&lt;/li>
+&lt;li>add .asf.yaml to set github about info by @tanzhongyi003 in #1222&lt;/li>
+&lt;li>update .asf.yaml to change RPC into lowercase by @tanzhongyi003 in #1224&lt;/li>
+&lt;li>add option to allow access methods from default url by @wasphin in #1214&lt;/li>
+&lt;li>For https naming service, use 443 as default port by @TousakaRin in #1139&lt;/li>
+&lt;li>update StreamOptions by @cstarc in #1247&lt;/li>
+&lt;li>Fix build break for clang 10.0.1 by @thanksunix in #1261&lt;/li>
+&lt;li>coding style fix in brpc/trackme.cpp by @gydong in #1270&lt;/li>
+&lt;li>Compatibility improvement of protobuf json format and spring http spec by @chenzhangyi in #1292&lt;/li>
+&lt;li>Fix bazel build in macos by @chenzhangyi in #1298&lt;/li>
+&lt;li>make butil::BasicStringPiece support string split functions-family by @lrita in #1295&lt;/li>
+&lt;li>make butil::ScopedVector support std::initializer_list by @lrita in #1291&lt;/li>
+&lt;li>Update docs by @serverglen in #1258&lt;/li>
+&lt;li>Add rpm packaging spec by @wasphin in #1290&lt;/li>
+&lt;li>Fix the compile error when using GCC compiler with asan enabled on Linux platform. by @warriorpaw in #1289&lt;/li>
+&lt;li>Fix registering multiple addresses to discovery by @wasphin in #1320&lt;/li>
+&lt;li>Fix rpm spec by @wasphin in #1324&lt;/li>
+&lt;li>Remove FlameGraph dependency by @zyearn in #1345&lt;/li>
+&lt;li>Fix build failure on macOS with FlameGraph by @gogdizzy in #1411&lt;/li>
+&lt;li>status文档中的代码示例写错了，需要实现的函数名应为Describe by @guodongxiaren in #1413&lt;/li>
+&lt;li>Update bvar.md by @codroc in #1414&lt;/li>
+&lt;li>修改la策略中的异常日志的级别，避免在使用glog的情况下core dump by @guodongxiaren in #1415&lt;/li>
+&lt;li>Change chinese quotation marks in bvar_c++.md sample code by @tbago in #1396&lt;/li>
+&lt;li>SampleRequest写错了应为SampledRequest by @guodongxiaren in #1420&lt;/li>
+&lt;li>修复rpc_replay中ChannelGroup初始化时resize的bug by @guodongxiaren in #1422&lt;/li>
+&lt;li>fix warning in gcc8+ by @stdpain in #1381&lt;/li>
+&lt;li>文档修复：BRPC_RPC_VALIDATE_GFLAG改为BRPC_VALIDATE_GFLAG by @guodongxiaren in #1426&lt;/li>
+&lt;li>消除高版本GCC上编译时大量-Wclass-memaccess的警告 by @guodongxiaren in #1427&lt;/li>
+&lt;li>rm DISCLAIMER-WIP and use DISCLAIMER for 1.0 release by @tanzhongyi003 in #1432&lt;/li>
+&lt;li>Update flat_map.h by @yanjianglu in #1352&lt;/li>
+&lt;li>add flag BTHREAD_NEVER_QUIT by @ustccy in #1193&lt;/li>
+&lt;li>implement weighted randomized load balancer #1254 by @serverglen in #1314&lt;/li>
+&lt;li>rpc_view support setting timeout by @serverglen in #1459&lt;/li>
+&lt;li>Fix baidu_rpc_protocol.cpp a variable incorrectly named by @serverglen in #1451&lt;/li>
+&lt;li>Fix Socket::WaitAndReset memory leak by @wwbmmm in #1456&lt;/li>
+&lt;li>docs: fix server_push.md by @lorinlee in #1463&lt;/li>
+&lt;li>Add gitignore for files generated during test by @wwbmmm in #1473&lt;/li>
+&lt;li>docs: fix broken link in CONTRIBUTING.md by @lorinlee in #1481&lt;/li>
+&lt;li>Add FlatMap example code by @serverglen in #1484&lt;/li>
+&lt;li>Fix apache thrift download failed by @wwbmmm in #1495&lt;/li>
+&lt;li>Fix http client doc by @wwbmmm in #1493&lt;/li>
+&lt;li>Add DomainListNamingService which resolves services from the given list periodically by @chenzhangyi in #1509&lt;/li>
+&lt;li>check is valid character in uri by @guodongxiaren in #1506&lt;/li>
+&lt;li>emplace/emplace_back replace insert/push_back for pair by @guodongxiaren in #1504&lt;/li>
+&lt;li>Update gdb_bthread_stack.py by @tanzhongyi003 in #1521&lt;/li>
+&lt;li>Update get_brpc_revision.sh by @tanzhongyi003 in #1520&lt;/li>
+&lt;li>Tanslate getting_started.md into Chinese by @guodongxiaren in #1515&lt;/li>
+&lt;li>Update NOTICE by @tanzhongyi003 in #1519&lt;/li>
+&lt;li>add missing notice for tools/pprof, test/crc32c_unittest.cc by @tanzhongyi003 in #1522&lt;/li>
+&lt;li>docs: fix centos compile options by @lorinlee in #1525&lt;/li>
+&lt;li>Add rtmp/FlvWriterOptions to support writing audio/video content only by @v1siuol in #1505&lt;/li>
+&lt;li>upgrade baseimage to 20.04 by @tanzhongyi003 in #1531&lt;/li>
+&lt;li>release 1.0.0-rc02 by @lorinlee in #1538&lt;/li>
+&lt;li>Fix tools/get_brpc_revision.sh by @v1siuol in #1536&lt;/li>
+&lt;li>update docs by @serverglen in #1499&lt;/li>
+&lt;li>Set hostname rather than ip when channel Init by hostname but not host in http_requst().uri() by @guodongxiaren in #1529&lt;/li>
+&lt;li>add cases.md by @tanzhongyi003 in #1551&lt;/li>
+&lt;li>Add use case of Baidu by @wwbmmm in #1557&lt;/li>
+&lt;li>docs(circuit_breaker): add ema wiki link by @JiaoZiLang in #1575&lt;/li>
+&lt;li>Add Case by @guodongxiaren in #1576&lt;/li>
+&lt;li>community: add release doc by @lorinlee in #1582&lt;/li>
+&lt;li>Update release_cn.md by @tanzhongyi003 in #1588&lt;/li>
+&lt;/ul>
+&lt;p>Thanks to all contributors for the 1.0.0 version!&lt;/p></description></item><item><title>Docs: ASF</title><link>https://brpc.apache.org/docs/asf/</link><pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/asf/</guid><description>
+&lt;h2 id="apache-software-foundation">Apache Software Foundation&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://www.apache.org/">Foundation&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.apache.org/licenses/">License&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.apache.org/security/">Security&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.apache.org/events/current-event">Events&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.apache.org/foundation/thanks.html">Thanks&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Users</title><link>https://brpc.apache.org/docs/users/</link><pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/users/</guid><description>
+&lt;div id="overview">
+&lt;div class="contain" style="width: auto; margin: 0 auto">
+&lt;h1 class="section-head">Used by&lt;/h1>
+&lt;td align="center" valign="middle">
+&lt;a href="http://home.baidu.com/index.html" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/baidu_logo.svg">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://www.iqiyi.com" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/iqiyi_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://bytedance.com/zh/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/bytedance_logo.svg">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://www.bilibili.com/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/bilibili_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://www.vivo.com/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/vivo_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://www.xiaohongshu.com/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/redbook_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://www.4paradigm.com/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/4paradigm_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://zuoyebang.com/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/zuoyebang_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="http://www.huanju.cn/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/joyy_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://doris.apache.org/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/doris_logo.svg">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://github.com/baidu/BaikalDB/wiki" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/baikaldb_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="https://www.ishumei.com/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/nextdata_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="http://www.eyou.com/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/eyou_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;td align="center" valign="middle">
+&lt;a href="http://www.didiglobal.com/" target="_blank">
+&lt;img width="222px" style="margin: 0 10px;" src="https://brpc.apache.org/images/community/didi_logo.png">
+&lt;/a>
+&lt;/td>
+&lt;/div>
+&lt;/div></description></item><item><title>Docs: FAQ</title><link>https://brpc.apache.org/docs/faq/</link><pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/faq/</guid><description>
+&lt;p>See &lt;a href="https://github.com/apache/brpc/issues">https://github.com/apache/brpc/issues&lt;/a>&lt;/p></description></item></channel></rss>

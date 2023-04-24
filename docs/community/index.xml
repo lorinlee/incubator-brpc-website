@@ -1,0 +1,961 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bRPC – Community</title><link>https://brpc.apache.org/docs/community/</link><description>Recent content in Community on bRPC</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Thu, 12 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://brpc.apache.org/docs/community/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Community</title><link>https://brpc.apache.org/docs/community/community/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/community/</guid><description>
+&lt;!--
+{% comment %}
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements. See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to you under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+{% endcomment %}
+-->
+&lt;h2 id="apache-brpc-community">Apache bRPC Community&lt;/h2>
+&lt;p>Every volunteer project obtains its strength from the people involved in it. We invite you to participate as much or as little as you choose.&lt;/p>
+&lt;p>You can:&lt;/p>
+&lt;ul>
+&lt;li>Use our project and provide a feedback.&lt;/li>
+&lt;li>Provide us with the use-cases.&lt;/li>
+&lt;li>Report bugs and submit patches.&lt;/li>
+&lt;li>Contribute code, testcase, documentation.&lt;/li>
+&lt;/ul>
+&lt;p>Visit the &lt;a href="../contributing/">Contributing&lt;/a> page for more information.&lt;/p>
+&lt;h3 id="issue-tracker">Issue tracker&lt;/h3>
+&lt;h4 id="bug-reports">Bug Reports&lt;/h4>
+&lt;p>Found bug? Enter an issue in the &lt;a href="https://github.com/apache/brpc/issues">Issue Tracker&lt;/a>.&lt;/p>
+&lt;p>Before submitting an issue, please:&lt;/p>
+&lt;ul>
+&lt;li>Verify that the bug does in fact exist.&lt;/li>
+&lt;li>Search the issue tracker to verify there is no existing issue reporting the bug you&amp;rsquo;ve found.&lt;/li>
+&lt;li>Consider tracking down the bug yourself in the bRPC&amp;rsquo;s source and submitting a patch along with your bug report. This is a great time saver for the bRPC developers and helps ensure the bug will be fixed quickly.&lt;/li>
+&lt;/ul>
+&lt;h4 id="feature-requests">Feature Requests&lt;/h4>
+&lt;p>Enhancement requests for new features are also welcome. The more concrete and rationale the request is, the greater the chance it will incorporated into future releases.&lt;/p>
+&lt;p>&lt;a href="https://github.com/apache/brpc/issues">https://github.com/apache/brpc/issues&lt;/a>&lt;/p>
+&lt;h3 id="source-code">Source Code&lt;/h3>
+&lt;p>The project sources are accessible via the &lt;a href="https://github.com/apache/brpc">source code repository&lt;/a> which is on github.&lt;/p>
+&lt;h3 id="website-source-code">Website Source Code&lt;/h3>
+&lt;p>The project website sources are accessible via the &lt;a href="https://github.com/apache/brpc-website">website source code repository&lt;/a> which is on github also.&lt;/p></description></item><item><title>Docs: Mailing List</title><link>https://brpc.apache.org/docs/community/mailing_list/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/mailing_list/</guid><description>
+&lt;h3 id="about-mailing-list">About Mailing List&lt;/h3>
+&lt;p>Mailing list is where we discuss in public and keep everything tracked, When using or contributing to bRPC, if you encounter any problem, or you have any suggestions or new ideas, you can use the Apache mailing-list to participate in the community building.&lt;/p>
+&lt;p>If you have a specific bug to report or feature request, we&amp;rsquo;d suggest you opening an issue on our &lt;a href="https://github.com/apache/brpc/issues/new/choose">GitHub repo&lt;/a>, which is a more efficient way to report the details.&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> is for people who want to contribute code to bRPC. &lt;a href="mailto:dev-subscribe@brpc.apache.org?subject=send%20this%20email%20to%20subscribe">subscribe&lt;/a>, &lt;a href="mailto:dev-unsubscribe@brpc.apache.org?subject=send%20this%20email%20to%20unsubscribe">unsubscribe&lt;/a>, &lt;a href="https://www.mail-archive.com/dev@brpc.apache.org/">archives&lt;/a>&lt;/li>
+&lt;li>&lt;a href="commits@brpc.apache.org">commits@brpc.apache.org&lt;/a> is for commit messages and patches to bRPC. &lt;a href="mailto:commits-subscribe@brpc.apache.org?subject=send%20this%20email%20to%20subscribe">subscribe&lt;/a>, &lt;a href="mailto:commits-unsubscribe@brpc.apache.org?subject=send%20this%20email%20to%20unsubscribe">unsubscribe&lt;/a>, &lt;a href="https://www.mail-archive.com/commits@brpc.apache.org/">archives&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="subscribe-mailing-lists">Subscribe Mailing Lists&lt;/h3>
+&lt;h4 id="1-send-subscription-mail">1. Send Subscription Mail&lt;/h4>
+&lt;p>Open your own email, create a new email, and send an email to &lt;a href="mailto:dev-subscribe@brpc.apache.org">dev-subscribe@brpc.apache.org&lt;/a> (subject and content are arbitrary).&lt;/p>
+&lt;h4 id="2-receive-confirmation-emails-from-dev-helpbrpcapacheorg">2. Receive confirmation emails from &lt;a href="mailto:dev-help@brpc.apache.org">dev-help@brpc.apache.org&lt;/a>&lt;/h4>
+&lt;p>After the first step, you will receive a confirmation email from &lt;a href="mailto:dev-help@brpc.apache.org">dev-help@brpc.apache.org&lt;/a>, which is shown below (If you fail to receive it for a long time, please confirm that the mail has been intercepted, or has been automatically grouped into &amp;ldquo;Subscribed Mail&amp;rdquo;, &amp;ldquo;Spam Mail&amp;rdquo;, &amp;ldquo;Promotional Mail&amp;rdquo; folders).&lt;/p>
+&lt;h4 id="3-reply-to-confirmation-mail">3. Reply to confirmation mail&lt;/h4>
+&lt;p>For the mail received in the previous step, Reply to this email directly or Create a new recipient e-mail for the reply address in the previous step.&lt;/p>
+&lt;p>Every subject is acceptable.&lt;/p>
+&lt;h4 id="4-receiving-welcome-emails">4. Receiving Welcome Emails&lt;/h4>
+&lt;p>After completing the third step, you will receive a welcome email entitled WELCOME to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a>. So far, the work of subscribing to mailing lists has been completed, and community dynamics will be notified by mail.&lt;/p>
+&lt;h4 id="5-initiate-e-mail-discussion-optional">5. Initiate e-mail discussion (optional)&lt;/h4>
+&lt;p>After successfully subscribing to the mailing list, if you want to initiate a discussion, send an email directly to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a>. Anyone who subscribes to the mailing list receives the mail.&lt;/p></description></item><item><title>Docs: Contribute Guide</title><link>https://brpc.apache.org/docs/community/contributing/</link><pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/contributing/</guid><description>
+&lt;p>If you meet any problem or request a new feature, you&amp;rsquo;re welcome to &lt;a href="https://github.com/brpc/brpc/issues/new/choose">create an issue&lt;/a>.&lt;/p>
+&lt;p>If you can solve any of &lt;a href="https://github.com/brpc/brpc/issues">the issues&lt;/a>, you&amp;rsquo;re welcome to send the PR to us.&lt;/p>
+&lt;p>Before the PR:&lt;/p>
+&lt;ul>
+&lt;li>Fully comply with the &lt;a href="https://www.apache.org/foundation/policies/conduct.html">ASF Code of Conduct&lt;/a>.&lt;/li>
+&lt;li>Make sure your code style conforms to &lt;a href="https://google.github.io/styleguide/cppguide.html">google C++ coding style&lt;/a>. Indentation is preferred to be 4 spaces.&lt;/li>
+&lt;li>The code appears where it should be. For example the code to support an extra protocol should not be put in general classes like server.cpp, channel.cpp, while a general modification would better not be hidden inside a very specific protocol.&lt;/li>
+&lt;li>Has unittests.&lt;/li>
+&lt;/ul>
+&lt;p>After the PR:&lt;/p>
+&lt;ul>
+&lt;li>Make sure the &lt;a href="https://app.travis-ci.com/github/apache/brpc/pull_requests">travis-ci&lt;/a> passed.&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Committer Guide</title><link>https://brpc.apache.org/docs/community/committer/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/committer/</guid><description>
+&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>Participants in the Apache community have the following roles: &lt;strong>Contributor&lt;/strong>, &lt;strong>Committer&lt;/strong>, and &lt;strong>PMC(Project Member Committee) member&lt;/strong>.&lt;/p>
+&lt;p>When an individual contribution is accepted by the project, he/she will automatically become a Contributor.
+Committer and PMC members are invited by the PMC after a consensus vote.&lt;/p>
+&lt;p>Here we will only discuss some guidelines for the bRPC community to invite Committer and PMC member in order to be able to effectively estimate developer participation in the community.&lt;/p>
+&lt;h3 id="the-apache-way">The Apache Way:&lt;/h3>
+&lt;p>Before anyone can become a Committer or PMC member of an Apache project, they should first understand &amp;ldquo;&lt;a href="https://apache.org/theapacheway/index.html">What&amp;rsquo;s TheApacheWay&lt;/a>&amp;rdquo;.&lt;/p>
+&lt;h3 id="guidance-for-committer">Guidance for Committer:&lt;/h3>
+&lt;p>Have significant feature contributions (not limited to code), or long-term participation in community building (bug fixing, code review, documentation translation and proofreading, community outreach, etc.)
+Participate in community discussions in public domain and have a positive impact.&lt;/p>
+&lt;h3 id="guidance-for-pmc-member">Guidance for PMC member:&lt;/h3>
+&lt;p>Be able to actively participate in community maintenance work, such as answering emails, organizing wiki, release management, code review, etc.
+Recognize the Apache community philosophy and be able to actively promote the community development.&lt;/p>
+&lt;h3 id="peer-review">Peer Review:&lt;/h3>
+&lt;p>The above requirements are highly subjective and cannot be measured quantitatively. Therefore, the PMC needs to form a regular review mechanism to discuss and invite people who meet the requirements.&lt;/p>
+&lt;p>Conduct a review every 1-2 months to nominate and discuss suitable candidates&lt;/p>
+&lt;hr>
+&lt;h1 id="detailed-procedures">Detailed Procedures&lt;/h1>
+&lt;h2 id="1-how-to-develop-committers">1. How to develop committers&lt;/h2>
+&lt;h3 id="preconditions">Preconditions&lt;/h3>
+&lt;ol>
+&lt;li>More than 10 commits from the contributor&lt;/li>
+&lt;li>Contributor is willing to accept the invitation to become a committer&lt;/li>
+&lt;li>Contributor subscribe to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> and introduce himself by sending an email to &lt;a href="mailto:dev@apache.org">dev@apache.org&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h3 id="the-journey-to-become-a-committer">The journey to become a committer&lt;/h3>
+&lt;ol>
+&lt;li>The nominator sends an email to private@brpc to initiate discussion and begins to voting. If the voting is passed, it is OK (at least 3 +1, +1 &amp;gt;- 1). (See the Vote email template &lt;a href="https://community.apache.org/newcommitter.html#committer-vote-template">https://community.apache.org/newcommitter.html#committer-vote-template&lt;/a>)&lt;/li>
+&lt;li>The nominator sends a close vote email to private@brpc and private@incubator , the title can be subject [RESULT] [VOTE]. (See the close email template &lt;a href="https://community.apache.org/newcommitter.html#close-vote">https://community.apache.org/newcommitter.html#close-vote&lt;/a>)&lt;/li>
+&lt;li>The nominator sends an invitation letter to the nominee and prompts him to submit ICLA after receiving a reply. (See the template in &lt;a href="https://community.apache.org/newcommitter.html#committer-invite-template">https://community.apache.org/newcommitter.html#committer-invite-template&lt;/a>)&lt;/li>
+&lt;li>The nominee fills in ICLA（ &lt;a href="https://www.apache.org/licenses/contributor-agreements.html">https://www.apache.org/licenses/contributor-agreements.html&lt;/a> ）, individual contributors need to download [ICLA]（ &lt;a href="https://www.apache.org/licenses/icla.pdf">https://www.apache.org/licenses/icla.pdf&lt;/a> ）Fill in personal information and sign, and send the electronic version to &lt;a href="mailto:secretary@apache.org">secretary@apache.org&lt;/a> 。 (Note: ICLA needs to fill in complete information, including mailing address and signature, otherwise it will be returned by ASF&amp;rsquo;s secretary.) The personal information entry (except for the signature) can be filled in with a PDF reader or browser, and then saved for signature. Signature method support:
+&lt;ul>
+&lt;li>Print pdf documents and scan them into electronic version after handwritten signature;&lt;/li>
+&lt;li>Electronic signature using devices that support handwriting;&lt;/li>
+&lt;li>Use &amp;lsquo;gpg&amp;rsquo; for electronic signature, that is, to operate the pdf file filled with personal basic information (a public key/key pair matching the registered mailbox needs to be generated in advance): &amp;lsquo;gpg &amp;ndash; armor &amp;ndash; detach sign icla. pdf&amp;rsquo;;&lt;/li>
+&lt;li>Use &amp;lsquo;DocuSign&amp;rsquo; to sign;&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>The nominator sends an announcement email to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h3 id="how-to-grant-a-committer-permission-on-github">How to grant a committer permission on github&lt;/h3>
+&lt;ol>
+&lt;li>Add as committer (&lt;a href="https://whimsy.apache.org/roster/ppmc/brpc">https://whimsy.apache.org/roster/ppmc/brpc&lt;/a>)&lt;/li>
+&lt;li>Let him set github id (&lt;a href="https://id.apache.org/">https://id.apache.org/&lt;/a>)&lt;/li>
+&lt;li>Let him visit the website and get github permission(&lt;a href="https://id.apache.org/">https://gitbox.apache.org/setup/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;h3 id="documents-related-to-the-new-committer-on-the-official-apache-website">Documents related to the new committer on the official Apache website&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://community.apache.org/newcommitter.html">https://community.apache.org/newcommitter.html&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://infra.apache.org/new-committers-guide.html">https://infra.apache.org/new-committers-guide.html&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://juejin.cn/post/6844903788982042632">https://juejin.cn/post/6844903788982042632&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="suggested-steps-from-secretaryapacheorg">Suggested steps from &lt;a href="mailto:secretary@apache.org">secretary@apache.org&lt;/a>&lt;/h3>
+&lt;p>Please do these things:&lt;/p>
+&lt;ol>
+&lt;li>Hold the discussion and vote on your private@ list. This avoids any issues related to personnel, which should remain private.&lt;/li>
+&lt;li>If the vote is successful, announce the result to the private@ list with a new email thread with subject [RESULT][VOTE]. This makes it easier for secretary to find the result of the vote in order to request the account at the time of the filing of the ICLA.&lt;/li>
+&lt;li>Only if the candidate accepts committership, announce the new committer on your dev@ list.&lt;/li>
+&lt;/ol>
+&lt;p>Doing these things will make everyone&amp;rsquo;s job easier.&lt;/p>
+&lt;h2 id="2-how-to-upgrade-a-committer-into-a-ppmc">2. How to upgrade a committer into a PPMC&lt;/h2>
+&lt;h3 id="process-reference-apache-official-website-document">Process reference: Apache official website document&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://incubator.apache.org/guides/ppmc.html#voting_in_a_new_ppmc_member">https://incubator.apache.org/guides/ppmc.html#voting_in_a_new_ppmc_member&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://community.apache.org/newcommitter.html">https://community.apache.org/newcommitter.html&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://incubator.apache.org/guides/ppmc.html#podling_project_management_committee_ppmc">https://incubator.apache.org/guides/ppmc.html#podling_project_management_committee_ppmc&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="actual-process">Actual process&lt;/h3>
+&lt;ol>
+&lt;li>Initiate discussion in the private@brpc . If there is no objection, continue&lt;/li>
+&lt;li>Open a Vote in private@brpc&lt;/li>
+&lt;li>If the vote is successful, sends a message to the PPMC private email list about the vote result&lt;/li>
+&lt;li>send a message to the IPMC (&lt;a href="mailto:private@incubator.apache.org">private@incubator.apache.org&lt;/a>) with a reference to the vote result&lt;/li>
+&lt;li>Announce new PPMC On private@brpc&lt;/li>
+&lt;li>Set his authority by visiting &lt;a href="https://whimsy.apache.org/roster/ppmc/brpc">https://whimsy.apache.org/roster/ppmc/brpc&lt;/a>&lt;/li>
+&lt;li>Help him subscribe to a private email group. See &lt;a href="https://whimsy.apache.org/committers/moderationhelper.cgi">https://whimsy.apache.org/committers/moderationhelper.cgi&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>Docs: Release Guide</title><link>https://brpc.apache.org/docs/community/release/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/release/</guid><description>
+&lt;h1 id="brpc-apache-release-guide-step-by-step">brpc apache release guide step by step&lt;/h1>
+&lt;p>Overview: divided into the following steps&lt;/p>
+&lt;ol>
+&lt;li>Preparation: including generating the key required for signature, creating github release branch and tag, modifying the version file, etc&lt;/li>
+&lt;li>Publish software package: including making source tarball, signing, uploading to the designated location and verifying&lt;/li>
+&lt;li>Vote: including voting in mail group &lt;code>dev@brpc.apache.org&lt;/code> and &lt;code>general@incubator.apache.org&lt;/code>&lt;/li>
+&lt;li>Release announcement: including updating brpc website, sending announcement emails, posting WeChat official account announcements, merging the release branche into the master branch&lt;/li>
+&lt;/ol>
+&lt;h2 id="prepare-key">Prepare key&lt;/h2>
+&lt;h3 id="1-install-gpg">1. Install GPG&lt;/h3>
+&lt;p>Download the installation package from &lt;a href="https://www.gnupg.org/download/index.html">GnuPG official website&lt;/a>. The commands of GnuPG version 1.x and version 2.x are slightly different. The following instructions take the &lt;code>GnuPG-2.3.1&lt;/code> version (OSX) as an example.&lt;/p>
+&lt;p>After the installation is complete, execute the following command to check the version number.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-create-key">2. Create key&lt;/h3>
+&lt;p>After the installation is complete, execute the following command to create a key.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --full-gen-key
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Complete the key creation according to the prompts. Note that the mailbox should use the Apache email address, and the &lt;code>Real Name&lt;/code> can use Apache ID or GitHub ID:&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg (GnuPG) 2.3.1; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Please select what kind of key you want:
+(1) RSA and RSA
+(2) DSA and Elgamal
+(3) DSA (sign only)
+(4) RSA (sign only)
+(9) ECC (sign and encrypt) *default*
+(10) ECC (sign only)
+(14) Existing key from card
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+0 = key does not expire
+&amp;lt;n&amp;gt; = key expires in n days
+&amp;lt;n&amp;gt;w = key expires in n weeks
+&amp;lt;n&amp;gt;m = key expires in n months
+&amp;lt;n&amp;gt;y = key expires in n years
+Key is valid for? (0) 0
+Key does not expire at all
+Is this correct? (y/N) y
+GnuPG needs to construct a user ID to identify your key.
+Real name: LorinLee
+Email address: lorinlee@apache.org
+Comment: lorinlee&amp;#39;s key
+You selected this USER-ID:
+&amp;#34;LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;&amp;#34;
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+You need a Passphrase to protect your secret key. # Input password
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: key 92E18A11B6585834 marked as ultimately trusted
+gpg: revocation certificate stored as &amp;#39;/Users/lilei/.gnupg/openpgp-revocs.d/C30F211F071894258497F46392E18A11B6585834.rev&amp;#39;
+public and secret key created and signed.
+pub rsa4096 2021-10-17 [SC]
+C30F211F071894258497F46392E18A11B6585834
+uid LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;h3 id="3-check-the-generated-key">3. Check the generated key&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --list-keys
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>output:&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg: checking the trustdb
+gpg: marginals needed: 3 completes needed: 1 trust model: pgp
+gpg: depth: 0 valid: 2 signed: 0 trust: 0-, 0q, 0n, 0m, 0f, 2u
+/Users/lilei/.gnupg/pubring.kbx
+----------------------------------
+pub rsa4096 2021-10-17 [SC]
+C30F211F071894258497F46392E18A11B6585834
+uid [ultimate] LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;p>Note that &lt;code>C30F211F071894258497F46392E18A11B6585834&lt;/code> is the public key.&lt;/p>
+&lt;h3 id="4-publish-the-public-key-to-server">4. Publish the public key to server&lt;/h3>
+&lt;p>Execute the following command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --keyserver hkp://pgp.mit.edu --send-key C30F211F071894258497F46392E18A11B6585834
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5-generate-fingerprint-and-upload-to-apache-user-profile">5. Generate fingerprint and upload to apache user profile&lt;/h3>
+&lt;p>Since the public key server has no verifying mechanism, anyone can upload the public key in your name, so there is no way to guarantee the reliability of the public key on the server. Usually, you can publish a public key fingerprint on your website and let others check the downloaded public key.&lt;/p>
+&lt;p>Execute the following command to view the fingerprint.&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg --fingerprint lorinlee # user id
+&lt;/code>&lt;/pre>&lt;p>output:&lt;/p>
+&lt;pre tabindex="0">&lt;code>/Users/lilei/.gnupg/pubring.kbx
+----------------------------------
+pub rsa4096 2021-10-17 [SC]
+C30F 211F 0718 9425 8497 F463 92E1 8A11 B658 5834
+uid [ultimate] LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;p>Paste the above fingerprint &lt;code>C30F 211F 0718 9425 8497 F463 92E1 8A11 B658 5834&lt;/code> into the &lt;code>OpenPGP Public Key Primary Fingerprint:&lt;/code> field of your Apache user information on &lt;a href="https://id.apache.org">https://id.apache.org&lt;/a>.&lt;/p>
+&lt;h2 id="prepare-release-package">Prepare release package&lt;/h2>
+&lt;h3 id="1-create-release-branch">1. Create release branch&lt;/h3>
+&lt;p>If you are releasing a new MINOR version, like &lt;code>1.0.0&lt;/code>, you need to create a new branch &lt;code>release-1.0&lt;/code> from master.&lt;/p>
+&lt;p>If you are releasing a new PATCH version from existing MINOR version, like &lt;code>1.0.1&lt;/code>, you only need to modify the existing &lt;code>release-1.0&lt;/code> branch and add the content to be released.&lt;/p>
+&lt;p>The code modification during the release process are performed on the release branch (such as &lt;code>release-1.0&lt;/code>). After the release is complete, please merge the release branch back into the master branch.&lt;/p>
+&lt;h3 id="2-update-version-in-source-code">2. Update version in source code&lt;/h3>
+&lt;h4 id="update-release_version-file">Update RELEASE_VERSION file&lt;/h4>
+&lt;p>Edit the &lt;code>RELEASE_VERSION&lt;/code> file in the project root directory, update the version number, and submit it to the code repository. For example, the &lt;code>1.0.0&lt;/code> version of the file is:&lt;/p>
+&lt;pre tabindex="0">&lt;code>1.0.0
+&lt;/code>&lt;/pre>&lt;h4 id="update-cmakeliststxt-file">Update CMakeLists.txt file&lt;/h4>
+&lt;p>Edit the &lt;code>CMakeLists.txt&lt;/code> file in the project root directory, update the version number, and submit it to the code repository. For example:&lt;/p>
+&lt;pre tabindex="0">&lt;code>set(BRPC_VERSION 1.0.0)
+&lt;/code>&lt;/pre>&lt;h4 id="update-packagerpmbrpcspec-file">Update /package/rpm/brpc.spec file&lt;/h4>
+&lt;p>Edit the &lt;code>/package/rpm/brpc.spec&lt;/code> file in the project root directory, update the version number, and submit it to the code repository. For example:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Version: 1.0.0
+&lt;/code>&lt;/pre>&lt;h3 id="3-create-releasing-tag">3. Create releasing tag&lt;/h3>
+&lt;p>push the release branch to tag, For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git clone -b release-1.0 git@github.com:apache/brpc.git ~/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git tag -a 1.0.0 -m &lt;span style="color:#4e9a06">&amp;#34;release 1.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git push origin --tags
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-create-releasing-package">4. Create releasing package&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git archive --format&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>tar 1.0.0 --prefix&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>apache-brpc-1.0.0-incubating-src/ &lt;span style="color:#000;font-weight:bold">|&lt;/span> gzip &amp;gt; apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5-generate-gpg-signature">5. Generate GPG signature&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg -u lorinlee@apache.org --armor --output apache-brpc-1.0.0-incubating-src.tar.gz.asc --detach-sign apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gpg --verify apache-brpc-1.0.0-incubating-src.tar.gz.asc apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="6-generate-sha512-sum">6. Generate SHA512 sum&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sha512sum apache-brpc-1.0.0-incubating-src.tar.gz &amp;gt; apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sha512sum --check apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="publish-to-apache-svn-repository">Publish to Apache SVN repository&lt;/h2>
+&lt;h3 id="1-checkout-distdevbrpc-directory">1. checkout dist/dev/brpc directory&lt;/h3>
+&lt;p>If there is no local working directory, create a local working directory first. Clone the Apache SVN repository, username needs to use your own Apache LDAP username:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir -p ~/brpc_svn/dev/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn --username&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>lorinlee co https://dist.apache.org/repos/dist/dev/incubator/brpc/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-add-gpg-public-key">2. Add GPG public key&lt;/h3>
+&lt;p>A new release manager must add the key into KEYS file for the first time.&lt;/p>
+&lt;pre tabindex="0">&lt;code>(gpg --list-sigs lorinlee &amp;amp;&amp;amp; gpg -a --export lorinlee) &amp;gt;&amp;gt; KEYS
+&lt;/code>&lt;/pre>&lt;h3 id="3-add-the-releasing-package-to-svn-directory">3. Add the releasing package to SVN directory&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir -p ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz.asc ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz.sha512 ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-submit-svn">4. Submit SVN&lt;/h3>
+&lt;p>Return to the parent directory and use the Apache LDAP account to submit SVN&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn add *
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn --username&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>lorinlee commit -m &lt;span style="color:#4e9a06">&amp;#34;release 1.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="verify-release">Verify release&lt;/h2>
+&lt;h3 id="1-verify-sha512-sum">1. Verify SHA512 sum&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sha512sum --check apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-verify-gpg-signature">2. Verify GPG signature&lt;/h3>
+&lt;p>First import the publisher&amp;rsquo;s public key. Import KEYS from the svn repository to the local. (The person who releases the version does not need to import it again. The person who verify needs to import it.)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>curl https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS &amp;gt;&amp;gt; KEYS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gpg --import KEYS
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Trust the signature of publisher, execute the following command using the publisher&amp;rsquo;s user name&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --edit-key lorinlee
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>output:&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg (GnuPG) 2.3.1; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Secret key is available.
+gpg&amp;gt; trust
+Please decide how far you trust this user to correctly verify other users&amp;#39; keys
+(by looking at passports, checking fingerprints from different sources, etc.)
+1 = I don&amp;#39;t know or won&amp;#39;t say
+2 = I do NOT trust
+3 = I trust marginally
+4 = I trust fully
+5 = I trust ultimately
+m = back to the main menu
+Your decision? 5
+Do you really want to set this key to ultimate trust? (y/N) y
+gpg&amp;gt; save
+&lt;/code>&lt;/pre>&lt;p>Then verify the GPG signature:&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg --verify apache-brpc-1.0.0-incubating-src.tar.gz.asc apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/code>&lt;/pre>&lt;h3 id="3-check-release-content">3. Check release content&lt;/h3>
+&lt;h4 id="1-compare-the-difference-of-between-the-source-code-package-and-github-tag">1. Compare the difference of between the source code package and github tag&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>curl -Lo tag-1.0.0.tar.gz https://github.com/apache/brpc/archive/refs/tags/1.0.0.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tar xvzf tag-1.0.0.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tar xvzf apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>diff -r brpc-1.0.0 apache-brpc-1.0.0-incubating-src
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="2-check-file-content">2. Check file content&lt;/h4>
+&lt;ul>
+&lt;li>Check whether the source code package contains unnecessary files, which makes the tarball too large&lt;/li>
+&lt;li>LICENSE and NOTICE files exist&lt;/li>
+&lt;li>The year in the NOTICE file is correct&lt;/li>
+&lt;li>Only text files exist, no binary files exist&lt;/li>
+&lt;li>All files have an ASF license at the beginning&lt;/li>
+&lt;li>Source code can be compiled correctly, and the unit test can pass&lt;/li>
+&lt;li>Check whether there are redundant files or folders, such as empty folders&lt;/li>
+&lt;li>Check for third-party dependency licenses:
+&lt;ul>
+&lt;li>Third party dependency license compatibility&lt;/li>
+&lt;li>All licenses of third-party dependency are declared in the LICENSE file&lt;/li>
+&lt;li>The complete version of the dependency license is in the license directory&lt;/li>
+&lt;li>If third-party dependency have the Apache license and have NOTICE files, these NOTICE files also need to be added to the releasing NOTICE file&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="vote-in-apache-brpc-community">Vote in Apache brpc community&lt;/h2>
+&lt;h3 id="1-vote-stage">1. Vote stage&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>Send a voting email to &lt;code>dev@brpc.apache.org&lt;/code>. PPMC needs to check the correctness of the version according to the document before voting. After at least 72 hours and 3 +1 PPMC member votes, you can move to the next stage.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Announce the voting results and send the voting results to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> 。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="2-vote-email-template">2. Vote email template&lt;/h3>
+&lt;ol>
+&lt;li>Apache brpc community vote email template&lt;/li>
+&lt;/ol>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;p>Note: &lt;code>Release Commit ID&lt;/code> fills in the commit ID of the last commit of the current release branch.&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Apache brpc Community,
+This is a call for vote to release Apache brpc version
+1.0.0
+[Release Note]
+- xxx
+The release candidates:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0/
+Git tag for the release:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Release Commit ID:
+https://github.com/apache/brpc/commit/xxx
+Keys to verify the Release Candidate:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS
+The vote will be open for at least 72 hours or until the necessary number of
+votes are reached.
+Please vote accordingly:
+[ ] +1 approve
+[ ] +0 no opinion
+[ ] -1 disapprove with the reason
+PMC vote is +1 binding, all others are +1 non-binding.
+Checklist for reference:
+[ ] Download links are valid.
+[ ] Checksums and PGP signatures are valid.
+[ ] Source code distributions have correct names matching the current
+release.
+[ ] LICENSE and NOTICE files are correct for each brpc repo.
+[ ] All files have license headers if necessary.
+[ ] No compiled archives bundled in source archive.
+Regards,
+LorinLee
+&lt;/code>&lt;/pre>&lt;ol start="2">
+&lt;li>Apache brpc community announcement of vote result template&lt;/li>
+&lt;/ol>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[Result] [VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi all,
+The vote to release Apache brpc 1.0.0 has passed.
+The vote PASSED with 3 binding +1, 3 non binding +1 and no -1 votes:
+Binding votes:
+- xxx
+- yyy
+- zzz
+Non-binding votes:
+- aaa
+- bbb
+- ccc
+Vote thread: xxx (vote email link in https://lists.apache.org/)
+Thank you to all the above members to help us to verify and vote for the 1.0.0 release. We will move to IPMC voting shortly.
+Regards,
+LorinLee
+&lt;/code>&lt;/pre>&lt;h3 id="3-vote-not-passed">3. Vote not passed&lt;/h3>
+&lt;p>If the community vote is not passed, please modify the code of the release branch, package and vote again.&lt;/p>
+&lt;h2 id="vote-in-apache-incubator-community">Vote in Apache incubator community&lt;/h2>
+&lt;h3 id="1-update-gpg-signature">1. Update GPG Signature&lt;/h3>
+&lt;pre tabindex="0">&lt;code>svn delete https://dist.apache.org/repos/dist/release/incubator/brpc/KEYS -m &amp;#34;delete KEYS&amp;#34;
+svn cp https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS https://dist.apache.org/repos/dist/release/incubator/brpc/KEYS -m &amp;#34;update brpc KEYS&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>After commit the svn, access &lt;a href="https://downloads.apache.org/incubator/brpc/KEYS">https://downloads.apache.org/incubator/brpc/KEYS&lt;/a>, check whether the content is updated. It may take several minutes to wait for the content to be updated before continuing.&lt;/p>
+&lt;h3 id="2-vote-stage">2. Vote stage&lt;/h3>
+&lt;ol>
+&lt;li>Send voting email to &lt;code>general@incubator.apache.org&lt;/code>. IPMC will vote. After at least 72 hours and 3 +1 IPMC member tickets are counted, you can move to the next stage.&lt;/li>
+&lt;li>Announce the voting results by sending the voting results to &lt;code>general@incubator.apache.org&lt;/code>.&lt;/li>
+&lt;/ol>
+&lt;h3 id="3-vote-email-template">3. Vote email template&lt;/h3>
+&lt;ol>
+&lt;li>Apache Incubator community vote email template&lt;/li>
+&lt;/ol>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Incubator Community,
+This is a call for a vote to release Apache brpcversion
+1.0.0.
+The Apache brpc community has voted and approved the release of Apache
+brpc 1.0.0.
+We now kindly request the Incubator PMC members review and vote on this
+incubator release.
+brpc is an industrial-grade RPC framework with extremely high performance,
+and it supports multiple protocols, full rpc features, and has many
+convenient tools.
+brpc community vote thread: xxx
+Vote result thread: xxx
+The release candidate:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0/
+This release has been signed with a PGP available here:
+https://downloads.apache.org/incubator/brpc/KEYS
+Git tag for the release:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Build guide and get started instructions can be found at:
+https://brpc.apache.org/docs/getting_started
+The vote will be open for at least 72 hours or until the necessary number
+of votes is reached.
+Please vote accordingly:
+[ ] +1 approve
+[ ] +0 no opinion
+[ ] -1 disapprove with the reason
+Regards,
+Lorin Lee
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;ol start="2">
+&lt;li>Apache Incubator community announcement of vote result template&lt;/li>
+&lt;/ol>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[Result] [VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Incubator Community,
+Thanks to everyone that participated. The vote to release Apache
+brpc version 1.0.0 in general@incubator.apache.org
+is now closed.
+Vote thread: xxx
+The vote PASSED with 3 binding +1, 3 non binding +1 and no -1 votes:
+Binding votes:
+- xxx
+- yyy
+- zzz
+Non-binding votes:
+- aaa
+- bbb
+- ccc
+Many thanks for all our mentors helping us with the release procedure,
+and all IPMC helped us to review and vote for Apache brpc release.
+We will proceed with publishing the approved artifacts and
+sending out the announcement soon.
+Regards,
+Lorin Lee
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;h2 id="finish-the-release">Finish the release&lt;/h2>
+&lt;h3 id="1-move-the-release-package-from-apache-svn-directory-distdev-to-distrelease">1. Move the release package from Apache SVN directory dist/dev to dist/release&lt;/h3>
+&lt;pre tabindex="0">&lt;code>svn mv https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0 https://dist.apache.org/repos/dist/release/incubator/brpc/1.0.0 -m &amp;#34;release brpc 1.0.0&amp;#34;
+&lt;/code>&lt;/pre>&lt;h3 id="2-create-github-release">2. Create github release&lt;/h3>
+&lt;ol>
+&lt;li>On the &lt;a href="https://github.com/apache/brpc/tags">GitHub Releases page&lt;/a> Click the corresponding version of to create a new Release&lt;/li>
+&lt;li>Edit the version number and version description, and click &lt;code>Publish release&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h3 id="3-update-download-page">3. Update download page&lt;/h3>
+&lt;p>After waiting and confirming that the new release is synchronized to the Apache image, update the following page: &lt;a href="https://brpc.apache.org/docs/downloadbrpc/">https://brpc.apache.org/docs/downloadbrpc/&lt;/a> by change the code in &lt;a href="https://github.com/apache/brpc-website/">https://github.com/apache/brpc-website/&lt;/a>. Please update both Chinese and English.&lt;/p>
+&lt;p>The download links of GPG signature files and hash check files should use this prefix: &lt;code>https://downloads.apache.org/incubator/brpc/&lt;/code>&lt;/p>
+&lt;p>The download link of the code package should use this prefix: &lt;code>https://dlcdn.apache.org/incubator/brpc/&lt;/code>&lt;/p>
+&lt;h3 id="4-send-email-to-announce-release-finished">4. Send email to announce release finished&lt;/h3>
+&lt;p>Send mail to &lt;code>dev@brpc.apache.org&lt;/code>, &lt;code>general@incubator.apache.org&lt;/code>, and &lt;code>announce@apache.org&lt;/code> to announce the completion of release.&lt;/p>
+&lt;p>Note: The email account must use &lt;strong>personal apache email&lt;/strong>, and the email content must be &lt;strong>plain text format&lt;/strong> (&amp;ldquo;plain text mode&amp;rdquo; can be selected in gmail). And email to &lt;code>announce@apache.org&lt;/code> mail group will be delivered after manual review. Please wait patiently after sending the email, and it will be passed within one day.&lt;/p>
+&lt;p>The announcement email template:&lt;/p>
+&lt;p>Title:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[ANNOUNCE] Apache brpc 1.0.0 released
+&lt;/code>&lt;/pre>&lt;p>Content:&lt;/p>
+&lt;p>Note: &lt;code>Brief notes of this release&lt;/code> It is only necessary to list the main changes of this release, without corresponding contributors and PR numbers. It is recommended to refer to the previous announcement email.&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi all,
+The Apache brpc community is glad to announce the new release
+of Apache brpc 1.0.0.
+brpc is an Industrial-grade RPC framework using C++ Language, which is
+often used in high performance systems such as Search, Storage,
+Machine learning, Advertisement, Recommendation etc.
+Brief notes of this release:
+- xxx
+- yyy
+- zzz
+More details regarding Apache brpc can be found at:
+http://brpc.apache.org/
+The release is available for download at:
+https://brpc.apache.org/docs/downloadbrpc/
+The release notes can be found here:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Website: http://brpc.apache.org/
+brpcResources:
+- Issue: https://github.com/apache/brpc/issues/
+- Mailing list: dev@brpc.apache.org
+- Documents: https://brpc.apache.org/docs/
+We would like to thank all contributors of the Apache brpc community and
+Incubating community who made this release possible!
+Best Regards,
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;h3 id="5-publish-wechat-official-account-announcement">5. Publish WeChat official account announcement&lt;/h3>
+&lt;p>Reference &lt;a href="https://mp.weixin.qq.com/s/DeFhpAV_AYsn_Xd1ylPTSg">https://mp.weixin.qq.com/s/DeFhpAV_AYsn_Xd1ylPTSg&lt;/a>.&lt;/p>
+&lt;h3 id="6-update-master-branch">6. Update master branch&lt;/h3>
+&lt;p>After the release is completed, merge the release branch into the master branch&lt;/p></description></item><item><title>Docs: Committers</title><link>https://brpc.apache.org/docs/community/committers/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/committers/</guid><description>
+&lt;h2 id="brrc-committers">bRRC Committers&lt;/h2>
+&lt;p>The development of bRPC is associated with the outstanding contributions from the people in the community, who have helped get the project to where it is today.&lt;/p>
+&lt;p>Thank you all your help!&lt;/p>
+&lt;h3 id="pmc">PMC&lt;/h3>
+&lt;table class="table table-hover">
+&lt;tr>
+&lt;th>&lt;b>Photo&lt;/b>&lt;/th>
+&lt;th>&lt;b>Full Name&lt;/b>&lt;/th>
+&lt;th>&lt;b>Apache ID&lt;/b>&lt;/th>
+&lt;th>&lt;b>GitHub&lt;/b>&lt;/th>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/jamesge">&lt;img width="64" src="https://avatars.githubusercontent.com/u/6566535?v=4">&lt;/a>&lt;/td>
+&lt;td>James Ge&lt;/td>
+&lt;td>jamesge&lt;/td>
+&lt;td>&lt;a href="http://github.com/jamesge">jamesge&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/zyearn">&lt;img width="64" src="https://avatars.githubusercontent.com/u/4475779?v=4">&lt;/a>&lt;/td>
+&lt;td>Jiashun Zhu&lt;/td>
+&lt;td>jiashunzhu&lt;/td>
+&lt;td>&lt;a href="http://github.com/zyearn">zyearn&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/chenzhangyi">&lt;img width="64" src="https://avatars.githubusercontent.com/u/6805583?v=4">&lt;/a>&lt;/td>
+&lt;td>Zhangyi Chen&lt;/td>
+&lt;td>zychen&lt;/td>
+&lt;td>&lt;a href="http://github.com/chenzhangyi">chenzhangyi&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/old-bear">&lt;img width="64" src="https://avatars.githubusercontent.com/u/1525532?v=4">&lt;/a>&lt;/td>
+&lt;td>Bear Jiang&lt;/td>
+&lt;td>jrjbear&lt;/td>
+&lt;td>&lt;a href="http://github.com/old-bear">old-bear&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/ipconfigme">&lt;img width="64" src="https://avatars.githubusercontent.com/u/2500750?v=4">&lt;/a>&lt;/td>
+&lt;td>Yao Wang&lt;/td>
+&lt;td>fisherman&lt;/td>
+&lt;td>&lt;a href="http://github.com/ipconfigme">ipconfigme&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/tanzhongyi003">&lt;img width="64" src="https://avatars.githubusercontent.com/u/20179982?v=4">&lt;/a>&lt;/td>
+&lt;td>Jerry Tan&lt;/td>
+&lt;td>jerrytan&lt;/td>
+&lt;td>&lt;a href="http://github.com/tanzhongyi003">tanzhongyi003&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/wwbmmm">&lt;img width="64" src="https://avatars.githubusercontent.com/u/3894631?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>wwbmmm&lt;/td>
+&lt;td>&lt;a href="http://github.com/wwbmmm">wwbmmm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/TousakaRin">&lt;img width="64" src="https://avatars.githubusercontent.com/u/8801314?v=4">&lt;/a>&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>leander&lt;/td>
+&lt;td>&lt;a href="http://github.com/TousakaRin">TousakaRin&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/cdjingit">&lt;img width="64" src="https://avatars.githubusercontent.com/u/31362185?v=4">&lt;/a>&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>caidj&lt;/td>
+&lt;td>&lt;a href="http://github.com/cdjingit">cdjingit&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/lorinlee">&lt;img width="64" src="https://avatars.githubusercontent.com/u/16054841?v=4">&lt;/a>&lt;/td>
+&lt;td>Lorin Lee&lt;/td>
+&lt;td>lorinlee&lt;/td>
+&lt;td>&lt;a href="http://github.com/lorinlee">lorinlee&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/table>
+&lt;h3 id="committers">Committers&lt;/h3>
+&lt;table class="table table-hover">
+&lt;tr>
+&lt;th>&lt;b>Photo&lt;/b>&lt;/th>
+&lt;th>&lt;b>Full Name&lt;/b>&lt;/th>
+&lt;th>&lt;b>Apache ID&lt;/b>&lt;/th>
+&lt;th>&lt;b>GitHub&lt;/b>&lt;/th>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/gydong">&lt;img width="64" src="https://avatars.githubusercontent.com/u/3294444?v=4">&lt;/a>&lt;/td>
+&lt;td>Mou Gaidong&lt;/td>
+&lt;td>gydong&lt;/td>
+&lt;td>&lt;a href="http://github.com/gydong">gydong&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/guodongxiaren">&lt;img width="64" src="https://avatars.githubusercontent.com/u/5945107?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang wei&lt;/td>
+&lt;td>guodong&lt;/td>
+&lt;td>&lt;a href="http://github.com/guodongxiaren">guodongxiaren&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/serverglen">&lt;img width="64" src="https://avatars.githubusercontent.com/u/38067377?v=4">&lt;/a>&lt;/td>
+&lt;td>Shuai Liu&lt;/td>
+&lt;td>serverglen&lt;/td>
+&lt;td>&lt;a href="http://github.com/serverglen">serverglen&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/wasphin">&lt;img width="64" src="https://avatars.githubusercontent.com/u/1237906?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang Xiaofeng&lt;/td>
+&lt;td>xiaofeng&lt;/td>
+&lt;td>&lt;a href="http://github.com/wasphin">wasphin&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/Huixxi">&lt;img width="64" src="https://avatars.githubusercontent.com/u/21335093?v=4">&lt;/a>&lt;/td>
+&lt;td>Xiguo Hu&lt;/td>
+&lt;td>huixxi&lt;/td>
+&lt;td>&lt;a href="http://github.com/Huixxi">Huixxi&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://github.com/chenBright">&lt;img width="64" src="https://avatars.githubusercontent.com/u/12249635?v=4">&lt;/a>&lt;/td>
+&lt;td>Guangming Chen&lt;/td>
+&lt;td>guangmingchen&lt;/td>
+&lt;td>&lt;a href="http://github.com/chenBright">chenBright&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://github.com/Tuvie">&lt;img width="64" src="https://avatars.githubusercontent.com/u/5780312?v=4">&lt;/a>&lt;/td>
+&lt;td>Zhaogeng Li&lt;/td>
+&lt;td>lizhaogeng&lt;/td>
+&lt;td>&lt;a href="http://github.com/Tuvie">Tuvie&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/table>
+&lt;h3 id="contributors">Contributors&lt;/h3>
+&lt;p>Thanks to &lt;a href="https://github.com/apache/brpc/graphs/contributors">All the Contributors&lt;/a> making their effort to help bRPC getting better.&lt;/p></description></item><item><title>Docs: Security</title><link>https://brpc.apache.org/docs/community/security/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/security/</guid><description>
+&lt;p>The Apache Software Foundation takes a rigorous stance on eliminating security issues in its software projects. Likewise, Apache bRPC is also vigilant and takes security issues related to its features and functionality into the highest consideration.&lt;/p>
+&lt;p>If you have any concerns regarding bRPC’s security, or you discover a vulnerability or potential threat, please don’t hesitate to get in touch with the &lt;a href="http://www.apache.org/security/">Apache Security Team&lt;/a> by dropping an email at &lt;a href="mailto:security@apache.org">security@apache.org&lt;/a>.&lt;/p>
+&lt;p>Please specify the project name as &amp;ldquo;bRPC&amp;rdquo; in the email, and provide a description of the relevant problem or potential threat. You are also urged to recommend how to reproduce and replicate the issue.&lt;/p>
+&lt;p>The Apache Security Team and the bRPC community will get back to you after assessing and analyzing the findings.&lt;/p>
+&lt;p>&lt;strong>Please note&lt;/strong> that the security issue should be reported on the security email first, before disclosing it on any public domain.&lt;/p></description></item><item><title>Docs: Monthly Meeting</title><link>https://brpc.apache.org/docs/community/monthly-meeting/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/monthly-meeting/</guid><description>
+&lt;h3 id="monthly-meeting-record">Monthly Meeting Record&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Month&lt;/th>
+&lt;th>Host&lt;/th>
+&lt;th>Minutes Of Meeting&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>2023-02&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/opzmc74yhhokox0164f2o5wv60o74nct">https://lists.apache.org/thread/opzmc74yhhokox0164f2o5wv60o74nct&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>2023-03&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/38rswlzl51lqvl04bvf6ho0od8smrc4z">https://lists.apache.org/thread/38rswlzl51lqvl04bvf6ho0od8smrc4z&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: On Call</title><link>https://brpc.apache.org/docs/community/on-call/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/community/on-call/</guid><description>
+&lt;h2 id="duty-of-the-on-call">Duty of the On Call&lt;/h2>
+&lt;h3 id="1-review-and-process-the-pull-request-and-issue-list">1. Review and process the Pull Request and Issue list&lt;/h3>
+&lt;ul>
+&lt;li>Check the Pull Request and Issue list of brpc project on github every day, and be responsible for the problem handling&lt;/li>
+&lt;li>Including marking the issue, replying to the issue, closing the issue, etc.&lt;/li>
+&lt;li>Determine whether the issue is a long-term Issue. If so, mark it as Pending
+Determine the type of Issue, e.g. bug, enhancement, discussion, etc&lt;/li>
+&lt;li>Assign issues to contributors who are familiar with the module (ask who is responsible in the wechat group)&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-the-rotation-time-is-one-week">2. The rotation time is one week&lt;/h3>
+&lt;ul>
+&lt;li>From Monday morning to Sunday night&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-needed-at-the-end-of-on-call">3. Needed at the end of On Call&lt;/h3>
+&lt;ul>
+&lt;li>Write a weekly value report and send it to the &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> email group&lt;/li>
+&lt;li>Update value weekly record (brpc-website)&lt;/li>
+&lt;li>Remind the next shift student&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-on-call-order">4. On Call Order&lt;/h3>
+&lt;ul>
+&lt;li>Zhu Jiashun @zyearn&lt;/li>
+&lt;li>Li Lei @lorinlee&lt;/li>
+&lt;li>Wang Weibing @wwbmmm&lt;/li>
+&lt;li>CAI Daojin @cdjingit&lt;/li>
+&lt;li>He Lei @TousakaRin&lt;/li>
+&lt;li>Shuai Liu @serverglen&lt;/li>
+&lt;li>Huixxi @Huixxi&lt;/li>
+&lt;/ul>
+&lt;h3 id="5-on-call-record">5. On Call Record&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Date (Month/Day/year)&lt;/th>
+&lt;th>Name&lt;/th>
+&lt;th>report&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>06/21/2021 to 06/27/2021&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/czolsqo80jzsytqc7dp37knqwxnkymx1">https://lists.apache.org/thread/czolsqo80jzsytqc7dp37knqwxnkymx1&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/28/2021 to 07/04/2021&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/c05fcjdjh7473ho1ylyl98mxscmnkbv0">https://lists.apache.org/thread/c05fcjdjh7473ho1ylyl98mxscmnkbv0&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>07/05/2021 - 07/12/2021&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/hz1vn7358v5fslglg2cl4g8x0wtxy4lv">https://lists.apache.org/thread/hz1vn7358v5fslglg2cl4g8x0wtxy4lv&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/16/2021 - 08/22/2021&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/g36jtjc3v75lfoc7m3ynzplgbqlsjjrd">https://lists.apache.org/thread/g36jtjc3v75lfoc7m3ynzplgbqlsjjrd&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/23/2021 - 08/29/2021&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/2098ndgdy6fs2b1s8tywpmz47n5swh29">https://lists.apache.org/thread/2098ndgdy6fs2b1s8tywpmz47n5swh29&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/30/2021 - 09/05/2021&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/wjxdomg7fp75dc0n0rmh37bkwd8w7myv">https://lists.apache.org/thread/wjxdomg7fp75dc0n0rmh37bkwd8w7myv&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/06/2021 - 09/12/2021&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/cwjtocpjbqjgndog53rqw8gs6f9c0rmo">https://lists.apache.org/thread/cwjtocpjbqjgndog53rqw8gs6f9c0rmo&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/20/2021 - 09/26/2021&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/p779y43hogv7ftckc4cqx006gv9j65r8">https://lists.apache.org/thread/p779y43hogv7ftckc4cqx006gv9j65r8&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/27/2021 - 10/03/2021&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/ync12fx2dwjb2l3p4yck0kodmkgzz7wd">https://lists.apache.org/thread/ync12fx2dwjb2l3p4yck0kodmkgzz7wd&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/13/2021 - 12/19/2021&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/mvclsy79859mrbdso1xzm6y7yz3lg6w0">https://lists.apache.org/thread/mvclsy79859mrbdso1xzm6y7yz3lg6w0&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/24/2022 - 02/06/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/ttgqnw4hfw0qnb7swvnn2kxb5b9hkdbo">https://lists.apache.org/thread/ttgqnw4hfw0qnb7swvnn2kxb5b9hkdbo&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/10/2022 - 04/16/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/0l67lqnw0l6rgfwkvhrc168prwr7fp60">https://lists.apache.org/thread/0l67lqnw0l6rgfwkvhrc168prwr7fp60&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/17/2022 - 04/24/2022&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/xwkpyonndgtp8tq4c9v4yfowqx7fg9gl">https://lists.apache.org/thread/xwkpyonndgtp8tq4c9v4yfowqx7fg9gl&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/25/2022 - 05/01/2022&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/cx7t1glptr7x7posxstsb1691h4m4mbl">https://lists.apache.org/thread/cx7t1glptr7x7posxstsb1691h4m4mbl&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>05/02/2022 - 05/15/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/tgyqkhh6fqgyzcn5d56kt46hk978wogx">https://lists.apache.org/thread/tgyqkhh6fqgyzcn5d56kt46hk978wogx&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/06/2022 - 06/12/2022&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/s19p7ygnsj0bknfjvrh0wlf1mbgstxbk">https://lists.apache.org/thread/s19p7ygnsj0bknfjvrh0wlf1mbgstxbk&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/13/2022 - 06/19/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/tvqjyz6rh7jb1zcclx0lh6zrcsf9ykxr">https://lists.apache.org/thread/tvqjyz6rh7jb1zcclx0lh6zrcsf9ykxr&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>07/25/2022 - 07/31/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/83scwkkfxrp6kkkoltbrn1fthfy3w0qz">https://lists.apache.org/thread/83scwkkfxrp6kkkoltbrn1fthfy3w0qz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/08/2022 - 08/14/2022&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jj16rzfh34yrt6o0xqfdz9wtdtzxzswq">https://lists.apache.org/thread/jj16rzfh34yrt6o0xqfdz9wtdtzxzswq&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/15/2022 - 08/21/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jp69sm7c8fs3dkdd828qk0fsojqwwz6h">https://lists.apache.org/thread/jp69sm7c8fs3dkdd828qk0fsojqwwz6h&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/05/2022 - 09/12/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/4jjk2hxw9s2wskccclqb8fvpqxqffnlb">https://lists.apache.org/thread/4jjk2hxw9s2wskccclqb8fvpqxqffnlb&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/12/2022 - 09/18/2022&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/8mo7zl0l2yrd8tp4v3kx86rnlyfk6wz4">https://lists.apache.org/thread/8mo7zl0l2yrd8tp4v3kx86rnlyfk6wz4&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/19/2022 - 09/25/2022&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/qlkr7cmwow3ob47dt80tpx0zrgzg7bdm">https://lists.apache.org/thread/qlkr7cmwow3ob47dt80tpx0zrgzg7bdm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/26/2022 - 10/09/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/b0lwr8wyflmhqlnf0kkh1j30tgt5qw54">https://lists.apache.org/thread/b0lwr8wyflmhqlnf0kkh1j30tgt5qw54&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/10/2022 - 10/16/2022&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/y8sgbprxt21j6r0812dlftosfov6pbgk">https://lists.apache.org/thread/y8sgbprxt21j6r0812dlftosfov6pbgk&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/17/2022 - 10/23/2022&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/qn2270p9qsrglkh7oy013ts1zk5rlhwx">https://lists.apache.org/thread/qn2270p9qsrglkh7oy013ts1zk5rlhwx&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/24/2022 - 10/30/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/k74155opmwmopgtsqo6p79z9q0f0sv8j">https://lists.apache.org/thread/k74155opmwmopgtsqo6p79z9q0f0sv8j&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/31/2022 - 11/06/2022&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/t4z49yt7ymp4vr5sms0m4cpoo94db4oz">https://lists.apache.org/thread/t4z49yt7ymp4vr5sms0m4cpoo94db4oz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/14/2022 - 11/20/2022&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/nq50fp79ox3follc7gxp814cvcqnmqzz">https://lists.apache.org/thread/nq50fp79ox3follc7gxp814cvcqnmqzz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/21/2022 - 11/27/2022&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/57kzov5g3j4vv6l2zcyw0msm36qglc8k">https://lists.apache.org/thread/57kzov5g3j4vv6l2zcyw0msm36qglc8k&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/28/2022 - 12/04/2022&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/92hbzcd662slj75v3ndjf69o1dgsnd6o">https://lists.apache.org/thread/92hbzcd662slj75v3ndjf69o1dgsnd6o&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/05/2022 - 12/11/2022&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/99o15h9hk5dd73jv8wyp49l8mbw0j611">https://lists.apache.org/thread/99o15h9hk5dd73jv8wyp49l8mbw0j611&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/19/2022 - 12/25/2022&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/g1stjjo1mc9ds47do6gosrw5k6wwb9mj">https://lists.apache.org/thread/g1stjjo1mc9ds47do6gosrw5k6wwb9mj&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/26/2022 - 01/01/2023&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/3xw1gkobqmvr6oo375x3gsfcqvg80n23">https://lists.apache.org/thread/3xw1gkobqmvr6oo375x3gsfcqvg80n23&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/02/2023 - 01/08/2023&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/sm4f209c8ltols04gpmzo386b02dyc9s">https://lists.apache.org/thread/sm4f209c8ltols04gpmzo386b02dyc9s&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/09/2023 - 01/15/2023&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/fydjz4h88omsrb7fzw65wl64kh5r520s">https://lists.apache.org/thread/fydjz4h88omsrb7fzw65wl64kh5r520s&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/16/2023 - 01/29/2023&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/k5bb4pn2v23dksmwpwqphzlc4bd92ndr">https://lists.apache.org/thread/k5bb4pn2v23dksmwpwqphzlc4bd92ndr&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/30/2023 - 02/05/2023&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/4scwpdh163l92czm5pvc7ox78n44mrn4">https://lists.apache.org/thread/4scwpdh163l92czm5pvc7ox78n44mrn4&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/13/2023 - 02/19/2023&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jwynp880hdhcfkqwq7thsm05y037wzy5">https://lists.apache.org/thread/jwynp880hdhcfkqwq7thsm05y037wzy5&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/27/2023 - 03/05/2023&lt;/td>
+&lt;td>Li Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/94ndftsvooydfnn8hdddv294pp0tfvdm">https://lists.apache.org/thread/94ndftsvooydfnn8hdddv294pp0tfvdm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/06/2023 - 03/12/2023&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/bv3qw5w8gj9xs576fplxqhktopkbk7md">https://lists.apache.org/thread/bv3qw5w8gj9xs576fplxqhktopkbk7md&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/27/2023 - 04/03/2023&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/fk37cn8r5pd1y10vjvzvkl211b67vn4q">https://lists.apache.org/thread/fk37cn8r5pd1y10vjvzvkl211b67vn4q&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/04/2023 - 04/10/2023&lt;/td>
+&lt;td>Xiguo Hu&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/p8f5knxkohj1kw5g9wb9hfbw2bjzjs3r">https://lists.apache.org/thread/p8f5knxkohj1kw5g9wb9hfbw2bjzjs3r&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item></channel></rss>

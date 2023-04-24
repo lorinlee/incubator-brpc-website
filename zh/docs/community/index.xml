@@ -1,0 +1,974 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bRPC – 社区</title><link>https://brpc.apache.org/zh/docs/community/</link><description>Recent content in 社区 on bRPC</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Thu, 12 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://brpc.apache.org/zh/docs/community/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: 社区</title><link>https://brpc.apache.org/zh/docs/community/community/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/community/</guid><description>
+&lt;!--
+{% comment %}
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements. See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to you under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License. You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+{% endcomment %}
+-->
+&lt;h2 id="apache-brpc-社区">Apache bRPC 社区&lt;/h2>
+&lt;p>每个志愿者项目的力量都来自参与其中的人。我们邀请您尽可能多或少地参与。&lt;/p>
+&lt;p>你可以：&lt;/p>
+&lt;ul>
+&lt;li>使用我们的项目并提供反馈。&lt;/li>
+&lt;li>向我们提供用例。&lt;/li>
+&lt;li>报告错误并提交补丁。&lt;/li>
+&lt;li>贡献代码、测试用例和文档。&lt;/li>
+&lt;/ul>
+&lt;p>更多有关信息，请访问&lt;a href="../contributing/">贡献&lt;/a>页面。&lt;/p>
+&lt;h3 id="问题追踪">问题追踪&lt;/h3>
+&lt;h4 id="bug报告">Bug报告&lt;/h4>
+&lt;p>发现bug? 在&lt;a href="https://github.com/apache/brpc/issues">问题追踪&lt;/a>页面中提交问题。&lt;/p>
+&lt;p>在提交问题之前，请：&lt;/p>
+&lt;ul>
+&lt;li>验证该错误是否确实存在。&lt;/li>
+&lt;li>搜索问题追踪器，以确认没有报告您发现的错误的现有问题。&lt;/li>
+&lt;li>考虑自己在bRPC的源代码中跟踪bug并提交一个补丁和bug报告。这对bRPC开发人员来说是一个很好的省时方法，并且有助于确保bug能够快速修复。&lt;/li>
+&lt;/ul>
+&lt;h4 id="功能请求">功能请求&lt;/h4>
+&lt;p>我们也欢迎对新功能的增强请求。请求越具体，理由越充分，它被纳入未来版本的可能性就越大。&lt;/p>
+&lt;p>&lt;a href="https://github.com/apache/brpc/issues">https://github.com/apache/brpc/issues&lt;/a>&lt;/p>
+&lt;h3 id="源代码">源代码&lt;/h3>
+&lt;p>可以通过github上的&lt;a href="https://github.com/apache/brpc">源代码库&lt;/a>访问项目源代码。&lt;/p>
+&lt;h3 id="网站源代码">网站源代码&lt;/h3>
+&lt;p>可以通过github上的&lt;a href="https://github.com/apache/brpc-website">网站源代码库&lt;/a>访问项目网站源代码。&lt;/p></description></item><item><title>Docs: 邮件列表</title><link>https://brpc.apache.org/zh/docs/community/mailing_list/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/mailing_list/</guid><description>
+&lt;h3 id="关于邮件列表">关于邮件列表&lt;/h3>
+&lt;p>邮件列表（Mailing List）是我们公开讨论并记录的地方，在使用 bRPC 的过程中，如果您发现任何问题，有新的想法、建议都可以通过 Apache 邮件列表参与到 bRPC 的社区建设中。&lt;/p>
+&lt;p>如果你有一个特定的问题想要问，建议使用 &lt;a href="https://github.com/apache/brpc/issues/new/choose">GitHub Issue&lt;/a> 报 Bug 或提需求，这是一种更有效率的方式。&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="dev@brpc.apache.org">dev@brpc.apache.org&lt;/a>适用于希望为bRPC贡献代码的人。&lt;a href="mailto:dev-subscribe@brpc.apache.org?subject=send%20this%20email%20to%20subscribe">订阅&lt;/a>, &lt;a href="mailto:dev-unsubscribe@brpc.apache.org?subject=send%20this%20email%20to%20unsubscribe">取消订阅&lt;/a>, &lt;a href="https://www.mail-archive.com/dev@brpc.apache.org/">存档&lt;/a>&lt;/li>
+&lt;li>&lt;a href="commits@brpc.apache.org">commits@brpc.apache.org&lt;/a>用于向bRPC提交消息和修补程序。&lt;a href="mailto:commits-subscribe@brpc.apache.org?subject=send%20this%20email%20to%20subscribe">订阅&lt;/a>, &lt;a href="mailto:commits-unsubscribe@brpc.apache.org?subject=send%20this%20email%20to%20unsubscribe">取消订阅&lt;/a>, &lt;a href="https://www.mail-archive.com/commits@brpc.apache.org/">存档&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="如何订阅">如何订阅&lt;/h3>
+&lt;h5 id="1-发送订阅邮件">1. 发送订阅邮件&lt;/h5>
+&lt;p>打开自己的邮箱，新建邮件，向&lt;a href="mailto:dev-subscribe@brpc.apache.org?subject=send%20this%20email%20to%20subscribe">dev-subscribe@brpc.apache.org&lt;/a>发送一封邮件（邮件主题和内容任意）。&lt;/p>
+&lt;h5 id="2-接收来自-dev-helpbrpcapacheorg-的确认邮件">2. 接收来自 &lt;a href="mailto:dev-help@brpc.apache.org">dev-help@brpc.apache.org&lt;/a> 的确认邮件&lt;/h5>
+&lt;p>执行完第一步之后，您将收到一封来自 &lt;a href="mailto:dev-help@brpc.apache.org">dev-help@brpc.apache.org&lt;/a> 的确认邮件，邮件内容如下图所示（如果长时间未能收到，请确认该邮件是否已被拦截，或已经被自动归入“订阅邮件”、“垃圾邮件”、“推广邮件”等文件夹）。&lt;/p>
+&lt;h5 id="3-回复确认邮件">3. 回复确认邮件&lt;/h5>
+&lt;p>针对上一步接收到的邮件，直接回复该邮件 或者 新建一封收件人为上一步中的回复地址的邮件均可，内容主题不限。&lt;/p>
+&lt;h5 id="4-接收欢迎邮件">4. 接收欢迎邮件&lt;/h5>
+&lt;p>完成第三步之后，将会受到一封标题为WELCOME to &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> 的欢迎邮件。至此，订阅邮件列表的工作已经完成了，社区的动态都会通过邮件的方式通知您。&lt;/p>
+&lt;h5 id="5-发起邮件讨论可选">5. 发起邮件讨论（可选）&lt;/h5>
+&lt;p>成功订阅邮件列表后，若想发起讨论，直接往 &lt;a href="mailto:dev@brpc.apache.org">dev@brpc.apache.org&lt;/a> 发送邮件即可，所有订阅了邮件列表的人都会收到邮件。&lt;/p></description></item><item><title>Docs: Contribute指南</title><link>https://brpc.apache.org/zh/docs/community/contributing/</link><pubDate>Tue, 13 Sep 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/contributing/</guid><description>
+&lt;p>如果你遇到问题或需要新功能，欢迎&lt;a href="https://github.com/brpc/brpc/issues/new/choose">创建issue&lt;/a>。&lt;/p>
+&lt;p>如果你可以解决某个&lt;a href="https://github.com/brpc/brpc/issues">issue&lt;/a>, 欢迎发送PR。&lt;/p>
+&lt;p>发送PR前请确认：&lt;/p>
+&lt;ul>
+&lt;li>完全遵守&lt;a href="https://www.apache.org/foundation/policies/conduct.html">Apache软件基金会行为准则&lt;/a>。&lt;/li>
+&lt;li>你的代码符合&lt;a href="https://google.github.io/styleguide/cppguide.html">google C++代码规范&lt;/a>。缩进最好为4个空格。&lt;/li>
+&lt;li>代码出现的位置和其定位相符。比如对于某特定协议的扩展代码不该出现在server.cpp, channel.cpp这些较为通用的类中，而一些非常通用的改动也不该深藏在某个特定协议的cpp中。&lt;/li>
+&lt;li>有对应的单测代码。&lt;/li>
+&lt;/ul>
+&lt;p>提交PR后请确认：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://app.travis-ci.com/github/apache/brpc/pull_requests">travis-ci&lt;/a>成功通过。&lt;/li>
+&lt;/ul></description></item><item><title>Docs: Committer指南</title><link>https://brpc.apache.org/zh/docs/community/committer/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/committer/</guid><description>
+&lt;h1 id="简介">简介&lt;/h1>
+&lt;p>Apache社区的参与者具有以下角色：&lt;strong>贡献者（Contributor）&lt;/strong>、&lt;strong>提交者（Committer）&lt;/strong> 和 &lt;strong>PMC（项目成员委员会）成员&lt;/strong>。&lt;/p>
+&lt;p>当个人贡献被项目接受时，他/她将自动成为贡献者。
+Committer 和 PMC 成员在共识投票后由 PMC 邀请。&lt;/p>
+&lt;p>在这里，我们将仅讨论 bRPC 社区邀请 Committer 和 PMC 成员的一些准则，以便能够有效地估计开发者在社区中的参与度。&lt;/p>
+&lt;h3 id="the-apache-way">The Apache Way：&lt;/h3>
+&lt;p>在任何人成为 Apache 项目的 Committer 或 PMC 成员之前，他们应该首先了解“&lt;a href="https://apache.org/theapacheway/index.html">什么是TheApacheWay&lt;/a>”。&lt;/p>
+&lt;h3 id="提交者指南">提交者指南：&lt;/h3>
+&lt;p>有重要的功能贡献（不限于代码），或长期参与社区建设（错误修复、代码审查、文档翻译和校对、社区外展等）
+参与公共领域的社区讨论并产生积极影响。&lt;/p>
+&lt;h3 id="pmc会员指南">PMC会员指南：&lt;/h3>
+&lt;p>能够积极参与社区维护工作，如回复邮件、组织wiki、发布管理、代码审查等。
+认同 Apache 社区理念，能够积极推动社区发展。&lt;/p>
+&lt;h3 id="同行评审">同行评审：&lt;/h3>
+&lt;p>上述要求具有很强的主观性，无法量化。因此，PMC需要形成定期审核机制，对符合条件的人员进行讨论和邀请。&lt;/p>
+&lt;p>每 1-2 个月进行一次审查，以提名和讨论合适的候选人&lt;/p>
+&lt;hr>
+&lt;h1 id="具体流程">具体流程&lt;/h1>
+&lt;h2 id="1-如何发展committer">1. 如何发展committer&lt;/h2>
+&lt;h3 id="前置条件">前置条件&lt;/h3>
+&lt;ol>
+&lt;li>贡献者commit数量达到10个以上&lt;/li>
+&lt;li>贡献者个人有意愿接受邀请成为committer&lt;/li>
+&lt;li>贡献者订阅dev@brpc.apache.org，并发邮件介绍自己&lt;/li>
+&lt;/ol>
+&lt;h3 id="成为committer的路程">成为committer的路程&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>提名者在private@brpc中发起讨论和投票，投票通过即OK （最少3+1， +1 &amp;gt; -1)，投票邮件模版https://community.apache.org/newcommitter.html#committer-vote-template&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>提名者发送close vote邮件给private@brpc和private@incubator ,标题可以为subject [RESULT][VOTE]，close邮件模版https://community.apache.org/newcommitter.html#close-vote&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>提名者给被提名者发invite letter，并得到回复后再提示他提交ICLA，模版见https://community.apache.org/newcommitter.html#Committer%20Invite%20Template&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>被提名者填写&lt;a href="https://www.apache.org/licenses/contributor-agreements.html">CLA&lt;/a>, 个人贡献者需要下载&lt;a href="https://www.apache.org/licenses/icla.pdf">ICLA&lt;/a>填写个人信息并签名，发送电子版给 &lt;a href="mailto:secretary@apache.org">secretary@apache.org&lt;/a>。（注意：ICLA需要填写信息完全，包括邮寄地址和签名，否则会被ASF的秘书打回）个人信息填写项（除签名外）可以使用 PDF 阅读器或浏览器填写，填写后保存进行签名。签名方式支持：&lt;/p>
+&lt;ul>
+&lt;li>打印 pdf 文件，手写签名后扫描为电子版；&lt;/li>
+&lt;li>使用支持手写的设备进行电子签名；&lt;/li>
+&lt;li>使用 &lt;code>gpg&lt;/code> 进行电子签名，即对填写好个人基本信息的 pdf 文件进行操作（需要提前生成与登记邮箱匹配的公钥/密钥对）：&lt;code>gpg --armor --detach-sign icla.pdf&lt;/code>；&lt;/li>
+&lt;li>使用 &lt;code>DocuSign&lt;/code> 进行签名；&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>提名者发送announce邮件到dev@brpc.apache.org&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="如何赋予committer在github上的权限">如何赋予committer在github上的权限&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>加为committer
+&lt;a href="https://whimsy.apache.org/roster/ppmc/brpc">https://whimsy.apache.org/roster/ppmc/brpc&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>让他设置github id
+&lt;a href="https://id.apache.org/">https://id.apache.org/&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>让他访问该网址，获得github的权限
+&lt;a href="https://gitbox.apache.org/setup/">https://gitbox.apache.org/setup/&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="apache-官网new-committer相关的文档">Apache 官网new committer相关的文档&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;a href="https://community.apache.org/newcommitter.html">https://community.apache.org/newcommitter.html&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://infra.apache.org/new-committers-guide.html">https://infra.apache.org/new-committers-guide.html&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://juejin.cn/post/6844903788982042632">https://juejin.cn/post/6844903788982042632&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="suggested-steps-from-secretaryapacheorg">Suggested steps from &lt;a href="mailto:secretary@apache.org">secretary@apache.org&lt;/a>&lt;/h3>
+&lt;p>Please do these things:&lt;/p>
+&lt;ol>
+&lt;li>Hold the discussion and vote on your private@ list. This avoids any issues related to personnel, which should remain private.&lt;/li>
+&lt;li>If the vote is successful, announce the result to the private@ list with a new email thread with subject [RESULT][VOTE]. This makes it easier for secretary to find the result of the vote in order to request the account at the time of the filing of the ICLA.&lt;/li>
+&lt;li>Only if the candidate accepts committership, announce the new committer on your dev@ list.&lt;/li>
+&lt;/ol>
+&lt;p>Doing these things will make everyone&amp;rsquo;s job easier.&lt;/p>
+&lt;h2 id="2-如何把committer变成为ppmc">2. 如何把committer变成为PPMC&lt;/h2>
+&lt;h3 id="流程参考apache官网文档">流程参考：Apache官网文档&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://incubator.apache.org/guides/ppmc.html#voting_in_a_new_ppmc_member">https://incubator.apache.org/guides/ppmc.html#voting_in_a_new_ppmc_member&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://community.apache.org/newcommitter.html">https://community.apache.org/newcommitter.html&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://incubator.apache.org/guides/ppmc.html#podling_project_management_committee_ppmc">https://incubator.apache.org/guides/ppmc.html#podling_project_management_committee_ppmc&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="实际流程">实际流程&lt;/h3>
+&lt;ol>
+&lt;li>在private@brpc中发起讨论，如果没有反对，则继续&lt;/li>
+&lt;li>在private@brpc中发起投票&lt;/li>
+&lt;li>在private@brpc中发邮件，结束投票，并通知private@incubator.apache.org&lt;/li>
+&lt;li>在private@brpc中和dev中announce new PPMC&lt;/li>
+&lt;li>设定他的权限，通过访问https://whimsy.apache.org/roster/ppmc/brpc&lt;/li>
+&lt;li>帮他订阅private邮件组，参见https://whimsy.apache.org/committers/moderationhelper.cgi&lt;/li>
+&lt;/ol></description></item><item><title>Docs: Release指南</title><link>https://brpc.apache.org/zh/docs/community/release/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/release/</guid><description>
+&lt;h1 id="brpc-发布apache-release-版本流程step-by-step">brpc 发布apache release 版本流程step by step&lt;/h1>
+&lt;p>概述：分为如下几个步骤&lt;/p>
+&lt;ol>
+&lt;li>事前准备：包括生成签名需要的key，github拉取发布分支、打tag，修改version文件等&lt;/li>
+&lt;li>发布软件包：包括制作source tarball，签名，上传到制定地点并验证&lt;/li>
+&lt;li>投票：包括在dev@brpc邮件群里投票，以及在general@incubator.apache.org邮件群里投票&lt;/li>
+&lt;li>发版通告：包括更新brpc网站，发邮件，发微信公众号公告，合并发布分支到master分支&lt;/li>
+&lt;/ol>
+&lt;h2 id="签名准备">签名准备&lt;/h2>
+&lt;h3 id="1-安装-gpg">1. 安装 GPG&lt;/h3>
+&lt;p>在&lt;a href="https://www.gnupg.org/download/index.html">GnuPG官网&lt;/a>下载安装包。 GnuPG的1.x版本和2.x版本的命令有细微差别，下列说明以&lt;code>GnuPG-2.3.1&lt;/code>版本（OSX）为例。&lt;/p>
+&lt;p>安装完成后，执行以下命令查看版本号。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-创建-key">2. 创建 key&lt;/h3>
+&lt;p>安装完成后，执行以下命令创建key。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --full-gen-key
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>根据提示完成创建key，注意邮箱要使用Apache邮件地址，&lt;code>Real Name&lt;/code>使用姓名Pinyin、Apache ID或GitHub ID等均可：&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg (GnuPG) 2.3.1; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Please select what kind of key you want:
+(1) RSA and RSA
+(2) DSA and Elgamal
+(3) DSA (sign only)
+(4) RSA (sign only)
+(9) ECC (sign and encrypt) *default*
+(10) ECC (sign only)
+(14) Existing key from card
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+0 = key does not expire
+&amp;lt;n&amp;gt; = key expires in n days
+&amp;lt;n&amp;gt;w = key expires in n weeks
+&amp;lt;n&amp;gt;m = key expires in n months
+&amp;lt;n&amp;gt;y = key expires in n years
+Key is valid for? (0) 0
+Key does not expire at all
+Is this correct? (y/N) y
+GnuPG needs to construct a user ID to identify your key.
+Real name: LorinLee
+Email address: lorinlee@apache.org
+Comment: lorinlee&amp;#39;s key
+You selected this USER-ID:
+&amp;#34;LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;&amp;#34;
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+You need a Passphrase to protect your secret key. # 输入密码
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: key 92E18A11B6585834 marked as ultimately trusted
+gpg: revocation certificate stored as &amp;#39;/Users/lilei/.gnupg/openpgp-revocs.d/C30F211F071894258497F46392E18A11B6585834.rev&amp;#39;
+public and secret key created and signed.
+pub rsa4096 2021-10-17 [SC]
+C30F211F071894258497F46392E18A11B6585834
+uid LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;h3 id="3-查看生成的key">3. 查看生成的key&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --list-keys
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行结果：&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg: checking the trustdb
+gpg: marginals needed: 3 completes needed: 1 trust model: pgp
+gpg: depth: 0 valid: 2 signed: 0 trust: 0-, 0q, 0n, 0m, 0f, 2u
+/Users/lilei/.gnupg/pubring.kbx
+----------------------------------
+pub rsa4096 2021-10-17 [SC]
+C30F211F071894258497F46392E18A11B6585834
+uid [ultimate] LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;p>其中 &lt;code>C30F211F071894258497F46392E18A11B6585834&lt;/code> 为公钥ID。&lt;/p>
+&lt;h3 id="4-将公钥公布到服务器">4. 将公钥公布到服务器&lt;/h3>
+&lt;p>命令如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --keyserver hkp://pgp.mit.edu --send-key C30F211F071894258497F46392E18A11B6585834
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5-生成-fingerprint-并上传到-apache-用户信息中">5. 生成 fingerprint 并上传到 apache 用户信息中&lt;/h3>
+&lt;p>由于公钥服务器没有检查机制，任何人都可以用你的名义上传公钥，所以没有办法保证服务器上的公钥的可靠性。通常，你可以在⽹站上公布一个公钥指纹，让其他⼈核对下载到的公钥是否为真。fingerprint参数生成公钥指纹。&lt;/p>
+&lt;p>执行如下命令查看 fingerprint：&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg --fingerprint lorinlee（用户ID）
+&lt;/code>&lt;/pre>&lt;p>输出如下：&lt;/p>
+&lt;pre tabindex="0">&lt;code>/Users/lilei/.gnupg/pubring.kbx
+----------------------------------
+pub rsa4096 2021-10-17 [SC]
+C30F 211F 0718 9425 8497 F463 92E1 8A11 B658 5834
+uid [ultimate] LorinLee (lorinlee&amp;#39;s key) &amp;lt;lorinlee@apache.org&amp;gt;
+sub rsa4096 2021-10-17 [E]
+&lt;/code>&lt;/pre>&lt;p>将上面的 fingerprint &lt;code>C30F 211F 0718 9425 8497 F463 92E1 8A11 B658 5834&lt;/code> 粘贴到⾃己Apache⽤户信息 &lt;a href="https://id.apache.org">https://id.apache.org&lt;/a> 的&lt;code>OpenPGP Public Key Primary Fingerprint:&lt;/code>字段中。&lt;/p>
+&lt;h2 id="发布包准备">发布包准备&lt;/h2>
+&lt;h3 id="1-拉出发版分支">1. 拉出发版分支&lt;/h3>
+&lt;p>如果是发布新的2位版本，如&lt;code>1.0.0&lt;/code>，则需要从master拉出新的分支&lt;code>release-1.0&lt;/code>。&lt;/p>
+&lt;p>如果是在已有的2位版本上发布新的3位版本，如&lt;code>1.0.1&lt;/code>版本，则只需要在已有的&lt;code>release-1.0&lt;/code>分支上修改加上要发布的内容。&lt;/p>
+&lt;p>发版过程中的操作都在release分支（如&lt;code>release-1.0&lt;/code>）上操作，如果发版过程发现代码有问题需要修改，也在该分支上进行修改。发版完成后，将该分支合回master分支。&lt;/p>
+&lt;h3 id="2-编辑-release_version-文件">2. 编辑 RELEASE_VERSION 文件&lt;/h3>
+&lt;h4 id="更新release_version文件">更新RELEASE_VERSION文件&lt;/h4>
+&lt;p>编辑项目根目录下&lt;code>RELEASE_VERSION&lt;/code>文件，更新版本号，并提交至代码仓库，本文以&lt;code>1.0.0&lt;/code>版本为例，文件内容为：&lt;/p>
+&lt;pre tabindex="0">&lt;code>1.0.0
+&lt;/code>&lt;/pre>&lt;h4 id="更新cmakeliststxt文件">更新CMakeLists.txt文件&lt;/h4>
+&lt;p>编辑项目根目录下&lt;code>CMakeLists.txt&lt;/code>文件，更新版本号，并提交至代码仓库，本文以&lt;code>1.0.0&lt;/code>版本为例，修改BRPC_VERSION为：&lt;/p>
+&lt;pre tabindex="0">&lt;code>set(BRPC_VERSION 1.0.0)
+&lt;/code>&lt;/pre>&lt;h4 id="更新packagerpmbrpcspec文件">更新/package/rpm/brpc.spec文件&lt;/h4>
+&lt;p>编辑项目根目录下&lt;code>/package/rpm/brpc.spec&lt;/code>文件，更新版本号，并提交至代码仓库，本文以&lt;code>1.0.0&lt;/code>版本为例，修改Version为：&lt;/p>
+&lt;pre tabindex="0">&lt;code>Version: 1.0.0
+&lt;/code>&lt;/pre>&lt;h3 id="3-创建发布-tag">3. 创建发布 tag&lt;/h3>
+&lt;p>拉取发布分支，并推送tag&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git clone -b release-1.0 git@github.com:apache/brpc.git ~/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git tag -a 1.0.0 -m &lt;span style="color:#4e9a06">&amp;#34;release 1.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git push origin --tags
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-打包发布包">4. 打包发布包&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git archive --format&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>tar 1.0.0 --prefix&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>apache-brpc-1.0.0-incubating-src/ &lt;span style="color:#000;font-weight:bold">|&lt;/span> gzip &amp;gt; apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5-生成签名文件">5. 生成签名文件&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg -u lorinlee@apache.org --armor --output apache-brpc-1.0.0-incubating-src.tar.gz.asc --detach-sign apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gpg --verify apache-brpc-1.0.0-incubating-src.tar.gz.asc apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="6-生成哈希文件">6. 生成哈希文件&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sha512sum apache-brpc-1.0.0-incubating-src.tar.gz &amp;gt; apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sha512sum --check apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="发布至apache-svn仓库">发布至Apache SVN仓库&lt;/h2>
+&lt;h3 id="1-检出-distdev-下的-brpc-仓库目录">1. 检出 dist/dev 下的 brpc 仓库目录&lt;/h3>
+&lt;p>如无本地工作目录，则先创建本地工作目录。将Apache SVN仓库克隆下来，username需要使用自己的Apache LDAP用户名&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir -p ~/brpc_svn/dev/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn --username&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>lorinlee co https://dist.apache.org/repos/dist/dev/incubator/brpc/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-添加gpg公钥">2. 添加GPG公钥&lt;/h3>
+&lt;p>仅第一次部署的账号需要添加，只要KEYS中包含已经部署过的账户的公钥即可。&lt;/p>
+&lt;pre tabindex="0">&lt;code>(gpg --list-sigs lorinlee &amp;amp;&amp;amp; gpg -a --export lorinlee) &amp;gt;&amp;gt; KEYS
+&lt;/code>&lt;/pre>&lt;h3 id="3-将待发布的代码包添加至svn目录">3. 将待发布的代码包添加至SVN目录&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir -p ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz.asc ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cp ~/brpc/apache-brpc-1.0.0-incubating-src.tar.gz.sha512 ~/brpc_svn/dev/brpc/1.0.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-提交svn">4. 提交SVN&lt;/h3>
+&lt;p>退回到上级目录，使用Apache LDAP账号提交SVN&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn add *
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn --username&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>lorinlee commit -m &lt;span style="color:#4e9a06">&amp;#34;release 1.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="检查发布结果">检查发布结果&lt;/h2>
+&lt;h3 id="1-检查sha512哈希">1. 检查sha512哈希&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sha512sum --check apache-brpc-1.0.0-incubating-src.tar.gz.sha512
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-检查gpg签名">2. 检查GPG签名&lt;/h3>
+&lt;p>首先导入发布人公钥。从svn仓库导入KEYS到本地环境。（发布版本的人不需要再导入，帮助做验证的人需要导入，用户名填发版人的即可）&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>curl https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS &amp;gt;&amp;gt; KEYS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gpg --import KEYS
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>设置信任该用户的签名，执行以下命令，填写发布人的用户名&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gpg --edit-key lorinlee
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出为&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg (GnuPG) 2.3.1; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Secret key is available.
+gpg&amp;gt; trust
+Please decide how far you trust this user to correctly verify other users&amp;#39; keys
+(by looking at passports, checking fingerprints from different sources, etc.)
+1 = I don&amp;#39;t know or won&amp;#39;t say
+2 = I do NOT trust
+3 = I trust marginally
+4 = I trust fully
+5 = I trust ultimately
+m = back to the main menu
+Your decision? 5
+Do you really want to set this key to ultimate trust? (y/N) y
+gpg&amp;gt; save
+&lt;/code>&lt;/pre>&lt;p>然后进行gpg签名检查。&lt;/p>
+&lt;pre tabindex="0">&lt;code>gpg --verify apache-brpc-1.0.0-incubating-src.tar.gz.asc apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/code>&lt;/pre>&lt;h3 id="3-检查发布内容">3. 检查发布内容&lt;/h3>
+&lt;h4 id="1-对比源码包与github上的tag内容差异">1. 对比源码包与github上的tag内容差异&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>curl -Lo tag-1.0.0.tar.gz https://github.com/apache/brpc/archive/refs/tags/1.0.0.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tar xvzf tag-1.0.0.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tar xvzf apache-brpc-1.0.0-incubating-src.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>diff -r brpc-1.0.0 apache-brpc-1.0.0-incubating-src
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="2-检查源码包的文件内容">2. 检查源码包的文件内容&lt;/h4>
+&lt;ul>
+&lt;li>检查源码包是否包含由于包含不必要文件，致使tarball过于庞大&lt;/li>
+&lt;li>存在LICENSE和NOTICE文件&lt;/li>
+&lt;li>NOTICE文件中的年份正确&lt;/li>
+&lt;li>只存在文本文件，不存在二进制文件&lt;/li>
+&lt;li>所有文件的开头都有ASF许可证&lt;/li>
+&lt;li>能够正确编译，单元测试可以通过&lt;/li>
+&lt;li>检查是否有多余文件或文件夹，例如空文件夹等&lt;/li>
+&lt;li>检查第三方依赖许可证：
+&lt;ul>
+&lt;li>第三方依赖的许可证兼容&lt;/li>
+&lt;li>所有第三方依赖的许可证都在LICENSE文件中声名&lt;/li>
+&lt;li>依赖许可证的完整版全部在license目录&lt;/li>
+&lt;li>如果依赖的是Apache许可证并且存在NOTICE文件，那么这些NOTICE文件也需要加入到版本的NOTICE文件中&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="在apache-brpc社区发起投票">在Apache brpc社区发起投票&lt;/h2>
+&lt;h3 id="1-投票阶段">1. 投票阶段&lt;/h3>
+&lt;ol>
+&lt;li>发起投票邮件到dev@brpc.apache.org。PPMC需要先按文档检查版本的正确性，然后再进行投票。经过至少72小时并统计到3个+1 PPMC member票后，即可进入下一阶段。&lt;/li>
+&lt;li>宣布投票结果，发起投票结果邮件到dev@brpc.apache.org。&lt;/li>
+&lt;/ol>
+&lt;h3 id="2-投票邮件模板">2. 投票邮件模板&lt;/h3>
+&lt;ol>
+&lt;li>Apache brpc 社区投票邮件模板&lt;/li>
+&lt;/ol>
+&lt;p>标题：&lt;/p>
+&lt;pre tabindex="0">&lt;code>[VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>正文：&lt;br>
+注：&lt;code>Release Commit ID&lt;/code>填写当前release发版分支最后一个commit的commit id。&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Apache brpc Community,
+This is a call for vote to release Apache brpc version
+1.0.0
+[Release Note]
+- xxx
+The release candidates:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0/
+Git tag for the release:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Release Commit ID:
+https://github.com/apache/brpc/commit/xxx
+Keys to verify the Release Candidate:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS
+The vote will be open for at least 72 hours or until the necessary number of
+votes are reached.
+Please vote accordingly:
+[ ] +1 approve
+[ ] +0 no opinion
+[ ] -1 disapprove with the reason
+PMC vote is +1 binding, all others are +1 non-binding.
+Checklist for reference:
+[ ] Download links are valid.
+[ ] Checksums and PGP signatures are valid.
+[ ] Source code distributions have correct names matching the current
+release.
+[ ] LICENSE and NOTICE files are correct for each brpc repo.
+[ ] All files have license headers if necessary.
+[ ] No compiled archives bundled in source archive.
+Regards,
+LorinLee
+&lt;/code>&lt;/pre>&lt;ol start="2">
+&lt;li>Apache brpc 社区宣布结果邮件模板&lt;/li>
+&lt;/ol>
+&lt;p>标题：&lt;/p>
+&lt;pre tabindex="0">&lt;code>[Result] [VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>正文：&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi all,
+The vote to release Apache brpc 1.0.0 has passed.
+The vote PASSED with 3 binding +1, 3 non binding +1 and no -1 votes:
+Binding votes:
+- xxx
+- yyy
+- zzz
+Non-binding votes:
+- aaa
+- bbb
+- ccc
+Vote thread: xxx (vote email link in https://lists.apache.org/)
+Thank you to all the above members to help us to verify and vote for the 1.0.0 release. We will move to IPMC voting shortly.
+Regards,
+LorinLee
+&lt;/code>&lt;/pre>&lt;h3 id="3-投票未通过">3. 投票未通过&lt;/h3>
+&lt;p>若社区投票未通过，则在release分支对代码仓库进行修改，重新打包，发起投票。&lt;/p>
+&lt;h2 id="在apache-incubator社区发起投票">在Apache Incubator社区发起投票&lt;/h2>
+&lt;h3 id="1-更新gpg签名">1. 更新GPG签名&lt;/h3>
+&lt;pre tabindex="0">&lt;code>svn delete https://dist.apache.org/repos/dist/release/incubator/brpc/KEYS -m &amp;#34;delete KEYS&amp;#34;
+svn cp https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS https://dist.apache.org/repos/dist/release/incubator/brpc/KEYS -m &amp;#34;update brpc KEYS&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>提交完svn后，访问 &lt;a href="https://downloads.apache.org/incubator/brpc/KEYS">https://downloads.apache.org/incubator/brpc/KEYS&lt;/a>，检查内容有没有更新，可能需要等几分钟时间，等内容更新了，再继续下一步。&lt;/p>
+&lt;h3 id="2-投票阶段">2. 投票阶段&lt;/h3>
+&lt;ol>
+&lt;li>发起投票邮件到general@incubator.apache.org。IPMC会进行投票。经过至少72小时并统计到3个+1 IPMC member票后，即可进入下一阶段。&lt;/li>
+&lt;li>宣布投票结果，发起投票结果邮件到general@incubator.apache.org。&lt;/li>
+&lt;/ol>
+&lt;h3 id="3-投票邮件模板">3. 投票邮件模板&lt;/h3>
+&lt;ol>
+&lt;li>Apache Incubator 社区投票邮件模板&lt;/li>
+&lt;/ol>
+&lt;p>标题：&lt;/p>
+&lt;pre tabindex="0">&lt;code>[VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>正文：&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Incubator Community,
+This is a call for a vote to release Apache brpc version
+1.0.0.
+The Apache brpc community has voted and approved the release of Apache
+brpc 1.0.0.
+We now kindly request the Incubator PMC members review and vote on this
+incubator release.
+brpc is an industrial-grade RPC framework with extremely high performance,
+and it supports multiple protocols, full rpc features, and has many
+convenient tools.
+brpc community vote thread: xxx
+Vote result thread: xxx
+The release candidate:
+https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0/
+This release has been signed with a PGP available here:
+https://downloads.apache.org/incubator/brpc/KEYS
+Git tag for the release:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Build guide and get started instructions can be found at:
+https://brpc.apache.org/docs/getting_started
+The vote will be open for at least 72 hours or until the necessary number
+of votes is reached.
+Please vote accordingly:
+[ ] +1 approve
+[ ] +0 no opinion
+[ ] -1 disapprove with the reason
+Regards,
+Lorin Lee
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;ol start="2">
+&lt;li>Apache Incubator 社区宣布结果邮件模板&lt;/li>
+&lt;/ol>
+&lt;p>标题：&lt;/p>
+&lt;pre tabindex="0">&lt;code>[Result] [VOTE] Release Apache brpc 1.0.0
+&lt;/code>&lt;/pre>&lt;p>正文：&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi Incubator Community,
+Thanks to everyone that participated. The vote to release Apache
+brpc version 1.0.0 in general@incubator.apache.org
+is now closed.
+Vote thread: xxx
+The vote PASSED with 3 binding +1, 3 non binding +1 and no -1 votes:
+Binding votes:
+- xxx
+- yyy
+- zzz
+Non-binding votes:
+- aaa
+- bbb
+- ccc
+Many thanks for all our mentors helping us with the release procedure,
+and all IPMC helped us to review and vote for Apache brpc release.
+We will proceed with publishing the approved artifacts and
+sending out the announcement soon.
+Regards,
+Lorin Lee
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;h2 id="完成发布">完成发布&lt;/h2>
+&lt;h3 id="1-将发布包从apache-svn仓库-distdev-移动至-distrelease">1. 将发布包从Apache SVN仓库 dist/dev 移动至 dist/release&lt;/h3>
+&lt;pre tabindex="0">&lt;code>svn mv https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0 https://dist.apache.org/repos/dist/release/incubator/brpc/1.0.0 -m &amp;#34;release brpc 1.0.0&amp;#34;
+&lt;/code>&lt;/pre>&lt;h3 id="2-github版本发布">2. Github版本发布&lt;/h3>
+&lt;p>在 &lt;a href="https://github.com/apache/brpc/tags">GitHub Releases 页面&lt;/a>的对应版本上点击，创建新的Release页面
+编辑版本号及版本说明，并点击 Publish release&lt;/p>
+&lt;h3 id="3-更新下载页面">3. 更新下载页面&lt;/h3>
+&lt;p>等待并确认新的发布版本同步至 Apache 镜像后，更新如下页面：&lt;a href="https://brpc.apache.org/docs/downloadbrpc/">https://brpc.apache.org/docs/downloadbrpc/&lt;/a>, 更新方式在 &lt;a href="https://github.com/apache/brpc-website/">https://github.com/apache/brpc-website/&lt;/a> 仓库中，注意中英文都要更新。&lt;/p>
+&lt;p>GPG签名文件和哈希校验文件的下载链接应该使用这个前缀：https://downloads.apache.org/incubator/brpc/&lt;/p>
+&lt;p>代码包的下载链接应该使用这个前缀：https://dlcdn.apache.org/incubator/brpc/&lt;/p>
+&lt;h3 id="4-发送邮件通知发布完成">4. 发送邮件通知发布完成&lt;/h3>
+&lt;p>发送邮件到dev@brpc.apache.org、general@incubator.apache.org、和announce@apache.org通知完成版本发布。&lt;/p>
+&lt;p>注意：发邮件账号必须使用&lt;strong>个人apache邮箱&lt;/strong>，且邮件内容必须是&lt;strong>纯文本格式&lt;/strong>（可在gmail选择&amp;quot;纯文本模式&amp;quot;）。announce@apache.org 邮件组需要经过人工审核才能送达，发出邮件后请耐心等待，一般会在一天之内通过。&lt;/p>
+&lt;p>通知邮件模板如下：&lt;/p>
+&lt;p>标题：&lt;/p>
+&lt;pre tabindex="0">&lt;code>[ANNOUNCE] Apache brpc 1.0.0 released
+&lt;/code>&lt;/pre>&lt;p>正文：&lt;br>
+注：&lt;code>Brief notes of this release&lt;/code>仅需列出本次发版的主要变更，且无需指出对应贡献人和PR编号，建议参考下之前的Announce邮件。&lt;/p>
+&lt;pre tabindex="0">&lt;code>Hi all,
+The Apache brpc community is glad to announce the new release
+of Apache brpc 1.0.0.
+brpc is an Industrial-grade RPC framework using C++ Language, which is
+often used in high performance systems such as Search, Storage,
+Machine learning, Advertisement, Recommendation etc.
+Brief notes of this release:
+- xxx
+- yyy
+- zzz
+More details regarding Apache brpc can be found at:
+http://brpc.apache.org/
+The release is available for download at:
+https://brpc.apache.org/docs/downloadbrpc/
+The release notes can be found here:
+https://github.com/apache/brpc/releases/tag/1.0.0
+Website: http://brpc.apache.org/
+brpc Resources:
+- Issue: https://github.com/apache/brpc/issues/
+- Mailing list: dev@brpc.apache.org
+- Documents: https://brpc.apache.org/docs/
+We would like to thank all contributors of the Apache brpc community and
+Incubating community who made this release possible!
+Best Regards,
+Apache brpc community
+&lt;/code>&lt;/pre>&lt;h3 id="发布微信公众号公告">发布微信公众号公告&lt;/h3>
+&lt;p>参考 &lt;a href="https://mp.weixin.qq.com/s/DeFhpAV_AYsn_Xd1ylPTSg">https://mp.weixin.qq.com/s/DeFhpAV_AYsn_Xd1ylPTSg&lt;/a>.&lt;/p>
+&lt;h3 id="更新master分支">更新master分支&lt;/h3>
+&lt;p>发版完成后，将release分支合并到master分支.&lt;/p></description></item><item><title>Docs: 贡献者列表</title><link>https://brpc.apache.org/zh/docs/community/committers/</link><pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/committers/</guid><description>
+&lt;h2 id="brrc-贡献者列表">bRRC 贡献者列表&lt;/h2>
+&lt;p>bRPC 的发展离不开其背后很多人的卓越贡献，感谢每一个人的帮助与支持，更希望以后能有更多的人助力 bRPC 的成长。&lt;/p>
+&lt;h3 id="pmc">PMC&lt;/h3>
+&lt;table class="table table-hover">
+&lt;tr>
+&lt;th>&lt;b>Photo&lt;/b>&lt;/th>
+&lt;th>&lt;b>Full Name&lt;/b>&lt;/th>
+&lt;th>&lt;b>Apache ID&lt;/b>&lt;/th>
+&lt;th>&lt;b>GitHub&lt;/b>&lt;/th>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/jamesge">&lt;img width="64" src="https://avatars.githubusercontent.com/u/6566535?v=4">&lt;/a>&lt;/td>
+&lt;td>James Ge&lt;/td>
+&lt;td>jamesge&lt;/td>
+&lt;td>&lt;a href="http://github.com/jamesge">jamesge&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/zyearn">&lt;img width="64" src="https://avatars.githubusercontent.com/u/4475779?v=4">&lt;/a>&lt;/td>
+&lt;td>Jiashun Zhu&lt;/td>
+&lt;td>jiashunzhu&lt;/td>
+&lt;td>&lt;a href="http://github.com/zyearn">zyearn&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/chenzhangyi">&lt;img width="64" src="https://avatars.githubusercontent.com/u/6805583?v=4">&lt;/a>&lt;/td>
+&lt;td>Zhangyi Chen&lt;/td>
+&lt;td>zychen&lt;/td>
+&lt;td>&lt;a href="http://github.com/chenzhangyi">chenzhangyi&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/old-bear">&lt;img width="64" src="https://avatars.githubusercontent.com/u/1525532?v=4">&lt;/a>&lt;/td>
+&lt;td>Bear Jiang&lt;/td>
+&lt;td>jrjbear&lt;/td>
+&lt;td>&lt;a href="http://github.com/old-bear">old-bear&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/ipconfigme">&lt;img width="64" src="https://avatars.githubusercontent.com/u/2500750?v=4">&lt;/a>&lt;/td>
+&lt;td>Yao Wang&lt;/td>
+&lt;td>fisherman&lt;/td>
+&lt;td>&lt;a href="http://github.com/ipconfigme">ipconfigme&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/tanzhongyi003">&lt;img width="64" src="https://avatars.githubusercontent.com/u/20179982?v=4">&lt;/a>&lt;/td>
+&lt;td>Jerry Tan&lt;/td>
+&lt;td>jerrytan&lt;/td>
+&lt;td>&lt;a href="http://github.com/tanzhongyi003">tanzhongyi003&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/wwbmmm">&lt;img width="64" src="https://avatars.githubusercontent.com/u/3894631?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>wwbmmm&lt;/td>
+&lt;td>&lt;a href="http://github.com/wwbmmm">wwbmmm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/TousakaRin">&lt;img width="64" src="https://avatars.githubusercontent.com/u/8801314?v=4">&lt;/a>&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>leander&lt;/td>
+&lt;td>&lt;a href="http://github.com/TousakaRin">TousakaRin&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/cdjingit">&lt;img width="64" src="https://avatars.githubusercontent.com/u/31362185?v=4">&lt;/a>&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>caidj&lt;/td>
+&lt;td>&lt;a href="http://github.com/cdjingit">cdjingit&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/lorinlee">&lt;img width="64" src="https://avatars.githubusercontent.com/u/16054841?v=4">&lt;/a>&lt;/td>
+&lt;td>Lorin Lee&lt;/td>
+&lt;td>lorinlee&lt;/td>
+&lt;td>&lt;a href="http://github.com/lorinlee">lorinlee&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/table>
+&lt;h3 id="committers">Committers&lt;/h3>
+&lt;table class="table table-hover">
+&lt;tr>
+&lt;th>&lt;b>Photo&lt;/b>&lt;/th>
+&lt;th>&lt;b>Full Name&lt;/b>&lt;/th>
+&lt;th>&lt;b>Apache ID&lt;/b>&lt;/th>
+&lt;th>&lt;b>GitHub&lt;/b>&lt;/th>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/gydong">&lt;img width="64" src="https://avatars.githubusercontent.com/u/3294444?v=4">&lt;/a>&lt;/td>
+&lt;td>Mou Gaidong&lt;/td>
+&lt;td>gydong&lt;/td>
+&lt;td>&lt;a href="http://github.com/gydong">gydong&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/guodongxiaren">&lt;img width="64" src="https://avatars.githubusercontent.com/u/5945107?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang wei&lt;/td>
+&lt;td>guodong&lt;/td>
+&lt;td>&lt;a href="http://github.com/guodongxiaren">guodongxiaren&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/serverglen">&lt;img width="64" src="https://avatars.githubusercontent.com/u/38067377?v=4">&lt;/a>&lt;/td>
+&lt;td>Shuai Liu&lt;/td>
+&lt;td>serverglen&lt;/td>
+&lt;td>&lt;a href="http://github.com/serverglen">serverglen&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/wasphin">&lt;img width="64" src="https://avatars.githubusercontent.com/u/1237906?v=4">&lt;/a>&lt;/td>
+&lt;td>Wang Xiaofeng&lt;/td>
+&lt;td>xiaofeng&lt;/td>
+&lt;td>&lt;a href="http://github.com/wasphin">wasphin&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="http://github.com/Huixxi">&lt;img width="64" src="https://avatars.githubusercontent.com/u/21335093?v=4">&lt;/a>&lt;/td>
+&lt;td>Xiguo Hu&lt;/td>
+&lt;td>huixxi&lt;/td>
+&lt;td>&lt;a href="http://github.com/Huixxi">Huixxi&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://github.com/chenBright">&lt;img width="64" src="https://avatars.githubusercontent.com/u/12249635?v=4">&lt;/a>&lt;/td>
+&lt;td>Guangming Chen&lt;/td>
+&lt;td>guangmingchen&lt;/td>
+&lt;td>&lt;a href="http://github.com/chenBright">chenBright&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;a href="https://github.com/Tuvie">&lt;img width="64" src="https://avatars.githubusercontent.com/u/5780312?v=4">&lt;/a>&lt;/td>
+&lt;td>Zhaogeng Li&lt;/td>
+&lt;td>lizhaogeng&lt;/td>
+&lt;td>&lt;a href="http://github.com/Tuvie">Tuvie&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/table>
+&lt;h3 id="contributors">Contributors&lt;/h3>
+&lt;p>在&lt;a href="https://github.com/apache/brpc/graphs/contributors">bRPC贡献者&lt;/a>列表中，记录了所有为bRPC出过贡献的人，感谢的所有&lt;a href="https://github.com/apache/brpc/graphs/contributors">贡献者&lt;/a>，一起帮助 bRPC 更好地发展。&lt;/p></description></item><item><title>Docs: 安全</title><link>https://brpc.apache.org/zh/docs/community/security/</link><pubDate>Thu, 12 Aug 2021 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/security/</guid><description>
+&lt;p>Apache Software Foundation 在消除其软件项目中的安全问题方面采取了严格的立场。Apache bRPC 也十分关注与其特性和功能相关的安全问题。&lt;/p>
+&lt;p>如果您对 bRPC 的安全性感到担忧，或者您发现了漏洞或潜在的威胁，请不要犹豫与 &lt;a href="http://www.apache.org/security/">Apache 安全团队&lt;/a> 联系，发送邮件至 &lt;a href="mailto:security@apache.org">security@apache.org&lt;/a>。 在邮件中请指明项目名称为 bRPC，并提供相关问题或潜在威胁的描述。同时推荐重现和复制安全问题的方法。在评估和分析调查结果后，Apache 安全团队和 bRPC 社区将直接与您回复。&lt;/p>
+&lt;p>&lt;strong>请注意&lt;/strong> 在提交安全邮件之前，请勿在公共领域披露安全电子邮件报告的安全问题。&lt;/p></description></item><item><title>Docs: 月度会</title><link>https://brpc.apache.org/zh/docs/community/monthly-meeting/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/monthly-meeting/</guid><description>
+&lt;h3 id="月度会记录">月度会记录&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>时间&lt;/th>
+&lt;th>主持人&lt;/th>
+&lt;th>会议纪要&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>2023-02&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/opzmc74yhhokox0164f2o5wv60o74nct">https://lists.apache.org/thread/opzmc74yhhokox0164f2o5wv60o74nct&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>2023-03&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/38rswlzl51lqvl04bvf6ho0od8smrc4z">https://lists.apache.org/thread/38rswlzl51lqvl04bvf6ho0od8smrc4z&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Docs: 值班表</title><link>https://brpc.apache.org/zh/docs/community/on-call/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/community/on-call/</guid><description>
+&lt;h2 id="值周工程师的职责如下">值周工程师的职责如下&lt;/h2>
+&lt;h3 id="1-查看并处理pull-request和issue列表">1. 查看并处理Pull Request和Issue列表&lt;/h3>
+&lt;ul>
+&lt;li>每天查看github上brpc项目待处理的Pull Request和Issue列表，负责问题的处理&lt;/li>
+&lt;li>包括标记issue，回复issue，关闭issue等；&lt;/li>
+&lt;li>判断issue是否是长期Issue，如果是则标记为Pending&lt;/li>
+&lt;li>判断Issue的类型，例如bug，enhancement, discussion等&lt;/li>
+&lt;li>把issue分配到熟悉该模块的贡献者(可在微信群里询问谁来负责)&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-轮值时间为一周">2. 轮值时间为一周&lt;/h3>
+&lt;ul>
+&lt;li>即从周一早上到本周日晚上&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-轮值结束需要">3. 轮值结束需要&lt;/h3>
+&lt;ul>
+&lt;li>编写值周report，并发送到dev@brpc.apache.org邮件群中&lt;/li>
+&lt;li>更新值周记录（brpc-website）&lt;/li>
+&lt;li>提醒下一位轮值同学&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-值周顺序如下">4. 值周顺序如下&lt;/h3>
+&lt;ul>
+&lt;li>朱佳顺 @zyearn&lt;/li>
+&lt;li>李磊 @lorinlee&lt;/li>
+&lt;li>王伟冰 @wwbmmm&lt;/li>
+&lt;li>蔡道进 @cdjingit&lt;/li>
+&lt;li>何磊 @TousakaRin&lt;/li>
+&lt;li>刘帅 @serverglen&lt;/li>
+&lt;li>胡希国 @Huixxi&lt;/li>
+&lt;/ul>
+&lt;h3 id="5-值周记录如下">5. 值周记录如下&lt;/h3>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>时间(月/日/年）&lt;/th>
+&lt;th>值周人&lt;/th>
+&lt;th>值周report&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>06/21/2021 to 06/27/2021&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/czolsqo80jzsytqc7dp37knqwxnkymx1">https://lists.apache.org/thread/czolsqo80jzsytqc7dp37knqwxnkymx1&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/28/2021 to 07/04/2021&lt;/td>
+&lt;td>蔡道进&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/c05fcjdjh7473ho1ylyl98mxscmnkbv0">https://lists.apache.org/thread/c05fcjdjh7473ho1ylyl98mxscmnkbv0&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>07/05/2021 - 07/12/2021&lt;/td>
+&lt;td>何磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/hz1vn7358v5fslglg2cl4g8x0wtxy4lv">https://lists.apache.org/thread/hz1vn7358v5fslglg2cl4g8x0wtxy4lv&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/16/2021 - 08/22/2021&lt;/td>
+&lt;td>朱佳顺&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/g36jtjc3v75lfoc7m3ynzplgbqlsjjrd">https://lists.apache.org/thread/g36jtjc3v75lfoc7m3ynzplgbqlsjjrd&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/23/2021 - 08/29/2021&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/2098ndgdy6fs2b1s8tywpmz47n5swh29">https://lists.apache.org/thread/2098ndgdy6fs2b1s8tywpmz47n5swh29&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/30/2021 - 09/05/2021&lt;/td>
+&lt;td>蔡道进&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/wjxdomg7fp75dc0n0rmh37bkwd8w7myv">https://lists.apache.org/thread/wjxdomg7fp75dc0n0rmh37bkwd8w7myv&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/06/2021 - 09/12/2021&lt;/td>
+&lt;td>何磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/cwjtocpjbqjgndog53rqw8gs6f9c0rmo">https://lists.apache.org/thread/cwjtocpjbqjgndog53rqw8gs6f9c0rmo&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/20/2021 - 09/26/2021&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/p779y43hogv7ftckc4cqx006gv9j65r8">https://lists.apache.org/thread/p779y43hogv7ftckc4cqx006gv9j65r8&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/27/2021 - 10/03/2021&lt;/td>
+&lt;td>蔡道进&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/ync12fx2dwjb2l3p4yck0kodmkgzz7wd">https://lists.apache.org/thread/ync12fx2dwjb2l3p4yck0kodmkgzz7wd&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/13/2021 - 12/19/2021&lt;/td>
+&lt;td>蔡道进&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/mvclsy79859mrbdso1xzm6y7yz3lg6w0">https://lists.apache.org/thread/mvclsy79859mrbdso1xzm6y7yz3lg6w0&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/24/2022 - 02/06/2022&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/ttgqnw4hfw0qnb7swvnn2kxb5b9hkdbo">https://lists.apache.org/thread/ttgqnw4hfw0qnb7swvnn2kxb5b9hkdbo&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/10/2022 - 04/16/2022&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/0l67lqnw0l6rgfwkvhrc168prwr7fp60">https://lists.apache.org/thread/0l67lqnw0l6rgfwkvhrc168prwr7fp60&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/17/2022 - 04/24/2022&lt;/td>
+&lt;td>朱佳顺&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/xwkpyonndgtp8tq4c9v4yfowqx7fg9gl">https://lists.apache.org/thread/xwkpyonndgtp8tq4c9v4yfowqx7fg9gl&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/25/2022 - 05/01/2022&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/cx7t1glptr7x7posxstsb1691h4m4mbl">https://lists.apache.org/thread/cx7t1glptr7x7posxstsb1691h4m4mbl&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>05/02/2022 - 05/15/2022&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/tgyqkhh6fqgyzcn5d56kt46hk978wogx">https://lists.apache.org/thread/tgyqkhh6fqgyzcn5d56kt46hk978wogx&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/06/2022 - 06/12/2022&lt;/td>
+&lt;td>何磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/s19p7ygnsj0bknfjvrh0wlf1mbgstxbk">https://lists.apache.org/thread/s19p7ygnsj0bknfjvrh0wlf1mbgstxbk&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/13/2022 - 06/19/2022&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/tvqjyz6rh7jb1zcclx0lh6zrcsf9ykxr">https://lists.apache.org/thread/tvqjyz6rh7jb1zcclx0lh6zrcsf9ykxr&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>07/25/2022 - 07/31/2022&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/83scwkkfxrp6kkkoltbrn1fthfy3w0qz">https://lists.apache.org/thread/83scwkkfxrp6kkkoltbrn1fthfy3w0qz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/08/2022 - 08/14/2022&lt;/td>
+&lt;td>何磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jj16rzfh34yrt6o0xqfdz9wtdtzxzswq">https://lists.apache.org/thread/jj16rzfh34yrt6o0xqfdz9wtdtzxzswq&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/15/2022 - 08/21/2022&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jp69sm7c8fs3dkdd828qk0fsojqwwz6h">https://lists.apache.org/thread/jp69sm7c8fs3dkdd828qk0fsojqwwz6h&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/05/2022 - 09/12/2022&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/4jjk2hxw9s2wskccclqb8fvpqxqffnlb">https://lists.apache.org/thread/4jjk2hxw9s2wskccclqb8fvpqxqffnlb&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/12/2022 - 09/18/2022&lt;/td>
+&lt;td>蔡道进&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/8mo7zl0l2yrd8tp4v3kx86rnlyfk6wz4">https://lists.apache.org/thread/8mo7zl0l2yrd8tp4v3kx86rnlyfk6wz4&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/19/2022 - 09/25/2022&lt;/td>
+&lt;td>何磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/qlkr7cmwow3ob47dt80tpx0zrgzg7bdm">https://lists.apache.org/thread/qlkr7cmwow3ob47dt80tpx0zrgzg7bdm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>09/26/2022 - 10/09/2022&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/b0lwr8wyflmhqlnf0kkh1j30tgt5qw54">https://lists.apache.org/thread/b0lwr8wyflmhqlnf0kkh1j30tgt5qw54&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/10/2022 - 10/16/2022&lt;/td>
+&lt;td>朱佳顺&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/y8sgbprxt21j6r0812dlftosfov6pbgk">https://lists.apache.org/thread/y8sgbprxt21j6r0812dlftosfov6pbgk&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/17/2022 - 10/23/2022&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/qn2270p9qsrglkh7oy013ts1zk5rlhwx">https://lists.apache.org/thread/qn2270p9qsrglkh7oy013ts1zk5rlhwx&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/24/2022 - 10/30/2022&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/k74155opmwmopgtsqo6p79z9q0f0sv8j">https://lists.apache.org/thread/k74155opmwmopgtsqo6p79z9q0f0sv8j&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/31/2022 - 11/06/2022&lt;/td>
+&lt;td>蔡道进&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/t4z49yt7ymp4vr5sms0m4cpoo94db4oz">https://lists.apache.org/thread/t4z49yt7ymp4vr5sms0m4cpoo94db4oz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/14/2022 - 11/20/2022&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/nq50fp79ox3follc7gxp814cvcqnmqzz">https://lists.apache.org/thread/nq50fp79ox3follc7gxp814cvcqnmqzz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/21/2022 - 11/27/2022&lt;/td>
+&lt;td>朱佳顺&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/57kzov5g3j4vv6l2zcyw0msm36qglc8k">https://lists.apache.org/thread/57kzov5g3j4vv6l2zcyw0msm36qglc8k&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/28/2022 - 12/04/2022&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/92hbzcd662slj75v3ndjf69o1dgsnd6o">https://lists.apache.org/thread/92hbzcd662slj75v3ndjf69o1dgsnd6o&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/05/2022 - 12/11/2022&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/99o15h9hk5dd73jv8wyp49l8mbw0j611">https://lists.apache.org/thread/99o15h9hk5dd73jv8wyp49l8mbw0j611&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/19/2022 - 12/25/2022&lt;/td>
+&lt;td>何磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/g1stjjo1mc9ds47do6gosrw5k6wwb9mj">https://lists.apache.org/thread/g1stjjo1mc9ds47do6gosrw5k6wwb9mj&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/26/2022 - 01/01/2023&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/3xw1gkobqmvr6oo375x3gsfcqvg80n23">https://lists.apache.org/thread/3xw1gkobqmvr6oo375x3gsfcqvg80n23&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/02/2023 - 01/08/2023&lt;/td>
+&lt;td>朱佳顺&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/sm4f209c8ltols04gpmzo386b02dyc9s">https://lists.apache.org/thread/sm4f209c8ltols04gpmzo386b02dyc9s&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/09/2023 - 01/15/2023&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/fydjz4h88omsrb7fzw65wl64kh5r520s">https://lists.apache.org/thread/fydjz4h88omsrb7fzw65wl64kh5r520s&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/16/2023 - 01/29/2023&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/k5bb4pn2v23dksmwpwqphzlc4bd92ndr">https://lists.apache.org/thread/k5bb4pn2v23dksmwpwqphzlc4bd92ndr&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/30/2023 - 02/05/2023&lt;/td>
+&lt;td>蔡道进&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/4scwpdh163l92czm5pvc7ox78n44mrn4">https://lists.apache.org/thread/4scwpdh163l92czm5pvc7ox78n44mrn4&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/13/2023 - 02/19/2023&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jwynp880hdhcfkqwq7thsm05y037wzy5">https://lists.apache.org/thread/jwynp880hdhcfkqwq7thsm05y037wzy5&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/27/2023 - 03/05/2023&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/94ndftsvooydfnn8hdddv294pp0tfvdm">https://lists.apache.org/thread/94ndftsvooydfnn8hdddv294pp0tfvdm&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/06/2023 - 03/12/2023&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/bv3qw5w8gj9xs576fplxqhktopkbk7md">https://lists.apache.org/thread/bv3qw5w8gj9xs576fplxqhktopkbk7md&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/27/2023 - 04/03/2023&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/fk37cn8r5pd1y10vjvzvkl211b67vn4q">https://lists.apache.org/thread/fk37cn8r5pd1y10vjvzvkl211b67vn4q&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/04/2023 - 04/10/2023&lt;/td>
+&lt;td>胡希国&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/p8f5knxkohj1kw5g9wb9hfbw2bjzjs3r">https://lists.apache.org/thread/p8f5knxkohj1kw5g9wb9hfbw2bjzjs3r&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item></channel></rss>
