@@ -279,7 +279,7 @@ sub rsa4096 2021-10-17 [E]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn --username&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>lorinlee co https://dist.apache.org/repos/dist/dev/incubator/brpc/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>svn --username&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>lorinlee co https://dist.apache.org/repos/dist/dev/brpc/
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87">cd&lt;/span> ~/brpc_svn/dev/brpc
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-add-gpg-public-key">2. Add GPG public key&lt;/h3>
@@ -307,7 +307,7 @@ sub rsa4096 2021-10-17 [E]
 &lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sha512sum --check apache-brpc-1.0.0-incubating-src.tar.gz.sha512
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-verify-gpg-signature">2. Verify GPG signature&lt;/h3>
 &lt;p>First import the publisher&amp;rsquo;s public key. Import KEYS from the svn repository to the local. (The person who releases the version does not need to import it again. The person who verify needs to import it.)&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>curl https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS &amp;gt;&amp;gt; KEYS
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>curl https://dist.apache.org/repos/dist/dev/brpc/KEYS &amp;gt;&amp;gt; KEYS
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>gpg --import KEYS
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Trust the signature of publisher, execute the following command using the publisher&amp;rsquo;s user name&lt;/p>
@@ -431,9 +431,9 @@ LorinLee
 &lt;p>If the community vote is not passed, please modify the code of the release branch, package and vote again.&lt;/p>
 &lt;h2 id="vote-in-apache-incubator-community">Vote in Apache incubator community&lt;/h2>
 &lt;h3 id="1-update-gpg-signature">1. Update GPG Signature&lt;/h3>
-&lt;pre tabindex="0">&lt;code>svn delete https://dist.apache.org/repos/dist/release/incubator/brpc/KEYS -m &amp;#34;delete KEYS&amp;#34;
-svn cp https://dist.apache.org/repos/dist/dev/incubator/brpc/KEYS https://dist.apache.org/repos/dist/release/incubator/brpc/KEYS -m &amp;#34;update brpc KEYS&amp;#34;
-&lt;/code>&lt;/pre>&lt;p>After commit the svn, access &lt;a href="https://downloads.apache.org/incubator/brpc/KEYS">https://downloads.apache.org/incubator/brpc/KEYS&lt;/a>, check whether the content is updated. It may take several minutes to wait for the content to be updated before continuing.&lt;/p>
+&lt;pre tabindex="0">&lt;code>svn delete https://dist.apache.org/repos/dist/release/brpc/KEYS -m &amp;#34;delete KEYS&amp;#34;
+svn cp https://dist.apache.org/repos/dist/dev/brpc/KEYS https://dist.apache.org/repos/dist/release/brpc/KEYS -m &amp;#34;update brpc KEYS&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>After commit the svn, access &lt;a href="https://downloads.apache.org/brpc/KEYS">https://downloads.apache.org/brpc/KEYS&lt;/a>, check whether the content is updated. It may take several minutes to wait for the content to be updated before continuing.&lt;/p>
 &lt;h3 id="2-vote-stage">2. Vote stage&lt;/h3>
 &lt;ol>
 &lt;li>Send voting email to &lt;code>general@incubator.apache.org&lt;/code>. IPMC will vote. After at least 72 hours and 3 +1 IPMC member tickets are counted, you can move to the next stage.&lt;/li>
@@ -504,7 +504,7 @@ Lorin Lee
 Apache brpc community
 &lt;/code>&lt;/pre>&lt;h2 id="finish-the-release">Finish the release&lt;/h2>
 &lt;h3 id="1-move-the-release-package-from-apache-svn-directory-distdev-to-distrelease">1. Move the release package from Apache SVN directory dist/dev to dist/release&lt;/h3>
-&lt;pre tabindex="0">&lt;code>svn mv https://dist.apache.org/repos/dist/dev/incubator/brpc/1.0.0 https://dist.apache.org/repos/dist/release/incubator/brpc/1.0.0 -m &amp;#34;release brpc 1.0.0&amp;#34;
+&lt;pre tabindex="0">&lt;code>svn mv https://dist.apache.org/repos/dist/dev/brpc/1.0.0 https://dist.apache.org/repos/dist/release/brpc/1.0.0 -m &amp;#34;release brpc 1.0.0&amp;#34;
 &lt;/code>&lt;/pre>&lt;h3 id="2-create-github-release">2. Create github release&lt;/h3>
 &lt;ol>
 &lt;li>On the &lt;a href="https://github.com/apache/brpc/tags">GitHub Releases page&lt;/a> Click the corresponding version of to create a new Release&lt;/li>
@@ -512,8 +512,8 @@ Apache brpc community
 &lt;/ol>
 &lt;h3 id="3-update-download-page">3. Update download page&lt;/h3>
 &lt;p>After waiting and confirming that the new release is synchronized to the Apache image, update the following page: &lt;a href="https://brpc.apache.org/docs/downloadbrpc/">https://brpc.apache.org/docs/downloadbrpc/&lt;/a> by change the code in &lt;a href="https://github.com/apache/brpc-website/">https://github.com/apache/brpc-website/&lt;/a>. Please update both Chinese and English.&lt;/p>
-&lt;p>The download links of GPG signature files and hash check files should use this prefix: &lt;code>https://downloads.apache.org/incubator/brpc/&lt;/code>&lt;/p>
-&lt;p>The download link of the code package should use this prefix: &lt;code>https://dlcdn.apache.org/incubator/brpc/&lt;/code>&lt;/p>
+&lt;p>The download links of GPG signature files and hash check files should use this prefix: &lt;code>https://downloads.apache.org/brpc/&lt;/code>&lt;/p>
+&lt;p>The download link of the code package should use this prefix: &lt;code>https://dlcdn.apache.org/brpc/&lt;/code>&lt;/p>
 &lt;h3 id="4-send-email-to-announce-release-finished">4. Send email to announce release finished&lt;/h3>
 &lt;p>Send mail to &lt;code>dev@brpc.apache.org&lt;/code>, &lt;code>general@incubator.apache.org&lt;/code>, and &lt;code>announce@apache.org&lt;/code> to announce the completion of release.&lt;/p>
 &lt;p>Note: The email account must use &lt;strong>personal apache email&lt;/strong>, and the email content must be &lt;strong>plain text format&lt;/strong> (&amp;ldquo;plain text mode&amp;rdquo; can be selected in gmail). And email to &lt;code>announce@apache.org&lt;/code> mail group will be delivered after manual review. Please wait patiently after sending the email, and it will be passed within one day.&lt;/p>
@@ -958,9 +958,54 @@ Determine the type of Issue, e.g. bug, enhancement, discussion, etc&lt;/li>
 &lt;td>&lt;a href="https://lists.apache.org/thread/p8f5knxkohj1kw5g9wb9hfbw2bjzjs3r">https://lists.apache.org/thread/p8f5knxkohj1kw5g9wb9hfbw2bjzjs3r&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;tr>
+&lt;td>04/10/2023 - 04/17/2023&lt;/td>
+&lt;td>Zhu Jiashun&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/l0l1402r8yz7kl2w4hwc835rc1n5o22c">https://lists.apache.org/thread/l0l1402r8yz7kl2w4hwc835rc1n5o22c&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
 &lt;td>04/17/2023 - 04/23/2023&lt;/td>
 &lt;td>Lei Li&lt;/td>
 &lt;td>&lt;a href="https://lists.apache.org/thread/3gobs94vogdjg6pmkvbk5kst4z9xbdw9">https://lists.apache.org/thread/3gobs94vogdjg6pmkvbk5kst4z9xbdw9&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>04/24/2023 - 05/07/2023&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/25ocwx3n7kvmj0fd5zz5slwd0smt59r2">https://lists.apache.org/thread/25ocwx3n7kvmj0fd5zz5slwd0smt59r2&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>05/08/2023 - 05/14/2023&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/676w7087klhsb2hwn9q2p5sj541frgpl">https://lists.apache.org/thread/676w7087klhsb2hwn9q2p5sj541frgpl&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>05/22/2023 - 05/28/2023&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/m2cpr83h5l1gpznowxhf58lrxndok1lp">https://lists.apache.org/thread/m2cpr83h5l1gpznowxhf58lrxndok1lp&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/19/2023 - 06/25/2023&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jto9mzcbsxw3273xrgwd116vvdl3o1gx">https://lists.apache.org/thread/jto9mzcbsxw3273xrgwd116vvdl3o1gx&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>06/26/2023 - 07/02/2023&lt;/td>
+&lt;td>Cai Daojin&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/rzkdbo5ojff9grs2bowwl95n0fsb4zts">https://lists.apache.org/thread/rzkdbo5ojff9grs2bowwl95n0fsb4zts&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>07/03/2023 - 07/10/2023&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/2kh8mq2wn4g0vzdn1czb7nj4t8l2hj9v">https://lists.apache.org/thread/2kh8mq2wn4g0vzdn1czb7nj4t8l2hj9v&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>07/10/2023 - 07/16/2023&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/z6jcyqsy31rf1r626kjx2d2sykwtvhqz">https://lists.apache.org/thread/z6jcyqsy31rf1r626kjx2d2sykwtvhqz&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>08/07/2023 - 08/13/2023&lt;/td>
+&lt;td>Lei Li&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/g2tz50ymsvv3xb2dl3bjot1rfdp74rkj">https://lists.apache.org/thread/g2tz50ymsvv3xb2dl3bjot1rfdp74rkj&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table></description></item></channel></rss>
