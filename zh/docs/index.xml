@@ -780,7 +780,7 @@ limitations under the License.
 {% endcomment %}
 -->
 &lt;h2 id="下载-apache-brpc">下载 Apache bRPC&lt;/h2>
-&lt;p>Apache bRPC 作为源工件发布。我们很高兴宣布我们的 1.6.1 版本已经发布如下了！&lt;/p>
+&lt;p>Apache bRPC 作为源工件发布。我们很高兴宣布我们的 1.8.0 版本已经发布如下了！&lt;/p>
 &lt;h3 id="全部版本">全部版本&lt;/h3>
 &lt;!--when pass vote, we can change it back to Release Artifacts
 -->
@@ -794,6 +794,18 @@ limitations under the License.
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
+&lt;tr>
+&lt;td>Apache bRPC 1.8.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.8.0/apache-brpc-1.8.0-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.8.0/apache-brpc-1.8.0-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.8.0/apache-brpc-1.8.0-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache bRPC 1.7.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.7.0/apache-brpc-1.7.0-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.7.0/apache-brpc-1.7.0-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.7.0/apache-brpc-1.7.0-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
 &lt;tr>
 &lt;td>Apache bRPC 1.6.1 (tar.gz)&lt;/td>
 &lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.6.1/apache-brpc-1.6.1-src.tar.gz">tar.gz&lt;/a>&lt;/td>
@@ -817,30 +829,6 @@ limitations under the License.
 &lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz">tar.gz&lt;/a>&lt;/td>
 &lt;td>&lt;a href="https://downloads.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
 &lt;td>&lt;a href="https://downloads.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Apache bRPC (incubating) 1.3.0 (tar.gz)&lt;/td>
-&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Apache bRPC (incubating) 1.2.0 (tar.gz)&lt;/td>
-&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Apache bRPC (incubating) 1.1.0 (tar.gz)&lt;/td>
-&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Apache bRPC (incubating) 1.0.0 (tar.gz)&lt;/td>
-&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;!--tr>
 &lt;td>Release Notes&lt;/td>
@@ -2426,7 +2414,7 @@ butex_create_checked通过get_object拿到了一个Butex，然后将Butex中的v
 &lt;p>被https功能需要。&lt;/p>
 &lt;h4 id="tcmalloc-17-25">tcmalloc: 1.7-2.5&lt;/h4>
 &lt;p>brpc默认&lt;strong>不&lt;/strong>链接 &lt;a href="http://goog-perftools.sourceforge.net/doc/tcmalloc.html">tcmalloc&lt;/a>。用户按需要链接tcmalloc。&lt;/p>
-&lt;p>和glibc内置的ptmalloc相比，tcmalloc通常能提升性能。然而不同版本的tcmalloc可能表现迥异。例如：tcmalloc 2.1与 tcmalloc 1.7和2.5相比，可能会让brpc的多线程样例性能显著恶化（tcmalloc中的一个自旋锁导致的）。甚至不同的小版本号之间变现也可能不同。当你的程序表现不符合预期的时候，移除tcmalloc然后尝试其他版本。&lt;/p>
+&lt;p>和glibc内置的ptmalloc相比，tcmalloc通常能提升性能。然而不同版本的tcmalloc可能表现迥异。例如：tcmalloc 2.1与 tcmalloc 1.7和2.5相比，可能会让brpc的多线程样例性能显著恶化（tcmalloc中的一个自旋锁导致的）。甚至不同的小版本号之间表现也可能不同。当你的程序表现不符合预期的时候，移除tcmalloc然后尝试其他版本。&lt;/p>
 &lt;p>用gcc4.8.2编译然后链接更早版本GCC编译的tcmalloc，可能会让程序中main()函数之前挂掉或者死锁，例如：&lt;/p>
 &lt;p>&lt;img src="https://brpc.apache.org/images/docs/tcmalloc_stuck.png" alt="img">&lt;/p>
 &lt;p>当你遇到这个问题的时候，请用同一个GCC重新编译tcmalloc。&lt;/p>
@@ -2593,7 +2581,7 @@ server一样的&lt;a href="../builtin-services/buildin_services/">内置服务&l
 &lt;p>如无特殊说明，所有测试中的配置只是数量差异（线程数，请求大小，client个数etc），而不是模型差异。我们确保用户看到的qps和延时是同一个场景的不同维度，而不是无法统一的两个场景。&lt;/p>
 &lt;p>所有RPC server都配置了24个工作线程，这些线程一般运行用户的处理逻辑。关于每种RPC的特殊说明:&lt;/p>
 &lt;ul>
-&lt;li>UB: 配置了12个reactor线程，使用EPOOL模型。连接池限制数配置为线程个数（24）&lt;/li>
+&lt;li>UB: 配置了12个reactor线程，使用EPOLL模型。连接池限制数配置为线程个数（24）&lt;/li>
 &lt;li>hulu-pbrpc: 额外配置了12个IO线程。这些线程会处理fd读取，请求解析等任务。hulu有个“共享队列“的配置项，默认不打开，作用是把fd静态散列到多个线程中，由于线程间不再争抢，hulu的qps会显著提高，但会明显地被长尾影响（原因见&lt;a href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95">测试方法&lt;/a>）。考虑到大部分使用者并不会去改配置，我们也选择不打开。&lt;/li>
 &lt;li>thrift: 额外配置了12个IO线程。这些线程会处理fd读取，请求解析等任务。thrift的client不支持多线程，每个线程得使用独立的client，连接也都是分开的。&lt;/li>
 &lt;li>sofa-pbrpc: 按照sofa同学的要求，把io_service_pool_size配置为24，work_thread_num配置为1。大概含义是使用独立的24组线程池，每组1个worker thread。和hulu不打开“共享队列”时类似，这个配置会显著提高sofa-pbrpc的QPS，但同时使它失去了处理长尾的能力。如果你在真实产品中使用，我们不建议这个配置。（而应该用io_service_pool_size=1, work_thread_num=24)&lt;/li>
@@ -2608,7 +2596,7 @@ server一样的&lt;a href="../builtin-services/buildin_services/">内置服务&l
 &lt;p>以_mc结尾的曲线代表client和server保持多个连接（线程数个），在本测试中会有更好的表现。&lt;/p>
 &lt;p>&lt;strong>分析&lt;/strong>&lt;/p>
 &lt;ul>
-&lt;li>brpc: 当请求包小于16KB时，单连接下的吞吐超过了多连接的ubrpc_mc和thrift_mc，随着请求包变大，内核对单个连接的写入速度成为瓶颈。而多连接下的brpc则达到了测试中最高的2.3GB/s。注意: 虽然使用连接池的brpc在发送大包时吞吐更高，但也会耗费更多的CPU（UB和thrift也是这样）。下图中的单连接brpc已经可以提供800多兆的吞吐，足以打满万兆网卡，而使用的CPU可能只有多链接下的1/2(写出过程是&lt;a href="../rpc-in-depth/io#%E5%8F%91%E6%B6%88%E6%81%AF">wait-free的&lt;/a>)，真实系统中请优先使用单链接。&lt;/li>
+&lt;li>brpc: 当请求包小于16KB时，单连接下的吞吐超过了多连接的ubrpc_mc和thrift_mc，随着请求包变大，内核对单个连接的写入速度成为瓶颈。而多连接下的brpc则达到了测试中最高的2.3GB/s。注意: 虽然使用连接池的brpc在发送大包时吞吐更高，但也会耗费更多的CPU（UB和thrift也是这样）。下图中的单连接brpc已经可以提供800多兆的吞吐，足以打满万兆网卡，而使用的CPU可能只有多连接下的1/2(写出过程是&lt;a href="../rpc-in-depth/io#%E5%8F%91%E6%B6%88%E6%81%AF">wait-free的&lt;/a>)，真实系统中请优先使用单连接。&lt;/li>
 &lt;li>thrift: 初期明显低于brpc，随着包变大超过了单连接的brpc。&lt;/li>
 &lt;li>UB:和thrift类似的曲线，但平均要低4-5万QPS，在32K包时超过了单连接的brpc。整个过程中QPS几乎没变过。&lt;/li>
 &lt;li>gRPC: 初期几乎与UB平行，但低1万左右，超过8K开始下降。&lt;/li>
@@ -3753,6 +3741,61 @@ Apache bRPC 社区&lt;/p></description></item><item><title>Docs: bRPC 1.4.0</tit
 &lt;td>09/18/2023 - 09/24/2023&lt;/td>
 &lt;td>刘帅&lt;/td>
 &lt;td>&lt;a href="https://lists.apache.org/thread/v4po2bwzn3fb7w7qbxfn8hgqzthyqb4b">https://lists.apache.org/thread/v4po2bwzn3fb7w7qbxfn8hgqzthyqb4b&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/16/2023 - 10/22/2023&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/ylkbpgwp1qv7bs1z1dbxw31lk9o2vqod">https://lists.apache.org/thread/ylkbpgwp1qv7bs1z1dbxw31lk9o2vqod&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/23/2023 - 10/29/2023&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/pq87hnf6tdhx0lrdnqpv3dk4tr8wyyrd">https://lists.apache.org/thread/pq87hnf6tdhx0lrdnqpv3dk4tr8wyyrd&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/04/2023 - 12/17/2023&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/h6mphr4tnmwyfkw4r99ko3vk0wpwpzlp">https://lists.apache.org/thread/h6mphr4tnmwyfkw4r99ko3vk0wpwpzlp&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/18/2023 - 12/24/2023&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/9vycfp3dldlogd17b5p5onbgbqm791nj">https://lists.apache.org/thread/9vycfp3dldlogd17b5p5onbgbqm791nj&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/25/2023 - 12/31/2023&lt;/td>
+&lt;td>蔡道进&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/x6wk0shv05rhrjo6f13km8xx05kxdo58">https://lists.apache.org/thread/x6wk0shv05rhrjo6f13km8xx05kxdo58&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>01/01/2024 - 01/07/2024&lt;/td>
+&lt;td>何磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/yjov4rf7tfg03mhyyrb3tr2yy6z6t324">https://lists.apache.org/thread/yjov4rf7tfg03mhyyrb3tr2yy6z6t324&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/05/2024 - 02/18/2024&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jp19mj4qtjwhvq4r61nhkps253s82shy">https://lists.apache.org/thread/jp19mj4qtjwhvq4r61nhkps253s82shy&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/19/2024 - 02/26/2024&lt;/td>
+&lt;td>王伟冰&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/v4bynz0w3z14mylq6gk4kp3g08y71nds">https://lists.apache.org/thread/v4bynz0w3z14mylq6gk4kp3g08y71nds&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/04/2024 - 03/10/2024&lt;/td>
+&lt;td>何磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/4qzwspbzx5njd2759tmk8b8mdyx4ldqh">https://lists.apache.org/thread/4qzwspbzx5njd2759tmk8b8mdyx4ldqh&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/11/2024 - 03/17/2024&lt;/td>
+&lt;td>刘帅&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/6toz65lrntpj8wg66g87bsc52bbhowwk">https://lists.apache.org/thread/6toz65lrntpj8wg66g87bsc52bbhowwk&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/25/2024 - 03/31/2024&lt;/td>
+&lt;td>李磊&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/cyj36gds2dtyj4nm848r1mpnkqjp51qh">https://lists.apache.org/thread/cyj36gds2dtyj4nm848r1mpnkqjp51qh&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table></description></item><item><title>Docs: bRPC 1.1.0</title><link>https://brpc.apache.org/zh/docs/blogs/releases/1.1.0/</link><pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/zh/docs/blogs/releases/1.1.0/</guid><description>

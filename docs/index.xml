@@ -161,7 +161,7 @@ limitations under the License.
 -->
 &lt;h2 id="apache-brpc-downloads">Apache bRPC Downloads&lt;/h2>
 &lt;p>Apache bRPC is released as a source artifact.
-We are pleased to announce our 1.6.1 release as below.&lt;/p>
+We are pleased to announce our 1.8.0 release as below.&lt;/p>
 &lt;h3 id="all-release">All Release&lt;/h3>
 &lt;!--when pass vote, we can change it back to Release Artifacts
 -->
@@ -175,6 +175,18 @@ We are pleased to announce our 1.6.1 release as below.&lt;/p>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
+&lt;tr>
+&lt;td>Apache bRPC 1.8.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.8.0/apache-brpc-1.8.0-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.8.0/apache-brpc-1.8.0-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.8.0/apache-brpc-1.8.0-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Apache bRPC 1.7.0 (tar.gz)&lt;/td>
+&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.7.0/apache-brpc-1.7.0-src.tar.gz">tar.gz&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.7.0/apache-brpc-1.7.0-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
+&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.7.0/apache-brpc-1.7.0-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
+&lt;/tr>
 &lt;tr>
 &lt;td>Apache bRPC 1.6.1 (tar.gz)&lt;/td>
 &lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.6.1/apache-brpc-1.6.1-src.tar.gz">tar.gz&lt;/a>&lt;/td>
@@ -198,30 +210,6 @@ We are pleased to announce our 1.6.1 release as below.&lt;/p>
 &lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz">tar.gz&lt;/a>&lt;/td>
 &lt;td>&lt;a href="https://downloads.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
 &lt;td>&lt;a href="https://downloads.apache.org/brpc/1.4.0/apache-brpc-1.4.0-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Apache bRPC (incubating) 1.3.0 (tar.gz)&lt;/td>
-&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.3.0/apache-brpc-1.3.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Apache bRPC (incubating) 1.2.0 (tar.gz)&lt;/td>
-&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.2.0/apache-brpc-1.2.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Apache bRPC (incubating) 1.1.0 (tar.gz)&lt;/td>
-&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.1.0/apache-brpc-1.1.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Apache bRPC (incubating) 1.0.0 (tar.gz)&lt;/td>
-&lt;td>&lt;a href="https://dlcdn.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz">tar.gz&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz.sha512">SHA-512&lt;/a>&lt;/td>
-&lt;td>&lt;a href="https://downloads.apache.org/brpc/1.0.0/apache-brpc-1.0.0-incubating-src.tar.gz.asc">ASC&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;!--tr>
 &lt;td>Release Notes&lt;/td>
@@ -1743,6 +1731,76 @@ Determine the type of Issue, e.g. bug, enhancement, discussion, etc&lt;/li>
 &lt;td>09/25/2023 - 10/08/2023&lt;/td>
 &lt;td>Xiguo Hu&lt;/td>
 &lt;td>&lt;a href="https://lists.apache.org/thread/lz3n9nt8xpp7kfb39zxp8m5cjl3dcpbt">https://lists.apache.org/thread/lz3n9nt8xpp7kfb39zxp8m5cjl3dcpbt&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/16/2023 - 10/22/2023&lt;/td>
+&lt;td>Lei Li&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/ylkbpgwp1qv7bs1z1dbxw31lk9o2vqod">https://lists.apache.org/thread/ylkbpgwp1qv7bs1z1dbxw31lk9o2vqod&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/23/2023 - 10/29/2023&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/pq87hnf6tdhx0lrdnqpv3dk4tr8wyyrd">https://lists.apache.org/thread/pq87hnf6tdhx0lrdnqpv3dk4tr8wyyrd&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10/30/2023 - 11/05/2023&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/06/2023 - 11/12/2023&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/13/2023 - 11/19/2023&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>11/20/2023 - 11/26/2023&lt;/td>
+&lt;td>Xiguo Hu&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/7hhg555ykcq2sfh0qm71vp9pn4tvb39s">https://lists.apache.org/thread/7hhg555ykcq2sfh0qm71vp9pn4tvb39s&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/04/2023 - 12/17/2023&lt;/td>
+&lt;td>Lei Li&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/h6mphr4tnmwyfkw4r99ko3vk0wpwpzlp">https://lists.apache.org/thread/h6mphr4tnmwyfkw4r99ko3vk0wpwpzlp&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>12/18/2023 - 12/24/2023&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/9vycfp3dldlogd17b5p5onbgbqm791nj">https://lists.apache.org/thread/9vycfp3dldlogd17b5p5onbgbqm791nj&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/05/2024 - 02/18/2024&lt;/td>
+&lt;td>Lei Li&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/jp19mj4qtjwhvq4r61nhkps253s82shy">https://lists.apache.org/thread/jp19mj4qtjwhvq4r61nhkps253s82shy&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/19/2024 - 02/26/2024&lt;/td>
+&lt;td>Wang Weibing&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/v4bynz0w3z14mylq6gk4kp3g08y71nds">https://lists.apache.org/thread/v4bynz0w3z14mylq6gk4kp3g08y71nds&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>02/26/2024 - 03/03/2024&lt;/td>
+&lt;td>&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/04/2024 - 03/10/2024&lt;/td>
+&lt;td>He Lei&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/4qzwspbzx5njd2759tmk8b8mdyx4ldqh">https://lists.apache.org/thread/4qzwspbzx5njd2759tmk8b8mdyx4ldqh&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/11/2024 - 03/17/2024&lt;/td>
+&lt;td>Liu Shuai&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/6toz65lrntpj8wg66g87bsc52bbhowwk">https://lists.apache.org/thread/6toz65lrntpj8wg66g87bsc52bbhowwk&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>03/25/2024 - 03/31/2024&lt;/td>
+&lt;td>Lei Li&lt;/td>
+&lt;td>&lt;a href="https://lists.apache.org/thread/cyj36gds2dtyj4nm848r1mpnkqjp51qh">https://lists.apache.org/thread/cyj36gds2dtyj4nm848r1mpnkqjp51qh&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table></description></item><item><title>Docs: bRPC 1.1.0</title><link>https://brpc.apache.org/docs/blogs/releases/1.1.0/</link><pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate><guid>https://brpc.apache.org/docs/blogs/releases/1.1.0/</guid><description>
